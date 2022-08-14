@@ -1,10 +1,10 @@
 <template>
-<the-layout>
-  <template v-slot:side-nav>
-     <SideNav />
-  </template>
-  <template v-slot:main-content>
-     <h2>Dashboard</h2>
+  <the-layout>
+    <template v-slot:side-nav>
+      <SideNav />
+    </template>
+    <template v-slot:main-content>
+      <h2>Dashboard</h2>
       <p>
         Your Application is currently being review, you wil be notified if
         successful
@@ -39,9 +39,8 @@
           </div>
         </div>
       </div>
-  </template>
-</the-layout>
- 
+    </template>
+  </the-layout>
 </template>
 
 <script>
@@ -50,7 +49,8 @@ import TheLayout from "@/components/TheLayout.vue";
 
 export default {
   components: {
-    SideNav,TheLayout
+    SideNav,
+    TheLayout,
   },
 };
 </script>
