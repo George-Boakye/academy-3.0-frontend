@@ -47,11 +47,10 @@ export default {
 <style scoped>
 .headsection {
   display: flex;
-  gap: 280px;
+  justify-content: space-between;
+  padding-right: 82px;
 }
 h1 {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
   line-height: 52px;
@@ -60,28 +59,21 @@ h1 {
   color: #2b3c4e;
 }
 h2 {
-  font-family: "Lato";
   font-style: italic;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-
   color: #2b3c4e;
 }
 h3 {
-  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-
   margin-bottom: 10px;
-
   color: #4f4f4f;
 }
 .timer {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 300;
   font-size: 48px;
   line-height: 58px;
@@ -89,8 +81,6 @@ h3 {
   color: #2b3c4e;
 }
 .time-range {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
@@ -98,7 +88,6 @@ h3 {
   color: #4f4f4f;
 }
 h5 {
-  font-family: "Lato";
   font-style: italic;
   font-weight: 500;
   font-size: 14px;
@@ -121,5 +110,10 @@ button {
   border-radius: 4px;
   background-color: #7557d3;
   border: none;
+  color: #fff;
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
 }
 </style>

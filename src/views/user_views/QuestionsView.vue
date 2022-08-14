@@ -9,8 +9,8 @@
           <div>
             <h1>Take Assessment</h1>
             <h2>
-              Click the button below to start assessment, you have limited time
-              for this test
+              Click the finish button below to submit assessment, you can go
+              back at any time to edit your <br> answers.
             </h2>
           </div>
           <div>
@@ -119,11 +119,10 @@ export default {
 }
 .headsection {
   display: flex;
-  gap: 280px;
+  justify-content: space-between;
+  padding-right: 82px;
 }
 h1 {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
   line-height: 52px;
@@ -132,28 +131,21 @@ h1 {
   color: #2b3c4e;
 }
 h2 {
-  font-family: "Lato";
   font-style: italic;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-
   color: #2b3c4e;
 }
 h3 {
-  font-family: "Lato";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-
   margin-bottom: 10px;
-
   color: #4f4f4f;
 }
 .timer {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 300;
   font-size: 48px;
   line-height: 58px;
@@ -161,8 +153,6 @@ h3 {
   color: #2b3c4e;
 }
 .time-range {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;

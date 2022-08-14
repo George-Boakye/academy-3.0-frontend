@@ -13,19 +13,16 @@
           <label>Password</label>
           <input :type="inputTypeIcon" placeholder="" />
           <div class="icon" @click.prevent="toggleInputIcon">
-            <span v-if="inputTypeIcon == 'password'"
-              ><div class="eye-logo">
+            <span v-if="inputTypeIcon == 'password'">
+              <div class="eye-logo">
                 <img src="@/assets/password-eye-logo.svg" alt="" srcset="" />
               </div>
             </span>
-            <span v-else
-              ><div class="eye-logo">
-                <img
-                  src="@/assets/password-eye-logo.svg"
-                  alt=""
-                  srcset=""
-                /></div
-            ></span>
+            <span v-else>
+              <div class="eye-logo">
+                <img src="@/assets/password-eye-logo.svg" alt="" srcset="" />
+              </div>
+            </span>
           </div>
         </div>
       </form>
@@ -71,15 +68,18 @@ export default {
 .password-wrap {
   position: relative;
 }
+
 .eye-logo {
   padding-right: 10px;
 }
+
 .icon {
   position: absolute;
   right: 0;
   top: 38px;
   cursor: pointer;
 }
+
 h1 {
   font-family: "Lato";
   font-style: italic;
@@ -90,13 +90,16 @@ h1 {
   color: #2b3c4e;
   text-align: center;
 }
+
 img {
   margin-bottom: 26px;
   text-align: center;
 }
+
 .image {
   text-align: center;
 }
+
 input {
   border: 1.5px solid #bdbdbd;
   border-radius: 4px;
@@ -107,6 +110,7 @@ input {
   padding-right: 10px;
   padding-left: 5px;
 }
+
 label {
   font-family: "Lato";
   font-style: normal;
@@ -118,6 +122,7 @@ label {
   margin-top: 20px;
   color: #4f4f4f;
 }
+
 button {
   margin-top: 32px;
   border: none;
@@ -128,6 +133,7 @@ button {
   border-radius: 4px;
   color: white;
 }
+
 .SignUp-text,
 .forgotPassword {
   font-family: "Lato";
@@ -138,6 +144,7 @@ button {
   color: #4f4f4f;
   margin-top: 12px;
 }
+
 .password-text {
   display: flex;
   gap: 66px;

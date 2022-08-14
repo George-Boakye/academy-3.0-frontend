@@ -17,7 +17,7 @@
             <h3>Timer</h3>
             <h4>
               <span class="timer">00</span><span class="time-range">min</span
-              ><span class="timer">000<span class="time-range">max</span></span>
+              ><span class="timer">000<span class="time-range">sec</span></span>
             </h4>
           </div>
         </div>
@@ -60,11 +60,10 @@ export default {
 <style scoped>
 .headsection {
   display: flex;
-  gap: 280px;
+  justify-content: space-between;
+  padding-right: 82px;
 }
 h1 {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 300;
   font-size: 43.5555px;
   line-height: 52px;
@@ -73,28 +72,20 @@ h1 {
   color: #2b3c4e;
 }
 h2 {
-  font-family: "Lato";
   font-style: italic;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-
   color: #2b3c4e;
 }
 h3 {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-
   margin-bottom: 10px;
-
   color: #4f4f4f;
 }
 .timer {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 300;
   font-size: 48px;
   line-height: 58px;
@@ -102,8 +93,6 @@ h3 {
   color: #2b3c4e;
 }
 .time-range {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
@@ -119,8 +108,6 @@ h3 {
 }
 
 .main-text {
-  font-family: "Lato";
-  font-style: normal;
   font-weight: 400;
   font-size: 16.7273px;
   line-height: 20px;
@@ -129,13 +116,17 @@ h3 {
   margin-bottom: 24px;
 }
 button {
+  font-family: "Lato";
   background: #b1b1b1;
   border-radius: 4px;
   height: 41px;
   width: 205px;
   color: #ffffff;
   border: none;
-
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
   border-radius: 4px;
+  cursor: pointer;
 }
 </style>
