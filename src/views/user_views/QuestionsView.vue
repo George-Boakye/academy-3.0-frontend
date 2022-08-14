@@ -17,7 +17,7 @@
             <h3>Timer</h3>
             <h4>
               <span class="timer">00</span><span class="time-range">min</span
-              ><span class="timer">000<span class="time-range">max</span></span>
+              ><span class="timer">000<span class="time-range">sec</span></span>
             </h4>
           </div>
         </div>
