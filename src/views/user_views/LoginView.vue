@@ -50,15 +50,13 @@ export default {
   },
   methods: {
     toggleInputIcon() {
-      this.inputTypeIcon =
-        this.inputTypeIcon === "password" ? "text" : "password";
+      this.inputTypeIcon === "password" ? "text" : "password";
     },
   },
 };
 </script>
 <style scoped>
 .main {
-  /* margin: 220px 530px 276px 450px; */
   display: flex;
   height: 100vh;
   justify-content: center;

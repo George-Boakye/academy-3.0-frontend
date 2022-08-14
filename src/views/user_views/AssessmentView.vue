@@ -30,11 +30,7 @@
             Watch this space
           </div>
           <div>
-            <router-link to="/questions"
-              ><button @click="takeAssesment()">
-                Take Assessment
-              </button></router-link
-            >
+            <button @click="takeAssesment()">Take Assessment</button>
           </div>
         </div>
       </div>
@@ -50,9 +46,9 @@ export default {
     SideNav,
     TheLayout,
   },
-  watch: {
-    takeAssesment(q) {
-      this.$router.push({ name: "assessment", query: { q } });
+  methods: {
+    takeAssesment() {
+      this.$router.push({ name: "questions" });
     },
   },
 };

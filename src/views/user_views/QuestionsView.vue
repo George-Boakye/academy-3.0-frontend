@@ -10,7 +10,8 @@
             <h1>Take Assessment</h1>
             <h2>
               Click the finish button below to submit assessment, you can go
-              back at any time to edit your <br> answers.
+              back at any time to edit your <br />
+              answers.
             </h2>
           </div>
           <div>
@@ -22,32 +23,39 @@
           </div>
         </div>
         <div class="main-body">
-          <div class="questions">
-            <h5>{{ questions[index]["questionNumber"] }}</h5>
-            <h6>{{ questions[index]["question"] }}</h6>
-            <div class="checkbox-container" @click="changeColor">
-              <label
-                :for="key"
-                v-for="(answer, key) in questions[index]['answers']"
-                :key="answer"
-              >
-                <br />
-                <input
-                  type="checkbox"
-                  :id="key"
-                  name=""
-                  :value="key"
-                  @change="answered($event)"
-                />
-                {{ answer }}
-              </label>
+          <div class="questions-wrapper">
+            <div class="questions">
+              <h5>{{ questions[index]["questionNumber"] }}</h5>
+              <h6>{{ questions[index]["question"] }}</h6>
+              <div class="checkbox-container">
+                <label
+                  :for="key"
+                  v-for="(answer, key) in questions[index]['answers']"
+                  :key="answer"
+                >
+                  <input
+                    type="radio"
+                    :id="key"
+                    name="answers"
+                    :value="key"
+                    @change="answered($event)"
+                  />
+                  <span :class="{'checked-answer': true}">{{ answer }}</span>
+                </label>
+              </div>
             </div>
           </div>
           <div class="bottom">
-            <button class="preview-button" @click="index--">Previous</button>
+            <button
+              class="preview-button"
+              :disabled="index === 0"
+              @click="index--"
+            >
+              Previous
+            </button>
             <button class="next-button" @click="index++">Next</button>
           </div>
-          <button class="finish-button">Finish</button>
+          <button class="finish-button" @click="finishQuiz">Finish</button>
         </div>
       </div>
     </template>
@@ -69,12 +77,12 @@ export default {
       questions: [
         {
           questionNumber: "Question 1",
-          question: "which of these is a frameworks?",
+          question: "What is the purpose of HDR technology?",
           answers: {
-            a: "A. C++",
-            b: " B. javascript",
-            c: "C. vuejs",
-            d: "D. html",
+            a: "A. To reduce the file size of images and videos.",
+            b: "B. To speed up 3D rendering performance.",
+            c: "C. To support higher video resolutions.",
+            d: "D. To display more colors in images and videos",
           },
           correctAnswer: "c",
         },
@@ -107,14 +115,21 @@ export default {
     answered(event) {
       this.selectedAnswer = event.target.value;
     },
-    changeColor() {},
+    finishQuiz() {
+      this.$router.push({ name: "successful" });
+    },
+  },
+  computed: {
+    questionslength() {
+      return this.questions.length;
+    },
   },
 };
 </script>
 <style scoped>
 .bottom {
   display: flex;
-  gap: 580px;
+  justify-content: space-around;
   margin-top: 86px;
 }
 .headsection {
@@ -166,10 +181,19 @@ h5 {
   font-size: 14px;
   line-height: 17px;
   color: #2b3c4e;
+  text-align: center;
 }
 .main-body {
   margin-top: 60px;
   text-align: center;
+}
+.questions-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.questions {
+  width: max-content;
 }
 h6 {
   font-family: "Lato";
@@ -188,27 +212,39 @@ label {
   font-size: 16px;
   line-height: 19px;
   color: #2b3c4e;
+  text-align: left;
 }
 
 .checkbox-container label {
   cursor: pointer;
-  margin-bottom: 60px;
+  margin-bottom: 37px;
 }
 .checkbox-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.checkbox-container input[type="checkbox"] {
+.checkbox-container input[type="radio"] {
   cursor: pointer;
   appearance: none;
   height: 10px;
   width: 10px;
-  background-color: rgb(207, 188, 188);
-  border-style: 4px solid black;
+  background-color: #fff;
+  border: 1px solid #2b3c4e;
   -webkit-appearance: none;
-  margin-right: 40px;
-  /* margin-bottom: 60px; */
+  margin-right: 42px;
 }
-input[type="checkbox"]:checked {
+input[type="radio"]:checked {
   background-color: black;
+}
+.checked-answer{
+  background: #31D283;
+}
+button {
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
 }
 .next-button {
   height: 41px;
@@ -219,6 +255,7 @@ input[type="checkbox"]:checked {
   background: #7557d3;
   color: white;
   border: none;
+  cursor: pointer;
 }
 .preview-button {
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -228,6 +265,7 @@ input[type="checkbox"]:checked {
   color: black;
   background-color: white;
   border-radius: 4px;
+  cursor: pointer;
 }
 .finish-button {
   height: 41px;
@@ -238,5 +276,6 @@ input[type="checkbox"]:checked {
   margin-top: 86px;
   border: none;
   color: white;
+  cursor: pointer;
 }
 </style>

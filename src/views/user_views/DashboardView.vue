@@ -26,8 +26,12 @@
       </div>
 
       <div class="card-container">
-        <div class="card">
+        <div class="card-1 ">
           <h4>Updates</h4>
+          <hr>
+          <hr>
+          <hr>
+          <hr>
         </div>
         <div class="card">
           <h4>Take Assessment</h4>
@@ -119,12 +123,30 @@ p {
   .card {
     padding: 25px 34px;
     width: 482px;
-    height: 453px;
+    // height: 453px;
     border: 1px solid #ececf9;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
     gap: 144px 0;
+
+  }
+
+  .card-1{
+     padding: 25px 34px 99px 25px;
+    width: 482px;
+    // height: 453px;
+    border: 1px solid #ececf9;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 74px 0;
+
+    hr{
+      height: 0;
+      border: 1px solid #CECECE;
+      background: #CECECE;
+    }
   }
   .assessment-container {
     justify-self: center;
