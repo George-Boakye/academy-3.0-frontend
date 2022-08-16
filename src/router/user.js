@@ -1,7 +1,7 @@
 import SignUpView from "@/views/user_views/SignUpView.vue";
 import LoginView from "@/views/user_views/LoginView.vue";
 import PreDashboardView from "@/views/user_views/PreDashboardView.vue";
-import ForgetPasswordView from "@/views/user_views/ForgetPasswordView.vue";
+import ForgotPasswordView from "@/views/user_views/ForgotPasswordView.vue";
 import DashboardView from "@/views/user_views/DashboardView.vue";
 import AssessmentView from "@/views/user_views/AssessmentView.vue";
 import QuestionsView from "@/views/user_views/QuestionsView.vue";
@@ -21,7 +21,7 @@ export default[
       {
         path: "/forget-password",
         name: "forget-password",
-        component: ForgetPasswordView,
+        component: ForgotPasswordView,
       },
       {
         path: "/pre-dashboard",
