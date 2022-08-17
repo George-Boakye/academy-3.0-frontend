@@ -29,7 +29,7 @@
             </span>
           </div>
         </div>
-      <button>Sign In</button>
+        <button>Sign In</button>
       </form>
       <div class="admin-bg-img">
         <img src="@/assets/admin-login-Bg.svg" alt="" />
@@ -39,16 +39,34 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "AdminLoginView",
   components: {},
   data() {
     return {
+      user: {
+        emailAddress: "",
+        password: "",
+      },
       inputType: "password",
       inputTypeIcon: "password",
     };
   },
   methods: {
+    signIn() {
+      axios
+        .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
+        .then((res) => {
+          const { token } = res.data.data;
+          localStorage.setItem("admin-token", token);
+          console.log(res);
+        })
+        .catch((err) => {
+          alert("Email or password wrong");
+          console.log(err);
+        });
+    },
     toggleInputIcon() {
       this.inputTypeIcon === "password" ? "text" : "password";
     },
