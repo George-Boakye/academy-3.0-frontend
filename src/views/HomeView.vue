@@ -4,10 +4,10 @@
       <nav>
         <figure><img src="@/assets/logo.svg" alt="" /></figure>
         <div class="links">
-          <a href="">Home</a>
-          <a href="">Sign in</a>
+          <router-link :to="{ name: 'home' }"> Home </router-link>
+          <router-link :to="{ name: 'login' }"> Sign in </router-link>
           <div>
-            <a href="">Register Now</a>
+            <router-link :to="{ name: 'sign-up' }"> Register Now </router-link>
           </div>
         </div>
       </nav>
@@ -21,7 +21,7 @@
             Join enyata academy today and bring your long awaiting dream to
             reality.
           </p>
-          <button>Register Now</button>
+          <button @click="$router.push('/signup')">Register Now</button>
         </div>
         <div class="right">
           <figure><img src="@/assets/home-image.svg" alt="" /></figure>
@@ -91,7 +91,6 @@ main {
 .container {
   padding: 46px 136px 0 136px;
 }
-
 
 nav {
   display: flex;

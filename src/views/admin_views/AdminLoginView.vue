@@ -5,9 +5,6 @@
         <img src="@/assets/enyata-logowhite.svg" alt="" srcset="" />
       </div>
 
-      <div class="admin-bg-img">
-        <img src="@/assets/admin-login-Bg.svg" alt="" />
-      </div>
       <h1>Admin Log In</h1>
       <form>
         <label>Email Address</label>
@@ -32,8 +29,11 @@
             </span>
           </div>
         </div>
-      </form>
       <button>Sign In</button>
+      </form>
+      <div class="admin-bg-img">
+        <img src="@/assets/admin-login-Bg.svg" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -63,6 +63,8 @@ export default {
   justify-content: center;
   align-items: center;
   background: #7557d3;
+  /* padding-top: 106px;
+  padding-bottom: 96px; */
 }
 
 .password-wrap {

@@ -19,11 +19,17 @@ name:"TheLayout"
   height: 100vh;
   display: flex;
   padding-right: 15px;
+  overflow: hidden;
 }
 .right-section {
+  height: 100%;
   width: calc(100% - 292px);
   padding: 107px 0 86px 47px;
   overflow-y: scroll;
+  //  display: flex;
+  // flex-direction: column;
+  // // justify-content: center;
+  // align-items: center;
 
   &::-webkit-scrollbar {
     width: 6px;

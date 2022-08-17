@@ -5,36 +5,37 @@
     </template>
     <template v-slot:main-content>
       <div class="main">
-        <div class="main-text">Compose Assessment</div>
+        <h1 class="main-text">Compose Assessment</h1>
         <form>
           <label class="box-labels">15/30</label>
           <input class="fileupload" type="file" id="file" />
           <label class="file-label" for="file"> + Choose file</label>
 
           <div class="box3">
-            <label class="box-labels">Questions</label
-            ><input class="text-area" type="" />
+            <label class="box-labels">Questions</label> <br />
+            <textarea name="" class="text-area" id=""></textarea>
           </div>
           <div class="main-boxes">
-            <div class="box1">
-              <div>
-                <label class="box-labels">Option A</label
-                ><input class="box-input" />
-              </div>
-              <div>
-                <label class="box-labels">Option B</label
-                ><input class="box-input" />
-              </div>
+            <div>
+              <label class="box-labels">Option A</label> <br /><input
+                class="box-input"
+              />
             </div>
-            <div class="box2">
-              <div>
-                <label class="box-labels">Option C</label
-                ><input class="box-answer" />
-              </div>
-              <div>
-                <label class="box-labels">Option D</label
-                ><input class="box-input" />
-              </div>
+            <div>
+              <label class="box-labels">Option B</label> <br /><input
+                class="box-input box-answer"
+              />
+            </div>
+
+            <div>
+              <label class="box-labels">Option C</label> <br /><input
+                class="box-input"
+              />
+            </div>
+            <div>
+              <label class="box-labels">Option D</label><br /><input
+                class="box-input"
+              />
             </div>
           </div>
           <div class="button1">
@@ -50,7 +51,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/UserSideNav.vue";
+import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 
 export default {
@@ -61,6 +62,12 @@ export default {
 };
 </script>
 <style scoped>
+/* .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
 .main-text {
   font-family: "Lato";
   font-style: normal;
@@ -70,6 +77,7 @@ export default {
   letter-spacing: -0.02em;
   color: #2b3c4e;
   margin-bottom: 92px;
+  align-self: flex-start;
 }
 .file-label {
   width: 456px;
@@ -83,6 +91,7 @@ export default {
   line-height: 22px;
   display: flex;
   align-items: center;
+  margin-top: 21px;
   margin-bottom: 52px;
   color: #2b3c4e;
 }
@@ -90,66 +99,50 @@ export default {
   display: none;
 }
 .main-boxes {
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 25px 64px;
   margin-top: 48px;
 }
-.box2 {
-  display: block;
-}
-.box3 {
-}
+
 .box-input {
-  left: 25.49%;
-  right: 42.85%;
-  top: 40.23%;
-  bottom: 55.76%;
   border: 1.5px solid #2b3c4e;
-  border-radius: 4px;
   height: 41px;
   width: 456px;
-  margin-bottom: 48px;
   border-radius: 4px;
+  margin-top: 5px;
 }
 .box-answer {
   background-color: #31d283;
-  left: 25.49%;
-  right: 42.85%;
-  top: 40.23%;
-  bottom: 55.76%;
-  border: 1.5px solid #2b3c4e;
-  border-radius: 4px;
-  height: 41px;
-  width: 456px;
-  margin-bottom: 48px;
-  border-radius: 4px;
-  border: none;
 }
 .box-labels {
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-
   color: #2b3c4e;
 }
 .text-area {
-  left: 25.49%;
-  right: 6.74%;
-  top: 49.9%;
-  bottom: 36.04%;
   height: 144px;
   width: 976px;
-  border-radius: 4px;
-
   border: 1.5px solid #2b3c4e;
   border-radius: 4px;
+  resize: none;
+  margin-top: 5px;
 }
 .main {
   margin-right: 32px;
 }
+button {
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+}
 .button1 {
+  margin-top: 52px;
   display: flex;
-  gap: 560px;
+  justify-content: space-around;
+  color: white;
 }
 .button11 {
   border: none;
@@ -166,7 +159,6 @@ export default {
   width: 205px;
   color: white;
   border-radius: 4px;
-  font-family: "Lato";
   cursor: pointer;
   border: none;
 }

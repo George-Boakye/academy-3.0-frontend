@@ -38,7 +38,7 @@
           </router-link>
         </div>
         <div>
-          <router-link :to="{ name: 'results' }">
+          <router-link class="results" :to="{ name: 'results' }">
             <figure><img src="@/assets/results-icon.svg" alt="" /></figure>
             <p>Results</p>
           </router-link>
@@ -128,7 +128,12 @@ nav {
     a.router-link-exact-active {
       font-weight: 700;
       border-left: 4px solid #7557d3;
+       &.results{
+       border-left: 4px solid #31D283;
     }
+    }
+
+   
   }
 
   .logout {

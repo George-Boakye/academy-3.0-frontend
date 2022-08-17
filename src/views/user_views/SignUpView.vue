@@ -8,28 +8,28 @@
         <h1>Applicant Sign Up</h1>
       </div>
       <div class="mainform">
-        <form>
+        <form @submit.prevent="createUser">
           <div class="inputs-wrapper">
             <div>
               <label>First Name</label>
-              <input />
+              <input v-model="user.firstName" />
             </div>
             <div>
               <label>Last Name</label>
-              <input />
+              <input v-model="user.lastName" />
             </div>
 
             <div>
               <label>Email Address</label>
-              <input />
+              <input v-model="user.emailAddress" />
             </div>
             <div>
               <label>Phone Number</label>
-              <input />
+              <input v-model="user.phoneNumber" />
             </div>
             <div class="password-wrap">
               <label>Password</label>
-              <input :type="inputTypeIcon" placeholder="" />
+              <input :type="inputTypeIcon" v-model="user.password" />
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo2">
@@ -53,7 +53,7 @@
 
             <div class="password-wrap1">
               <label>Confirm Password</label>
-              <input :type="inputTypeIcon" placeholder="" />
+              <input :type="inputTypeIcon" v-model="user.confirmPassword" />
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo1">
@@ -75,12 +75,12 @@
               </div>
             </div>
           </div>
-          <button>Sign Up</button>
+          <button type="submit">Sign Up</button>
         </form>
 
         <h2>
           Already have an account?<router-link to="/login"
-            ><span>Sign In</span></router-link
+            ><span> Sign In</span></router-link
           >
         </h2>
       </div>
@@ -88,11 +88,20 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "SignUpView",
   components: {},
   data() {
     return {
+      user: {
+        firstName: "",
+        lastName: "",
+        emailAddress: "",
+        phoneNumber: "",
+        password: "",
+        confirmPassword: "",
+      },
       inputType: "password",
       inputTypeIcon: "password",
     };
@@ -101,6 +110,15 @@ export default {
     toggleInputIcon() {
       this.inputTypeIcon =
         this.inputTypeIcon === "password" ? "text" : "password";
+    },
+    createUser() {
+      axios
+        .post("http://localhost:3000/api/v1/user/signup", this.user)
+        .then((res) => {
+          console.log(res);
+          this.$router.push("/login");
+        })
+        .catch((err) => console.log(err));
     },
   },
 };
@@ -111,14 +129,15 @@ img {
   margin-bottom: 26px;
 }
 button {
-  bottom: 0%;
+  font-family: "Lato";
+  font-size: 16px;
+  line-height: 19px;
   height: 50px;
   width: 520px;
   border: none;
   border-radius: 4px;
   margin-top: 40px;
   background: #7557d3;
-
   border-radius: 4px;
   color: #ffffff;
   text-align: center;
@@ -214,5 +233,8 @@ form {
   grid-template-columns: max-content max-content;
   gap: 22px 62px;
   justify-content: center;
+}
+span {
+  color: #1a2c56;
 }
 </style>

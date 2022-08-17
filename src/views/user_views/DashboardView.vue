@@ -4,6 +4,7 @@
       <SideNav />
     </template>
     <template v-slot:main-content>
+      <div>
       <h2>Dashboard</h2>
       <p>
         Your Application is currently being review, you wil be notified if
@@ -42,6 +43,7 @@
             <button>Take Assessment</button>
           </div>
         </div>
+      </div>
       </div>
     </template>
   </the-layout>

@@ -2,31 +2,31 @@
   <div class="main">
     <div class="container">
       <div class="image">
-        <img src="@/assets/enyata-logo.svg" alt="" srcset="" />
+        <img src="@/assets/enyata-logo.svg" alt="" />
       </div>
       <!-- '@/assets/password-eye-logo.svg' -->
       <h1>Applicant Log In</h1>
-      <form>
+      <form @submit.prevent="signIn">
         <label>Email Address</label>
-        <input />
+        <input v-model="user.emailAddress" />
         <div class="password-wrap">
           <label>Password</label>
-          <input :type="inputTypeIcon" placeholder="" />
+          <input :type="inputTypeIcon" v-model="user.password" />
           <div class="icon" @click.prevent="toggleInputIcon">
             <span v-if="inputTypeIcon == 'password'">
               <div class="eye-logo">
-                <img src="@/assets/password-eye-logo.svg" alt="" srcset="" />
+                <img src="@/assets/password-eye-logo.svg" alt="" />
               </div>
             </span>
             <span v-else>
               <div class="eye-logo">
-                <img src="@/assets/password-eye-logo.svg" alt="" srcset="" />
+                <img src="@/assets/password-eye-logo.svg" alt="" />
               </div>
             </span>
           </div>
         </div>
+        <button type="submit">Sign In</button>
       </form>
-      <button>Sign In</button>
       <div class="password-text">
         <div class="SignUp-text">
           Don’t have an account yet?<router-link to="/signUp"
@@ -39,18 +39,43 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "LoginView",
   components: {},
   data() {
     return {
+      user: {
+        emailAddress: "",
+        password: "",
+      },
       inputType: "password",
       inputTypeIcon: "password",
     };
   },
   methods: {
+    signIn() {
+      axios
+        .post("http://localhost:3000/api/v1/auth/user/login", this.user)
+        .then((res) => {
+          const { token } = res.data.data;
+          const { user } = res.data.data;
+          localStorage.setItem("token", token);
+          console.log(res);
+          if (user.applied === false) {
+            this.$router.push("/pre-dashboard");
+          } else {
+            this.$router.push("/dashboard");
+          }
+        })
+        .catch((err) => {
+          alert("Email or password wrong");
+          console.log(err);
+        });
+    },
     toggleInputIcon() {
-      this.inputTypeIcon === "password" ? "text" : "password";
+      this.inputTypeIcon =
+        this.inputTypeIcon === "password" ? "text" : "password";
     },
   },
 };
