@@ -7,22 +7,26 @@
       <div class="main">
         <h1>Profiles and Settings</h1>
         <h2>Helps you set admin profile and give other users permissions</h2>
+
         <div class="setting-div">
-          <div class="settings">Admin Profile</div>
-          <div class="settings">Timer Settings</div>
+          <div
+            class="settings"
+            :class="[component == 'Profile' ? 'active-tab' : '']"
+            @click="toggle"
+          >
+            Admin Profile
+          </div>
+          <div
+            class="settings"
+            :class="[component == 'TimerSettings' ? 'active-tab' : '']"
+            @click="toggle"
+          >
+            Timer Settings
+          </div>
         </div>
-        <h3>Timer Setting</h3>
-        <hr />
-        <h4>Set Time</h4>
-        <div class="time">
-          <h5>00</h5>
-          <p>min</p>
-          <img src="@/assets/entries-logo.svg" alt="" srcset="" />
-          <h5>000</h5>
-          <p>sec</p>
-          <img src="@/assets/entries-logo.svg" alt="" srcset="" />
-        </div>
-        <button>Save</button>
+        <keep-alive>
+          <component :is="component" />
+        </keep-alive>
       </div>
     </template>
   </the-layout>
@@ -30,11 +34,27 @@
 <script>
 import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
+import TimerSettings from "@/components/TimerSettings.vue";
+import Profile from "@/components/AdminProfile.vue";
 
 export default {
   components: {
     SideNav,
     TheLayout,
+    TimerSettings,
+    Profile,
+  },
+  data() {
+    return {
+      component: "Profile",
+    };
+  },
+  methods: {
+    toggle() {
+      this.component === "Profile"
+        ? (this.component = "TimerSettings")
+        : (this.component = "Profile");
+    },
   },
 };
 </script>
@@ -65,8 +85,16 @@ h2 {
   font-size: 14px;
   line-height: 17px;
   color: #333758;
-  mix-blend-mode: normal;
   margin-bottom: 56px;
+  cursor: pointer;
+  padding: 24px 46px;
+  width: 188px;
+}
+.setting-div{
+display: flex;
+}
+.active-tab {
+  background: rgba(117, 87, 211, 0.1);
 }
 h3 {
   font-style: normal;
@@ -107,28 +135,5 @@ p {
   line-height: 14px;
   padding-top: 38px;
   color: #4f4f4f;
-}
-button {
-  background: #7557d3;
-  border-radius: 3px;
-  height: 38px;
-  width: 127px;
-  border-radius: 3px;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.setting-div {
-  display: flex;
-  gap: 100px;
-}
-.time {
-  display: flex;
-  margin-top: 10px;
-  margin-bottom: 34px;
-}
-img {
-  padding: 10px 40px 0px 10px;
 }
 </style>
