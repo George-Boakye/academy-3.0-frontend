@@ -19,7 +19,7 @@
             <th>University</th>
             <th class="numbs">CGPA</th>
           </tr>
-          <tr>
+          <tr @click="showModal = true">
             <td>Ify Chinke</td>
             <td>ify@enyata.com</td>
             <td>12/09/19 - 22</td>
@@ -49,11 +49,23 @@ export default {
     SideNav,
     TheLayout,
   },
+  data() {
+    return {};
+  },
 };
 </script>
 <style scoped>
 input {
   border: none;
+  background-color: #2b3c4e;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 98;
   background-color: #2b3c4e;
 }
 /* .numbs {
@@ -95,5 +107,9 @@ img {
 }
 .main {
   margin-right: 40px;
+}
+tr {
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
 }
 </style>
