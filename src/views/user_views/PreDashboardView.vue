@@ -7,9 +7,9 @@
       <h1>Applicant Sign Up</h1>
     </div>
     <form class="label-form" action="/action_page.php">
-      <input class="fileupload" type="file" id="file" />
+      <input class="fileupload" type="file" id="file" name="cv" />
       <label class="file-label" for="file"> + Upload CV</label>
-      <input class="fileupload" type="file" id="file" name="filename" />
+      <input class="fileupload" type="file" id="file" name="img" />
       <label class="file-label" for="file"> + Upload Photo</label>
     </form>
     <div class="mainform">

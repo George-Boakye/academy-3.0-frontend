@@ -12,24 +12,24 @@
           <div class="inputs-wrapper">
             <div>
               <label>First Name</label>
-              <input v-model="user.firstName" />
+              <input v-model.trim="user.firstName" />
             </div>
             <div>
               <label>Last Name</label>
-              <input v-model="user.lastName" />
+              <input v-model.trim="user.lastName" />
             </div>
 
             <div>
               <label>Email Address</label>
-              <input v-model="user.emailAddress" />
+              <input v-model.trim="user.emailAddress" />
             </div>
             <div>
               <label>Phone Number</label>
-              <input v-model="user.phoneNumber" />
+              <input v-model.trim="user.phoneNumber" />
             </div>
             <div class="password-wrap">
               <label>Password</label>
-              <input :type="inputTypeIcon" v-model="user.password" />
+              <input :type="inputTypeIcon" v-model.trim="user.password" />
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo2">
@@ -53,7 +53,7 @@
 
             <div class="password-wrap1">
               <label>Confirm Password</label>
-              <input :type="inputTypeIcon" v-model="user.confirmPassword" />
+              <input :type="inputTypeIcon" v-model.trim="user.confirmPassword" />
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo1">
