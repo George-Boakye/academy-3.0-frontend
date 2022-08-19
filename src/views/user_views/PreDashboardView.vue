@@ -6,7 +6,6 @@
     <div class="signup-text">
       <h1>Applicant Sign Up</h1>
     </div>
-<<<<<<< HEAD
     <form
       @submit.prevent="createUser"
       class="label-form"
@@ -22,13 +21,6 @@
         <label class="file-label" for="file"> + Upload Photo</label>
         <p>{{ photoError }}</p>
       </div>
-=======
-    <form class="label-form" action="/action_page.php">
-      <input class="fileupload" type="file" id="file" name="cv" />
-      <label class="file-label" for="file"> + Upload CV</label>
-      <input class="fileupload" type="file" id="file" name="img" />
-      <label class="file-label" for="file"> + Upload Photo</label>
->>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
     </form>
     <div class="mainform">
       <form @submit.prevent="createUser">
@@ -71,7 +63,6 @@
             <input />
             <p>{{ courseError }}</p>
           </div>
-
           <div class="password-wrap1">
             <label>CGPA</label>
             <input />

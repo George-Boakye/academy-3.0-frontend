@@ -81,9 +81,8 @@ export default {};
   height: 54px;
   left: 595px;
   top: 733px;
-  color: #333758;
-  background: #7557d3;
-  opacity: 0.04;
+  color: black;
+  background: #cdcbd6;
 }
 .button3 {
   text-align: center;
@@ -93,9 +92,8 @@ export default {};
   height: 54px;
   left: 340px;
   top: 613px;
-  color: #333758;
-  background: #7557d3;
-  opacity: 0.04;
+  color: black;
+  background: #cdcbd6;
 }
 ::placeholder {
   font-style: normal;
