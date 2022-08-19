@@ -12,11 +12,17 @@ export default[
         path: "/signup",
         name: "sign-up",
         component: SignUpView,
+        meta: {
+          noAuth: true,
+        },
       },
       {
         path: "/login",
         name: "login",
         component: LoginView,
+        meta: {
+          noAuth: true,
+        },
       },
       {
         path: "/forget-password",

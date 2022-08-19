@@ -12,24 +12,37 @@
           <div class="inputs-wrapper">
             <div>
               <label>First Name</label>
+<<<<<<< HEAD
               <input v-model="user.firstName" />
               <p>{{ fnameError }}</p>
+=======
+              <input v-model.trim="user.firstName" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
 
             <div>
               <label>Last Name</label>
+<<<<<<< HEAD
               <input v-model="user.lastName" />
               <p>{{ lastError }}</p>
+=======
+              <input v-model.trim="user.lastName" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
 
             <div>
               <label>Email Address</label>
+<<<<<<< HEAD
               <input v-model="user.emailAddress" />
               <p>{{ emailError }}</p>
+=======
+              <input v-model.trim="user.emailAddress" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
 
             <div>
               <label>Phone Number</label>
+<<<<<<< HEAD
               <input v-model="user.phoneNumber" type="tel" />
               <p>{{ numberError }}</p>
             </div>
@@ -37,6 +50,13 @@
               <label>Password</label>
               <input :type="inputTypeIcon" v-model="user.password" />
               <p>{{ passwordError }}</p>
+=======
+              <input v-model.trim="user.phoneNumber" />
+            </div>
+            <div class="password-wrap">
+              <label>Password</label>
+              <input :type="inputTypeIcon" v-model.trim="user.password" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo2">
@@ -61,8 +81,12 @@
 
             <div class="password-wrap1">
               <label>Confirm Password</label>
+<<<<<<< HEAD
               <input :type="inputTypeIcon" v-model="user.confirmPassword" />
               <p>{{ confirmError }}</p>
+=======
+              <input :type="inputTypeIcon" v-model.trim="user.confirmPassword" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo1">
