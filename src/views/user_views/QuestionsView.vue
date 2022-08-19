@@ -237,8 +237,8 @@ label {
 input[type="radio"]:checked {
   background-color: black;
 }
-.checked-answer{
-  background: #31D283;
+input[type = radio]:checked ~ span {
+background: #31D283;
 }
 button {
   font-family: "Lato";
