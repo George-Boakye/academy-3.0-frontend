@@ -6,58 +6,82 @@
     <div class="signup-text">
       <h1>Applicant Sign Up</h1>
     </div>
-    <form class="label-form" action="/action_page.php">
-      <input class="fileupload" type="file" id="file" name="cv" />
-      <label class="file-label" for="file"> + Upload CV</label>
-      <input class="fileupload" type="file" id="file" name="img" />
-      <label class="file-label" for="file"> + Upload Photo</label>
-    </form>
-    <div class="mainform">
-      <form>
-        <div class="inputs-wrapper">
-          <div>
-            <label>First Name</label>
-            <input />
-          </div>
-          <div>
-            <label>Last Name</label>
-            <input />
-          </div>
-
-          <div>
-            <label>Email</label>
-            <input />
-          </div>
-          <div>
-            <label>Date of Birth</label>
-            <input />
-          </div>
-          <div class="password-wrap">
-            <label>Address</label>
-            <input />
-          </div>
-
-          <div class="password-wrap1">
-            <label>University</label>
-            <input />
-          </div>
-          <div class="password-wrap">
-            <label>Course of Study</label>
-            <input />
-          </div>
-
-          <div class="password-wrap1">
-            <label>CGPA</label>
-            <input />
-          </div>
-        </div>
-        <button>Submit</button>
+    <div class="form-wrapper">
+      <form class="label-form" action="/action_page.php">
+        <input class="fileupload" type="file" id="file" name="cv" />
+        <label class="file-label" for="file"> + Upload CV</label>
+        <input class="fileupload" type="file" id="file" name="img" />
+        <label class="file-label" for="file"> + Upload Photo</label>
       </form>
+      <div class="mainform">
+        <form>
+          <div class="inputs-wrapper">
+            <div>
+              <label>First Name</label>
+              <input />
+            </div>
+            <div>
+              <label>Last Name</label>
+              <input />
+            </div>
+
+            <div>
+              <label>Email</label>
+              <input />
+            </div>
+            <div>
+              <label>Date of Birth</label>
+              <input />
+            </div>
+            <div class="password-wrap">
+              <label>Address</label>
+              <input />
+            </div>
+
+            <div class="password-wrap1">
+              <label>University</label>
+              <input />
+            </div>
+            <div class="password-wrap">
+              <label>Course of Study</label>
+              <input />
+            </div>
+
+            <div class="password-wrap1">
+              <label>CGPA</label>
+              <input />
+            </div>
+          </div>
+          <button>Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 <script></script>
-<style scoped>
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 17px;
+  margin-right: 30px;
+}
+::-webkit-scrollbar-track {
+  background: #cdcfd6;
+  height: 681px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #031131;
+  opacity: 0.7;
+  border-radius: 17px;
+  background-clip: padding-box;
+}
 img {
   margin-top: 100px;
   margin-bottom: 26px;
@@ -188,5 +212,12 @@ form {
   grid-template-columns: max-content max-content;
   gap: 22px 62px;
   justify-content: center;
+}
+.form-wrapper {
+  padding: 53px 71px 39px 61px;
+  background: #ffffff;
+  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
+  border-radius: 8px;
+  width: max-content;
 }
 </style>
