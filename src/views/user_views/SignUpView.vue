@@ -12,24 +12,51 @@
           <div class="inputs-wrapper">
             <div>
               <label>First Name</label>
+<<<<<<< HEAD
+              <input v-model="user.firstName" />
+              <p>{{ fnameError }}</p>
+=======
               <input v-model.trim="user.firstName" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
+
             <div>
               <label>Last Name</label>
+<<<<<<< HEAD
+              <input v-model="user.lastName" />
+              <p>{{ lastError }}</p>
+=======
               <input v-model.trim="user.lastName" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
 
             <div>
               <label>Email Address</label>
+<<<<<<< HEAD
+              <input v-model="user.emailAddress" />
+              <p>{{ emailError }}</p>
+=======
               <input v-model.trim="user.emailAddress" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
+
             <div>
               <label>Phone Number</label>
+<<<<<<< HEAD
+              <input v-model="user.phoneNumber" type="tel" />
+              <p>{{ numberError }}</p>
+            </div>
+            <div class="password-wrap">
+              <label>Password</label>
+              <input :type="inputTypeIcon" v-model="user.password" />
+              <p>{{ passwordError }}</p>
+=======
               <input v-model.trim="user.phoneNumber" />
             </div>
             <div class="password-wrap">
               <label>Password</label>
               <input :type="inputTypeIcon" v-model.trim="user.password" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo2">
@@ -49,11 +76,17 @@
                     /></div
                 ></span>
               </div>
+              <span v-if="msg.password">{{ msg.password }}</span>
             </div>
 
             <div class="password-wrap1">
               <label>Confirm Password</label>
+<<<<<<< HEAD
+              <input :type="inputTypeIcon" v-model="user.confirmPassword" />
+              <p>{{ confirmError }}</p>
+=======
               <input :type="inputTypeIcon" v-model.trim="user.confirmPassword" />
+>>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo1">
@@ -92,6 +125,7 @@ import axios from "axios";
 export default {
   name: "SignUpView",
   components: {},
+  props: {},
   data() {
     return {
       user: {
@@ -102,7 +136,14 @@ export default {
         password: "",
         confirmPassword: "",
       },
-      inputType: "password",
+      fnameError: "",
+      lastError: "",
+      emailError: "",
+      numberError: "",
+      passwordError: "",
+      confirmError: "",
+      msg: [],
+      // inputType: "password",
       inputTypeIcon: "password",
     };
   },
@@ -112,13 +153,47 @@ export default {
         this.inputTypeIcon === "password" ? "text" : "password";
     },
     createUser() {
+      console.log(typeof this.user.phoneNumber);
+      this.user.firstName.length < 2
+        ? (this.fnameError = "first name not valid")
+        : console.log(this.fnameError);
+      this.user.lastName.length < 2
+        ? (this.lastError = "Last name not valid!")
+        : console.log(this.username);
+      !this.user.emailAddress.includes("@")
+        ? (this.emailError = "Email address not valid!")
+        : console.log(this.emailError);
+      this.user.phoneNumber.length < 10
+        ? (this.numberError = "Phone number not valid!")
+        : console.log(this.numberError);
+      this.user.password.length < 8
+        ? (this.passwordError = "password must be more than 8 characters!")
+        : console.log(this.passwordError);
+      this.user.password != this.user.confirmPassword
+        ? (this.confirmError = "Confirm Password not matching!")
+        : console.log(this.confirmError);
       axios
-        .post("http://localhost:3000/api/v1/user/signup", this.user)
+        .post("http://localhost:3030/api/v1/user/signup", this.user)
         .then((res) => {
           console.log(res);
           this.$router.push("/login");
         })
         .catch((err) => console.log(err));
+    },
+    validateEmail(value) {
+      /* eslint-disable */
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+        this.msg["emailAddress"] = "";
+      } else {
+        this.msg["emailAddress"] = "Invalid Email Address";
+      }
+    },
+  },
+  watch: {
+    emailAddress(value) {
+      // binding this to the data value in the email input
+      this.email = value;
+      this.validateEmailAddress(value);
     },
   },
 };
@@ -141,6 +216,12 @@ button {
   border-radius: 4px;
   color: #ffffff;
   text-align: center;
+}
+p {
+  color: red;
+  font-size: 10px;
+  text-align: start;
+  margin-top: 5px;
 }
 h1 {
   font-family: "Lato";
@@ -193,7 +274,7 @@ label {
 
 .eye-logo1 {
   position: absolute;
-  bottom: -14px;
+  bottom: -8px;
   right: 14px;
   cursor: pointer;
 }
