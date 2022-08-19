@@ -6,49 +6,68 @@
     <div class="signup-text">
       <h1>Applicant Sign Up</h1>
     </div>
-    <form class="label-form" action="/action_page.php">
-      <input class="fileupload" type="file" id="file" />
-      <label class="file-label" for="file"> + Upload CV</label>
-      <input class="fileupload" type="file" id="file" name="filename" />
-      <label class="file-label" for="file"> + Upload Photo</label>
+    <form
+      @submit.prevent="createUser"
+      class="label-form"
+      action="/action_page.php"
+    >
+      <div>
+        <input class="fileupload" type="file" id="file" />
+        <label class="file-label" for="file"> + Upload CV</label>
+        <p>{{ CVerror }}</p>
+      </div>
+      <div>
+        <input class="fileupload" type="file" id="file" name="filename" />
+        <label class="file-label" for="file"> + Upload Photo</label>
+        <p>{{ photoError }}</p>
+      </div>
     </form>
     <div class="mainform">
-      <form>
+      <form @submit.prevent="createUser">
         <div class="inputs-wrapper">
           <div>
             <label>First Name</label>
             <input />
+            <p>{{ fnameError }}</p>
           </div>
           <div>
             <label>Last Name</label>
             <input />
+            <p>{{ lastError }}</p>
           </div>
 
           <div>
             <label>Email</label>
             <input />
+            <p>{{ emailError }}</p>
           </div>
           <div>
             <label>Date of Birth</label>
             <input />
+            <p>{{ DOBerror }}</p>
           </div>
           <div class="password-wrap">
             <label>Address</label>
             <input />
+            <p>{{ addressError }}</p>
           </div>
 
           <div class="password-wrap1">
             <label>University</label>
+
             <input />
+            <p>{{ universityError }}</p>
           </div>
           <div class="password-wrap">
             <label>Course of Study</label>
             <input />
+            <p>{{ courseError }}</p>
           </div>
 
           <div class="password-wrap1">
             <label>CGPA</label>
             <input />
+            <p>{{ GPAerror }}</p>
           </div>
         </div>
         <button>Submit</button>
@@ -56,7 +75,72 @@
     </div>
   </div>
 </template>
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      user: {
+        firstName: "",
+        lastName: "",
+        emailAddress: "",
+        DOB: "",
+        address: "",
+        university: "",
+        course: "",
+        GPA: "",
+        CV: null,
+        photo: null,
+      },
+
+      fnameError: "",
+      lastError: "",
+      emailError: "",
+      DOBerror: "",
+      addressError: "",
+      universityError: "",
+      courseError: "",
+      GPAerror: "",
+      CVerror: null,
+      photoError: null,
+    };
+  },
+  methods: {
+    createUser() {
+      console.log(typeof this.user.phoneNumber);
+      this.user.firstName.length < 2
+        ? (this.fnameError = "first name not valid")
+        : console.log(this.fnameError);
+      this.user.lastName.length < 2
+        ? (this.lastError = "Last name not valid")
+        : console.log(this.username);
+      !this.user.emailAddress.includes("@")
+        ? (this.emailError = "Email address not valid")
+        : console.log(this.emailError);
+      this.user.DOB.length < 1
+        ? (this.DOBerror = "Select DOB")
+        : console.log(this.numberError);
+      this.user.address.length < 8
+        ? (this.addressError = "include address")
+        : console.log(this.passwordError);
+      this.user.university.length != this.user.confirmPassword
+        ? (this.universityError = "Confirm Password not matching")
+        : console.log(this.confirmError);
+      this.user.course.length < 1
+        ? (this.courseError = "include course")
+        : console.log(this.passwordError);
+      this.user.GPA.length < 1
+        ? (this.GPAerror = "input correct CGPA")
+        : console.log(this.confirmError);
+      this.user.CV == null
+        ? (this.CVerror = "upload your CV")
+        : console.log(this.passwordError);
+      this.user.photo == null
+        ? (this.photoError = "upload your photo")
+        : console.log(this.confirmError);
+    },
+  },
+};
+</script>
 <style scoped>
 img {
   margin-top: 100px;
@@ -114,6 +198,11 @@ label {
   /* identical to box height */
   margin-top: 20px;
   color: #4f4f4f;
+}
+p {
+  color: red;
+  font-size: 10px;
+  text-align: start;
 }
 .main {
   /* margin: 220px 310px 276px 276px; */

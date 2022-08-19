@@ -9,6 +9,7 @@
       <form @submit.prevent="signIn">
         <label>Email Address</label>
         <input v-model="user.emailAddress" />
+        <P>{{ emailError }}</P>
         <div class="password-wrap">
           <label>Password</label>
           <input :type="inputTypeIcon" v-model="user.password" />
@@ -24,6 +25,7 @@
               </div>
             </span>
           </div>
+          <P>{{ passwordError }}</P>
         </div>
         <button type="submit">Sign In</button>
       </form>
@@ -51,10 +53,19 @@ export default {
       },
       inputType: "password",
       inputTypeIcon: "password",
+
+      emailError: "",
+      passwordError: "",
     };
   },
   methods: {
     signIn() {
+      !this.user.emailAddress.includes("@")
+        ? (this.emailError = "Email address not valid!")
+        : console.log(this.emailError);
+      this.user.password.length < 10
+        ? (this.passwordError = "enter your password!")
+        : console.log(this.passworderror);
       axios
         .post("http://localhost:3000/api/v1/auth/user/login", this.user)
         .then((res) => {
@@ -87,7 +98,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
+p {
+  color: red;
+  font-size: 10px;
+  text-align: start;
+  margin-top: 5px;
+}
 .password-wrap {
   position: relative;
 }

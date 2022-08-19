@@ -6,9 +6,10 @@
       </div>
 
       <h1>Admin Log In</h1>
-      <form>
+      <form @submit.prevent="adminUser">
         <label>Email Address</label>
         <input />
+        <P>{{ emailError }}</P>
         <div class="password-wrap">
           <label>Password</label>
           <input :type="inputTypeIcon" placeholder="" />
@@ -28,8 +29,9 @@
               </div>
             </span>
           </div>
+          <P>{{ passwordError }}</P>
         </div>
-      <button>Sign In</button>
+        <button>Sign In</button>
       </form>
       <div class="admin-bg-img">
         <img src="@/assets/admin-login-Bg.svg" alt="" />
@@ -46,11 +48,27 @@ export default {
     return {
       inputType: "password",
       inputTypeIcon: "password",
+
+      user: {
+        emailAddress: "",
+        password: "",
+      },
+
+      emailError: "",
+      passwordError: "",
     };
   },
   methods: {
     toggleInputIcon() {
       this.inputTypeIcon === "password" ? "text" : "password";
+    },
+    adminUser() {
+      !this.user.emailAddress.includes("@")
+        ? (this.emailError = "Email address not valid!")
+        : console.log(this.emailError);
+      this.user.password.length < 10
+        ? (this.passwordError = "enter your password!")
+        : console.log(this.passworderror);
     },
   },
 };
@@ -65,6 +83,11 @@ export default {
   background: #7557d3;
   /* padding-top: 106px;
   padding-bottom: 96px; */
+}
+p {
+  font-size: 10px;
+  text-align: start;
+  margin-top: 5px;
 }
 
 .password-wrap {
