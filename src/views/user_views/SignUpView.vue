@@ -71,7 +71,7 @@
                     /></div
                 ></span>
               </div>
-              <span v-if="msg.password">{{ msg.password }}</span>
+              <p>{{ passwordError }}</p>
             </div>
 
             <div class="password-wrap1">
