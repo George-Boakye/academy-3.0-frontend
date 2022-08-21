@@ -25,9 +25,12 @@ export default[
         },
       },
       {
-        path: "/forget-password",
-        name: "forget-password",
+        path: "/forgot-password",
+        name: "forgot-password",
         component: ForgotPasswordView,
+        meta: {
+          noAuth: true,
+        },
       },
       {
         path: "/pre-dashboard",

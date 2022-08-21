@@ -7,56 +7,51 @@
       <div class="signup-text">
         <h1>Applicant Sign Up</h1>
       </div>
+      <div class="server-error" v-show="error">{{ error }} &#9888;</div>
       <div class="mainform">
         <form @submit.prevent="createUser">
           <div class="inputs-wrapper">
             <div>
               <label>First Name</label>
-<<<<<<< HEAD
-              <input v-model="user.firstName" />
-              <p>{{ fnameError }}</p>
-=======
-              <input v-model.trim="user.firstName" />
->>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
+              <input
+                v-model.trim="user.firstName"
+                @keydown="clearError('fname')"
+              />
+              <p v-show="fnameError">{{ fnameError }}</p>
             </div>
-
             <div>
               <label>Last Name</label>
-<<<<<<< HEAD
-              <input v-model="user.lastName" />
+              <input
+                v-model.trim="user.lastName"
+                @keydown="clearError('lname')"
+              />
               <p>{{ lastError }}</p>
-=======
-              <input v-model.trim="user.lastName" />
->>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
-
             <div>
               <label>Email Address</label>
-<<<<<<< HEAD
-              <input v-model="user.emailAddress" />
+              <input
+                v-model.trim="user.emailAddress"
+                @keydown="clearError('email')"
+              />
               <p>{{ emailError }}</p>
-=======
-              <input v-model.trim="user.emailAddress" />
->>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
             </div>
-
             <div>
               <label>Phone Number</label>
-<<<<<<< HEAD
-              <input v-model="user.phoneNumber" type="tel" />
+              <input
+                v-model.trim="user.phoneNumber"
+                type="tel"
+                @keydown="clearError('phone')"
+              />
               <p>{{ numberError }}</p>
             </div>
             <div class="password-wrap">
               <label>Password</label>
-              <input :type="inputTypeIcon" v-model="user.password" />
+              <input
+                :type="inputTypeIcon"
+                v-model.trim="user.password"
+                @keydown="clearError('password')"
+              />
               <p>{{ passwordError }}</p>
-=======
-              <input v-model.trim="user.phoneNumber" />
-            </div>
-            <div class="password-wrap">
-              <label>Password</label>
-              <input :type="inputTypeIcon" v-model.trim="user.password" />
->>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo2">
@@ -81,12 +76,12 @@
 
             <div class="password-wrap1">
               <label>Confirm Password</label>
-<<<<<<< HEAD
-              <input :type="inputTypeIcon" v-model="user.confirmPassword" />
+              <input
+                :type="inputTypeIcon"
+                v-model="user.confirmPassword"
+                @keydown="clearError('confirmPassword')"
+              />
               <p>{{ confirmError }}</p>
-=======
-              <input :type="inputTypeIcon" v-model.trim="user.confirmPassword" />
->>>>>>> 6c08765d566696bca149adc9ec4640a5af16cccc
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo1">
@@ -110,7 +105,6 @@
           </div>
           <button type="submit">Sign Up</button>
         </form>
-
         <h2>
           Already have an account?<router-link to="/login"
             ><span> Sign In</span></router-link
@@ -145,6 +139,7 @@ export default {
       msg: [],
       // inputType: "password",
       inputTypeIcon: "password",
+      error:""
     };
   },
   methods: {
@@ -152,10 +147,22 @@ export default {
       this.inputTypeIcon =
         this.inputTypeIcon === "password" ? "text" : "password";
     },
+    clearError(value) {
+      this.fnameError && value == "fname" ? (this.fnameError = "") : false;
+      this.lastError && value == "lname" ? (this.lastError = "") : false;
+      this.emailError && value == "email" ? (this.emailError = "") : false;
+      this.numberError && value == "phone" ? (this.numberError = "") : false;
+      this.passwordError && value == "password"
+        ? (this.passwordError = "")
+        : false;
+      this.confirmError && value == "confirmPass"
+        ? (this.confirmError = "")
+        : false;
+        this.error = ""
+    },
     createUser() {
-      console.log(typeof this.user.phoneNumber);
       this.user.firstName.length < 2
-        ? (this.fnameError = "first name not valid")
+        ? (this.fnameError = "First name not valid")
         : console.log(this.fnameError);
       this.user.lastName.length < 2
         ? (this.lastError = "Last name not valid!")
@@ -167,18 +174,21 @@ export default {
         ? (this.numberError = "Phone number not valid!")
         : console.log(this.numberError);
       this.user.password.length < 8
-        ? (this.passwordError = "password must be more than 8 characters!")
+        ? (this.passwordError = "Password must be more than 8 characters!")
         : console.log(this.passwordError);
       this.user.password != this.user.confirmPassword
         ? (this.confirmError = "Confirm Password not matching!")
         : console.log(this.confirmError);
       axios
-        .post("http://localhost:3030/api/v1/user/signup", this.user)
+        .post("http://localhost:3000/api/v1/user/signup", this.user)
         .then((res) => {
           console.log(res);
           this.$router.push("/login");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          this.error = err.response.data.message
+          });
+          this.error = ""
     },
     validateEmail(value) {
       /* eslint-disable */
@@ -210,16 +220,17 @@ button {
   height: 50px;
   width: 520px;
   border: none;
-  border-radius: 4px;
   margin-top: 40px;
   background: #7557d3;
   border-radius: 4px;
   color: #ffffff;
   text-align: center;
+  cursor: pointer;
+  font-weight: 700;
 }
 p {
   color: red;
-  font-size: 10px;
+  font-size: 12px;
   text-align: start;
   margin-top: 5px;
 }
@@ -265,6 +276,12 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .mainform {
@@ -317,5 +334,12 @@ form {
 }
 span {
   color: #1a2c56;
+}
+.server-error {
+  width: max-content;
+  border-radius: 5px;
+  background: #d68f8a;
+  color: #fff;
+  padding: 10px;
 }
 </style>

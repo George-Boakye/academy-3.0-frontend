@@ -5,45 +5,45 @@
     </template>
     <template v-slot:main-content>
       <div>
-      <h2>Dashboard</h2>
-      <p>
-        Your Application is currently being review, you wil be notified if
-        successful
-      </p>
+        <h2>Dashboard</h2>
+        <p>
+          Your Application is currently being review, you wil be notified if
+          successful
+        </p>
 
-      <div class="application-info">
-        <div class="date">
-          <p>Date of Application</p>
-          <h3>09.09.19</h3>
-          <div></div>
-          <p>4 days since applied</p>
-        </div>
-        <div class="status">
-          <p>Application Status</p>
-          <h3>Pending</h3>
-          <div></div>
-          <p>We will get back to you</p>
-        </div>
-      </div>
-
-      <div class="card-container">
-        <div class="card-1">
-          <h4>Updates</h4>
-          <hr />
-          <hr />
-          <hr />
-          <hr />
-        </div>
-        <div class="card">
-          <h4>Take Assessment</h4>
-          <div class="assessment-container">
-            <p>
-              We have 4 days left until the next assessment Watch this space
-            </p>
-            <button>Take Assessment</button>
+        <div class="application-info">
+          <div class="date">
+            <p>Date of Application</p>
+            <h3>{{ date }}</h3>
+            <div></div>
+            <p>{{ applicationDuration }} since applied</p>
+          </div>
+          <div class="status">
+            <p>Application Status</p>
+            <h3>{{ applicant.status }}</h3>
+            <div></div>
+            <p>We will get back to you</p>
           </div>
         </div>
-      </div>
+
+        <div class="card-container">
+          <div class="card-1">
+            <h4>Updates</h4>
+            <hr />
+            <hr />
+            <hr />
+            <hr />
+          </div>
+          <div class="card">
+            <h4>Take Assessment</h4>
+            <div class="assessment-container">
+              <p>
+                We have 4 days left until the next assessment Watch this space
+              </p>
+              <button>Take Assessment</button>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </the-layout>
@@ -52,11 +52,36 @@
 <script>
 import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
+import { mapActions, mapGetters } from "vuex";
+import { formatDistance, format } from "date-fns";
 
 export default {
   components: {
     SideNav,
     TheLayout,
+  },
+  async created() {
+    const userId = localStorage.getItem("userId");
+    await this.userDetails(userId);
+  },
+  computed: {
+    ...mapGetters({
+      applicant: "getApplicant",
+    }),
+    applicationDuration() {
+      const date = formatDistance(
+        new Date(this.applicant.createdAt),
+        new Date()
+      );
+      return date;
+    },
+    date() {
+      const date = new Date(this.applicant.createdAt);
+      return format(date, "dd.MM.yy");
+    },
+  },
+  methods: {
+    ...mapActions(["userDetails"]),
   },
 };
 </script>
