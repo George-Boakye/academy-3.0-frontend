@@ -6,15 +6,19 @@
     <template v-slot:main-content>
       <div class="main">
         <h1 class="main-text">Compose Assessment</h1>
-        <form>
+        <form @submit.prevent="composeApplication">
           <label class="box-labels">15/30</label>
+
           <input class="fileupload" type="file" id="file" />
+          <p>{{ fileError }}</p>
           <label class="file-label" for="file"> + Choose file</label>
 
           <div class="box3">
             <label class="box-labels">Questions</label> <br />
             <textarea name="" class="text-area" id=""></textarea>
+            <p>{{ questionError }}</p>
           </div>
+
           <div class="main-boxes">
             <div>
               <label class="box-labels">Option A</label> <br /><input
@@ -37,6 +41,7 @@
                 class="box-input"
               />
             </div>
+            <p>{{ optionDerror }}</p>
           </div>
           <div class="button1">
             <button class="button11">Previous</button>
@@ -59,6 +64,42 @@ export default {
     SideNav,
     TheLayout,
   },
+  data() {
+    return {
+      user: {
+        optionA: null,
+        optionB: null,
+        optionC: null,
+        optionD: null,
+        question: "",
+        file: null,
+      },
+
+      optionAerror: null,
+      optionBerror: null,
+      optionCerror: null,
+      optionDerror: null,
+      questionError: "",
+      fileError: null,
+    };
+  },
+  methods: {
+    composeApplication() {
+      this.user.optionA ||
+      this.user.optionB ||
+      this.user.optionC ||
+      this.user.optionD == null
+        ? (this.optionDerror = "Select at least one answer option!")
+        : console.log(this.optionDerror);
+
+      this.user.file == null
+        ? (this.fileError = "upload file")
+        : console.log(this.fileError);
+      this.user.question.length < 5
+        ? (this.questionError = "input a valid question!")
+        : console.log(this.instructionError);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -68,6 +109,12 @@ export default {
   justify-content: center;
   align-items: center;
 } */
+p {
+  color: red;
+  font-size: 10px;
+  text-align: start;
+  margin-top: 5px;
+}
 .main-text {
   font-family: "Lato";
   font-style: normal;

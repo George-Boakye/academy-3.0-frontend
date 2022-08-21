@@ -111,6 +111,15 @@ input {
   border: none;
   background-color: #2b3c4e;
 }
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 98;
+  background-color: #2b3c4e;
+}
 /* .numbs {
   right: 130px;
 } */

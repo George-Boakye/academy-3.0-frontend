@@ -12,7 +12,10 @@ export default [
     {
         path:'/admin-login',
         name:'admin-login',
-        component: AdminLoginView
+        component: AdminLoginView,
+        meta: {
+            noAuth: true,
+          },
     },
     {
         path:'/admin-dashboard',

@@ -6,16 +6,18 @@
     <template v-slot:main-content>
       <div class="main">
         <div class="main-text">Create Application</div>
-        <form>
+        <form @submit.prevent="createApplication">
           <div class="main-boxes">
             <div>
               <label class="file-label" for="file"> + Choose file</label>
               <input class="fileupload" type="file" id="file" />
+              <p>{{ fileError }}</p>
             </div>
             <div>
               <label class="box-labels">Link</label><br /><input
                 class="box-input"
               />
+              <p>{{ linkError }}</p>
             </div>
             <div>
               <label class="box-labels">Application closure date</label><br />
@@ -26,16 +28,19 @@
                 onfocus="(this.type='date')"
                 onblur="if(this.value==''){this.type='text'}"
               />
+              <p>{{ dateError }}</p>
             </div>
             <div>
               <label class="box-labels">Batch ID</label> <br /><input
                 class="box-input"
               />
+              <p>{{ batchIderror }}</p>
             </div>
           </div>
           <div class="box3">
             <label class="box-labels">Instructions</label> <br />
             <textarea class="text-area" name="" id=""></textarea>
+            <p>{{ instructionsError }}</p>
           </div>
           <div class="button1"><button>Submit</button></div>
         </form>
@@ -51,6 +56,42 @@ export default {
   components: {
     SideNav,
     TheLayout,
+  },
+  data() {
+    return {
+      user: {
+        link: null,
+        date: null,
+        batchId: "",
+        instructions: "",
+        file: null,
+      },
+
+      linkError: null,
+      dateError: null,
+      batchIderror: "",
+      instructionsError: "",
+      fileError: null,
+    };
+  },
+  methods: {
+    createApplication() {
+      this.user.link == null
+        ? (this.linkError = "upload link!")
+        : console.log(this.linkError);
+      this.user.date == null
+        ? (this.dateError = "choose a date!")
+        : console.log(this.emailError);
+      this.user.batchId.length < 1
+        ? (this.batchIderror = "include batch ID!")
+        : console.log(this.batchError);
+      this.user.file == null
+        ? (this.fileError = "upload file")
+        : console.log(this.fileError);
+      this.user.instructions.length < 5
+        ? (this.instructionsError = "input a clear instruction!")
+        : console.log(this.instructionError);
+    },
   },
 };
 </script>
@@ -77,6 +118,12 @@ export default {
   display: flex;
   align-items: center;
   color: #2b3c4e;
+}
+p {
+  color: red;
+  font-size: 10px;
+  text-align: start;
+  margin-top: 5px;
 }
 .fileupload {
   display: none;

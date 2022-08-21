@@ -7,29 +7,51 @@
       <div class="signup-text">
         <h1>Applicant Sign Up</h1>
       </div>
+      <div class="server-error" v-show="error">{{ error }} &#9888;</div>
       <div class="mainform">
         <form @submit.prevent="createUser">
           <div class="inputs-wrapper">
             <div>
               <label>First Name</label>
-              <input v-model="user.firstName" />
+              <input
+                v-model.trim="user.firstName"
+                @keydown="clearError('fname')"
+              />
+              <p v-show="fnameError">{{ fnameError }}</p>
             </div>
             <div>
               <label>Last Name</label>
-              <input v-model="user.lastName" />
+              <input
+                v-model.trim="user.lastName"
+                @keydown="clearError('lname')"
+              />
+              <p>{{ lastError }}</p>
             </div>
-
             <div>
               <label>Email Address</label>
-              <input v-model="user.emailAddress" />
+              <input
+                v-model.trim="user.emailAddress"
+                @keydown="clearError('email')"
+              />
+              <p>{{ emailError }}</p>
             </div>
             <div>
               <label>Phone Number</label>
-              <input v-model="user.phoneNumber" />
+              <input
+                v-model.trim="user.phoneNumber"
+                type="tel"
+                @keydown="clearError('phone')"
+              />
+              <p>{{ numberError }}</p>
             </div>
             <div class="password-wrap">
               <label>Password</label>
-              <input :type="inputTypeIcon" v-model="user.password" />
+              <input
+                :type="inputTypeIcon"
+                v-model.trim="user.password"
+                @keydown="clearError('password')"
+              />
+              <p>{{ passwordError }}</p>
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo2">
@@ -49,11 +71,17 @@
                     /></div
                 ></span>
               </div>
+              <p>{{ passwordError }}</p>
             </div>
 
             <div class="password-wrap1">
               <label>Confirm Password</label>
-              <input :type="inputTypeIcon" v-model="user.confirmPassword" />
+              <input
+                :type="inputTypeIcon"
+                v-model="user.confirmPassword"
+                @keydown="clearError('confirmPassword')"
+              />
+              <p>{{ confirmError }}</p>
               <div class="icon" @click.prevent="toggleInputIcon">
                 <span v-if="inputTypeIcon == 'password'"
                   ><div class="eye-logo1">
@@ -77,7 +105,6 @@
           </div>
           <button type="submit">Sign Up</button>
         </form>
-
         <h2>
           Already have an account?<router-link to="/login"
             ><span> Sign In</span></router-link
@@ -92,6 +119,7 @@ import axios from "axios";
 export default {
   name: "SignUpView",
   components: {},
+  props: {},
   data() {
     return {
       user: {
@@ -102,8 +130,16 @@ export default {
         password: "",
         confirmPassword: "",
       },
-      inputType: "password",
+      fnameError: "",
+      lastError: "",
+      emailError: "",
+      numberError: "",
+      passwordError: "",
+      confirmError: "",
+      msg: [],
+      // inputType: "password",
       inputTypeIcon: "password",
+      error:""
     };
   },
   methods: {
@@ -111,14 +147,63 @@ export default {
       this.inputTypeIcon =
         this.inputTypeIcon === "password" ? "text" : "password";
     },
+    clearError(value) {
+      this.fnameError && value == "fname" ? (this.fnameError = "") : false;
+      this.lastError && value == "lname" ? (this.lastError = "") : false;
+      this.emailError && value == "email" ? (this.emailError = "") : false;
+      this.numberError && value == "phone" ? (this.numberError = "") : false;
+      this.passwordError && value == "password"
+        ? (this.passwordError = "")
+        : false;
+      this.confirmError && value == "confirmPass"
+        ? (this.confirmError = "")
+        : false;
+        this.error = ""
+    },
     createUser() {
+      this.user.firstName.length < 2
+        ? (this.fnameError = "First name not valid")
+        : console.log(this.fnameError);
+      this.user.lastName.length < 2
+        ? (this.lastError = "Last name not valid!")
+        : console.log(this.username);
+      !this.user.emailAddress.includes("@")
+        ? (this.emailError = "Email address not valid!")
+        : console.log(this.emailError);
+      this.user.phoneNumber.length < 10
+        ? (this.numberError = "Phone number not valid!")
+        : console.log(this.numberError);
+      this.user.password.length < 8
+        ? (this.passwordError = "Password must be more than 8 characters!")
+        : console.log(this.passwordError);
+      this.user.password != this.user.confirmPassword
+        ? (this.confirmError = "Confirm Password not matching!")
+        : console.log(this.confirmError);
       axios
         .post("http://localhost:3000/api/v1/user/signup", this.user)
         .then((res) => {
           console.log(res);
           this.$router.push("/login");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          this.error = err.response.data.message
+          });
+          this.error = ""
+    },
+    validateEmail(value) {
+      /* eslint-disable */
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+        this.msg["emailAddress"] = "";
+      } else {
+        this.msg["emailAddress"] = "Invalid Email Address";
+      }
+    },
+  },
+  watch: {
+    emailAddress(value) {
+      // binding this to the data value in the email input
+      this.email = value;
+      this.validateEmailAddress(value);
     },
   },
 };
@@ -135,12 +220,19 @@ button {
   height: 50px;
   width: 520px;
   border: none;
-  border-radius: 4px;
   margin-top: 40px;
   background: #7557d3;
   border-radius: 4px;
   color: #ffffff;
   text-align: center;
+  cursor: pointer;
+  font-weight: 700;
+}
+p {
+  color: red;
+  font-size: 12px;
+  text-align: start;
+  margin-top: 5px;
 }
 h1 {
   font-family: "Lato";
@@ -185,6 +277,12 @@ label {
   justify-content: center;
   align-items: center;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 .mainform {
   gap: 62px;
@@ -193,7 +291,7 @@ label {
 
 .eye-logo1 {
   position: absolute;
-  bottom: -14px;
+  bottom: -8px;
   right: 14px;
   cursor: pointer;
 }
@@ -236,5 +334,12 @@ form {
 }
 span {
   color: #1a2c56;
+}
+.server-error {
+  width: max-content;
+  border-radius: 5px;
+  background: #d68f8a;
+  color: #fff;
+  padding: 10px;
 }
 </style>

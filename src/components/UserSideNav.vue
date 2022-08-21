@@ -1,9 +1,9 @@
 <template>
   <nav>
     <div class="profile">
-      <figure><img src="@/assets/dummy-profile-pic.svg" alt="" /></figure>
-      <h1>Jane Doe</h1>
-      <p>doe@enyata.com</p>
+      <figure><img :src="applicant.img" alt="" /></figure>
+      <h1>{{applicant.firstName}} {{applicant.lastName}}</h1>
+      <p>{{applicant.emailAddress}}</p>
     </div>
     <div class="links-container">
       <div class="links">
@@ -30,14 +30,30 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "SideNav",
+  async created() {
+    const userId = localStorage.getItem("userId");
+    await this.userDetails(userId);
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters({
+      applicant: 'getApplicant',
+    }),
+  },
+  methods: {
+    ...mapActions(["userDetails"]),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 nav {
-  font-family: 'Lato';
+  font-family: "Lato";
   width: 292px;
   height: 100vh;
   background: #ffffff;
@@ -54,12 +70,12 @@ nav {
   margin-bottom: 28px;
   color: #fff;
 
-  figure{
-   img{
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-   }
+  figure {
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
   }
 
   h1 {
@@ -111,6 +127,5 @@ nav {
     margin-top: 57px;
     cursor: pointer;
   }
- 
 }
 </style>

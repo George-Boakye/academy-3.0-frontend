@@ -4,14 +4,19 @@
       <div class="image">
         <img src="@/assets/enyata-logo.svg" alt="" />
       </div>
-      <!-- '@/assets/password-eye-logo.svg' -->
       <h1>Applicant Log In</h1>
+      <div class="error" v-show="serverError">{{ serverError }} &#9888;</div>
       <form @submit.prevent="signIn">
         <label>Email Address</label>
-        <input v-model="user.emailAddress" />
+        <input v-model="user.emailAddress" @keypress="clearError('email')" />
+        <P v-show="emailError">{{ emailError }}</P>
         <div class="password-wrap">
           <label>Password</label>
-          <input :type="inputTypeIcon" v-model="user.password" />
+          <input
+            :type="inputTypeIcon"
+            v-model="user.password"
+            @keypress="clearError('password')"
+          />
           <div class="icon" @click.prevent="toggleInputIcon">
             <span v-if="inputTypeIcon == 'password'">
               <div class="eye-logo">
@@ -24,6 +29,7 @@
               </div>
             </span>
           </div>
+          <P v-show="passwordError">{{ passwordError }}</P>
         </div>
         <button type="submit">Sign In</button>
       </form>
@@ -33,7 +39,9 @@
             ><span>Sign Up</span></router-link
           >
         </div>
-        <div class="forgotPassword">Forgot Password?</div>
+        <div class="forgotPassword" @click="$router.push('/forgot-password')">
+          <a href="">Forgot Password?</a>
+        </div>
       </div>
     </div>
   </div>
@@ -51,27 +59,44 @@ export default {
       },
       inputType: "password",
       inputTypeIcon: "password",
+      emailError: "",
+      passwordError: "",
+      serverError: "",
     };
   },
   methods: {
     signIn() {
+      !this.user.emailAddress.includes("@")
+        ? (this.emailError = "Email address not valid!")
+        : true;
+      this.user.password.length < 8
+        ? (this.passwordError = "Password must be more than 8 characters!")
+        : true;
       axios
         .post("http://localhost:3000/api/v1/auth/user/login", this.user)
         .then((res) => {
-          const { token } = res.data.data;
-          const { user } = res.data.data;
+          const { token } = res.data;
+          const { data } = res.data;
           localStorage.setItem("token", token);
+          localStorage.setItem('userId', data._id)
           console.log(res);
-          if (user.applied === false) {
+          if (data.applied === false) {
             this.$router.push("/pre-dashboard");
           } else {
             this.$router.push("/dashboard");
           }
         })
         .catch((err) => {
-          alert("Email or password wrong");
-          console.log(err);
+          // alert("Email or password wrong");
+          this.serverError = err.response.data.message;
         });
+    },
+    clearError(value) {
+      this.emailError && value == "email" ? (this.emailError = "") : false;
+      this.passwordError && value == "password"
+        ? (this.passwordError = "")
+        : false;
+      this.serverError = "";
     },
     toggleInputIcon() {
       this.inputTypeIcon =
@@ -87,11 +112,21 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
+p {
+  color: red;
+  font-size: 12px;
+  text-align: start;
+  margin-top: 5px;
+}
 .password-wrap {
   position: relative;
 }
-
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .eye-logo {
   padding-right: 10px;
 }
@@ -147,6 +182,7 @@ label {
 }
 
 button {
+  font-family: "Lato";
   margin-top: 32px;
   border: none;
   height: 50px;
@@ -155,6 +191,10 @@ button {
   background: #7557d3;
   border-radius: 4px;
   color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .SignUp-text,
@@ -171,5 +211,16 @@ button {
 .password-text {
   display: flex;
   gap: 66px;
+}
+.error {
+  padding: 10px;
+  color: #fff;
+  background: #d68f8a;
+  width: max-content;
+  border-radius: 5px;
+}
+.forgotPassword a {
+  text-decoration: none;
+  color: #4f4f4f;
 }
 </style>

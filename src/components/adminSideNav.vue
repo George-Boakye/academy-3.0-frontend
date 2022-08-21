@@ -21,7 +21,9 @@
         </div>
         <div>
           <router-link :to="{ name: 'application-entries' }">
-            <figure><img src="@/assets/application-entries-icon.svg" alt="" /></figure>
+            <figure>
+              <img src="@/assets/application-entries-icon.svg" alt="" />
+            </figure>
             <p>Application Entries</p>
           </router-link>
         </div>
@@ -67,7 +69,7 @@ export default {
 
 <style lang="scss" scoped>
 nav {
-  font-family: 'Lato';
+  font-family: "Lato";
   width: 292px;
   height: 100vh;
   background: #ffffff;
@@ -84,12 +86,12 @@ nav {
   margin-bottom: 28px;
   color: #fff;
 
-  figure{
-   img{
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-   }
+  figure {
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
   }
 
   h1 {
@@ -128,12 +130,10 @@ nav {
     a.router-link-exact-active {
       font-weight: 700;
       border-left: 4px solid #7557d3;
-       &.results{
-       border-left: 4px solid #31D283;
+      &.results {
+        border-left: 4px solid #31d283;
+      }
     }
-    }
-
-   
   }
 
   .logout {
