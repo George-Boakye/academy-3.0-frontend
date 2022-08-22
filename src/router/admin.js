@@ -6,6 +6,24 @@ import ComposeAssessmentView from "@/views/admin_views/ComposeAssessmentView.vue
 import CreateApplicationView from "@/views/admin_views/CreateApplicationView.vue"
 import ResultsView from "@/views/admin_views/ResultsView.vue"
 import SettingsView from "@/views/admin_views/SettingsView.vue"
+import jwt_decode from "jwt-decode";
+
+let admin = localStorage.getItem("admin-token")
+  // let decoded = jwt_decode(token)
+  let decodedAdmin;
+  let adminAuth = false;
+
+
+  if(admin){
+    decodedAdmin = jwt_decode(admin);
+    const expirydate = new Date(decodedAdmin.exp * 1000);
+    const now = new Date();
+
+    if (now < expirydate) {
+      adminAuth = true;
+    }
+
+  }
 
 
 export default [
@@ -20,36 +38,107 @@ export default [
     {
         path:'/admin-dashboard',
         name:'admin-dashboard',
-        component: AdminDashboardView
+        component: AdminDashboardView,
+        meta:{
+            admin:true,
+            noAuth: true,
+        
+        },
+        beforeEnter: (to) =>{
+            if(to.meta.admin && !adminAuth){
+                return {name: 'admin-login'}
+              }
+              return true
+        }
     },
     {
         path:'/create-application',
         name:'create-application',
-        component: CreateApplicationView
+        component: CreateApplicationView,
+        meta:{
+            admin:true,
+            noAuth: true,
+        },
+        beforeEnter: (to) =>{
+            if(to.meta.admin && !adminAuth){
+                return {name: 'admin-login'}
+              }
+              return true
+        }
     },
     {
         path:'/application-entries',
         name:'application-entries',
-        component: ApplicationEntriesView
+        component: ApplicationEntriesView,
+        meta:{
+            admin:true,
+            noAuth: true,
+        },
+        beforeEnter: (to) =>{
+            if(to.meta.admin && !adminAuth){
+                return {name: 'admin-login'}
+              }
+              return true
+        }
     },
     {
         path:'/compose-assessment',
         name:'compose-assessment',
-        component: ComposeAssessmentView
+        component: ComposeAssessmentView,
+        meta:{
+            admin:true,
+            noAuth: true,
+        },
+        beforeEnter: (to) =>{
+            if(to.meta.admin && !adminAuth){
+                return {name: 'admin-login'}
+              }
+              return true
+        }
     },
     {
         path:'/assessment-history',
         name:'assessment-history',
-        component: AssessmentHistoryView
+        component: AssessmentHistoryView,
+        meta:{
+            admin:true,
+            noAuth: true,
+        },
+        beforeEnter: (to) =>{
+            if(to.meta.admin && !adminAuth){
+                return {name: 'admin-login'}
+              }
+              return true
+        }
     },
     {
         path:'/results',
         name:'results',
-        component: ResultsView
+        component: ResultsView,
+        meta:{
+            admin:true,
+            noAuth: true,
+        },
+        beforeEnter: (to) =>{
+            if(to.meta.admin && !adminAuth){
+                return {name: 'admin-login'}
+              }
+              return true
+        }
     },
     {
         path:'/settings',
         name:'settings',
-        component: SettingsView
+        component: SettingsView,
+        meta:{
+            admin:true,
+            noAuth: true,
+        },
+        beforeEnter: (to) =>{
+            if(to.meta.admin && !adminAuth){
+                return {name: 'admin-login'}
+              }
+              return true
+        }
     }
 ]

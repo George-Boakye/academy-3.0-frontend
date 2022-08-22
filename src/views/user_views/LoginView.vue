@@ -75,9 +75,10 @@ export default {
       axios
         .post("http://localhost:3000/api/v1/auth/user/login", this.user)
         .then((res) => {
+          console.log(res)
           const { data } = res.data;
           localStorage.setItem("token", data.token);
-          localStorage.setItem('userId', data._id)
+          localStorage.setItem('userId', data._id);
           if (data.applied === false) {
             this.$router.push("/pre-dashboard");
           } else {

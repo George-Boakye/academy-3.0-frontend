@@ -42,7 +42,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/adminSideNav.vue";
+import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 
 export default {

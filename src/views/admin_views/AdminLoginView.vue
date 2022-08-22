@@ -6,13 +6,13 @@
       </div>
 
       <h1>Admin Log In</h1>
-      <form @submit.prevent="adminUser">
+      <form @submit.prevent="signIn()">
         <label>Email Address</label>
-        <input />
-        <P>{{ emailError }}</P>
+        <input v-model="user.emailAddress"/>
+        <P v-show="emailError">{{ emailError }}</P>
         <div class="password-wrap">
           <label>Password</label>
-          <input :type="inputTypeIcon" placeholder="" />
+          <input :type="inputTypeIcon" placeholder="" v-model="user.password" />
           <div class="icon" @click.prevent="toggleInputIcon">
             <span v-if="inputTypeIcon == 'password'">
               <div class="eye-logo">
@@ -29,9 +29,9 @@
               </div>
             </span>
           </div>
-          <P>{{ passwordError }}</P>
+          <P v-show="passwordError">{{ passwordError }}</P>
         </div>
-        <button>Sign In</button>
+        <button type="submit">Sign In</button>
       </form>
       <div class="admin-bg-img">
         <img src="@/assets/admin-login-Bg.svg" alt="" />
@@ -44,7 +44,6 @@
 import axios from "axios";
 export default {
   name: "AdminLoginView",
-  components: {},
   data() {
     return {
       user: {
@@ -60,12 +59,23 @@ export default {
   },
   methods: {
     signIn() {
+      !this.user.emailAddress.includes("@")
+        ? (this.emailError = "Email address not valid!")
+        : console.log(this.emailError);
+      this.user.password.length < 8
+        ? (this.passwordError = "Password must be more than 8 charcacters!")
+        : console.log(this.passworderror);
       axios
         .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
         .then((res) => {
+          console.log(res)
           const { token } = res.data.data;
           localStorage.setItem("admin-token", token);
-          console.log(res);
+          if(res.data.data.is_admin == true){
+            this.$router.push('/admin-dashboard')
+          }else{
+            this.$router.push('/admin-login')
+          }
         })
         .catch((err) => {
           alert("Email or password wrong");
@@ -74,14 +84,6 @@ export default {
     },
     toggleInputIcon() {
       this.inputTypeIcon === "password" ? "text" : "password";
-    },
-    adminUser() {
-      !this.user.emailAddress.includes("@")
-        ? (this.emailError = "Email address not valid!")
-        : console.log(this.emailError);
-      this.user.password.length < 10
-        ? (this.passwordError = "enter your password!")
-        : console.log(this.passworderror);
     },
   },
 };
@@ -147,6 +149,7 @@ input {
   margin-top: 3px;
   padding-right: 10px;
   padding-left: 5px;
+  color: #fff;
   background-color: #7557d3;
 }
 
@@ -163,6 +166,7 @@ label {
 }
 
 button {
+  font-family: "Lato";
   margin-top: 32px;
   border: none;
   height: 50px;
@@ -171,6 +175,7 @@ button {
   background: #ffff;
   border-radius: 4px;
   color: #7557d3;
+  cursor: pointer;
 }
 
 .password-text {

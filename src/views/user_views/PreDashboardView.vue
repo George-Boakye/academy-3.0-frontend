@@ -158,7 +158,7 @@ export default {
     };
   },
   methods: {
-    createUser() {
+   createUser() {
       this.user.firstName.length < 2
         ? (this.fnameError = "First name not valid!")
         : console.log(this.fnameError);
@@ -204,17 +204,21 @@ export default {
 
       console.log(formData);
 
-      axios
+       axios
         .post("http://localhost:3000/api/v1/auth/application", formData, {
           headers: {
             Authorization: `Basic ${token}`,
           },
         })
         .then((res) => {
-          if(res.data.data.applicant){
+          localStorage.removeItem('token')
+          const { data } = res.data;
+          localStorage.setItem("token", data.token);
+          if(data.details.applicant){
             this.$router.push("/dashboard");
+          }else{
+            this.$router.push("/pre-dashboard");
           }
-          console.log('response',res);
         })
         .catch((err) => {
           this.error = err.response.data.message;
@@ -238,11 +242,11 @@ export default {
     },
     selectedFile(event) {
       this.user.cv = event.target.files[0];
-      console.log("cv", this.user.cv);
+     
     },
     selectedImg(event) {
       this.user.photo = event.target.files[0];
-      console.log("img", this.user.photo);
+    
     },
   },
 };

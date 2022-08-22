@@ -64,6 +64,7 @@
 <script>
 import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -111,6 +112,17 @@ export default {
       ],
     };
   },
+ async created(){
+  await this.questions()
+  },
+    computed: {
+      questionslength() {
+        return this.questions.length;
+      },
+      ...mapGetters({
+        'allQuestions':'getQuestions'
+      })
+    },
   methods: {
     answered(event) {
       this.selectedAnswer = event.target.value;
@@ -118,11 +130,7 @@ export default {
     finishQuiz() {
       this.$router.push({ name: "successful" });
     },
-  },
-  computed: {
-    questionslength() {
-      return this.questions.length;
-    },
+    ...mapActions(['questions'])
   },
 };
 </script>

@@ -68,11 +68,12 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/adminSideNav.vue";
+import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import MainModal from "@/components/MainModal.vue";
 import DenyDecisionModal from "@/components/DenyDecisionModal.vue";
 import ApproveDecisionModal from "@/components/ApproveDecisionModal.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ApplicationEntries",
@@ -90,6 +91,14 @@ export default {
       approveModalVisibility: false,
     };
   },
+  async created(){
+    await this.applicants()
+  },
+  computed:{
+    ...mapGetters({
+      'allApplicants': 'getApplicants'
+    })
+  },
   methods: {
     openMainModal() {
       this.mainModalVisibility = true;
@@ -102,6 +111,7 @@ export default {
       this.mainModalVisibility = false;
       this.approveModalVisibility = true;
     },
+    ...mapActions(['applicants'])
   },
 };
 </script>

@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="logout">
+      <div class="logout" @click="logout">
         <figure><img src="@/assets/logout-icon.svg" alt="" /></figure>
         <p>Log Out</p>
       </div>
@@ -64,6 +64,12 @@
 <script>
 export default {
   name: "AdminSideNav",
+  methods:{
+        logout(){
+      localStorage.removeItem('admin-token')
+      this.$router.push('/admin-login')
+    }
+  }
 };
 </script>
 

@@ -23,13 +23,25 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  const token = localStorage.getItem("token");
+  let token = localStorage.getItem("token");
+  // let admin = localStorage.getItem("admin-token")
   let isAuthenticated = false;
   let decoded;
+  // let decodedAdmin;
+  let adminAuth = false;
 
+  // if(admin){
+  //   decodedAdmin = jwt_decode(admin);
+  //   const expirydate = new Date(decodedAdmin.exp * 1000);
+  //   const now = new Date();
+
+  //   if (now < expirydate) {
+  //     adminAuth = true;
+  //   }
+
+  // }
   if (token) {
     decoded = jwt_decode(token);
-    console.log(decoded);
     const expirydate = new Date(decoded.exp * 1000);
     const now = new Date();
 
@@ -37,6 +49,8 @@ router.beforeEach((to) => {
       isAuthenticated = true;
     }
   }
+
+
 
   if (!to.meta.noAuth && !isAuthenticated) {
     return { name: "login" };
@@ -53,6 +67,9 @@ router.beforeEach((to) => {
   }
   if (isAuthenticated && to.name === "login") {
     return { name: "dashboard" };
+  }
+  if (adminAuth && to.name === "admin-login") {
+    return { name: "admin-dashboard" };
   }
   return true;
 });

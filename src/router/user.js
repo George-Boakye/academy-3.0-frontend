@@ -6,10 +6,7 @@ import DashboardView from "@/views/user_views/DashboardView.vue";
 import AssessmentView from "@/views/user_views/AssessmentView.vue";
 import QuestionsView from "@/views/user_views/QuestionsView.vue";
 import SuccessfulView from "@/views/user_views/SuccessfulView.vue";
-// import jwt_decode from "jwt-decode";
 
-  // const token = localStorage.getItem("token");
-  // let decoded = jwt_decode(token)
 
 export default[
     {
@@ -48,12 +45,6 @@ export default[
         path: "/dashboard",
         name: "dashboard",
         component: DashboardView,
-        // beforeEnter:(to)=>{
-        //   if(to.meta.noAuth && !decoded.applied){
-        //     return {name: "pre-dashboard"}
-        //   }
-        //   return true
-        // }
       },
     
       {
