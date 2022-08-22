@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="logout">
+      <div class="logout" @click="logout">
         <figure><img src="@/assets/logout-icon.svg" alt="" /></figure>
         <p>Log Out</p>
       </div>
@@ -47,6 +47,12 @@ export default {
   },
   methods: {
     ...mapActions(["userDetails"]),
+    logout(){
+      localStorage.removeItem('token')
+      localStorage.removeItem('userId')
+      localStorage.clear()
+      this.$router.push('/login')
+    }
   },
 };
 </script>

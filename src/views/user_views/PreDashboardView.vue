@@ -18,22 +18,26 @@
             <input
               class="fileupload"
               type="file"
-              id="file"
+              id="cv"
               name="cv"
+              accept="file_extension"
+              v-on:change="selectedFile($event)"
               @keypress="clearError('cv')"
             />
-            <label class="file-label" for="file"> + Upload CV</label>
+            <label class="file-label" for="cv"> + Upload CV</label>
             <p v-show="cvError">{{ cvError }}</p>
           </div>
           <div>
             <input
-              class="fileupload"
+             class="fileupload"
               type="file"
-              id="file"
+              id="img"
               name="img"
+              accept="image/*,.pdf"
+              v-on:change="selectedImg($event)"
               @keypress="clearError('img')"
             />
-            <label class="file-label" for="file"> + Upload Photo</label>
+            <label class="file-label" for="img"> + Upload Photo</label>
             <p v-show="photoError">{{ photoError }}</p>
           </div>
         </div>
@@ -41,49 +45,81 @@
           <div class="inputs-wrapper">
             <div>
               <label>First Name</label>
-              <input @keypress="clearError('fname')" />
+              <input
+                @keypress="clearError('fname')"
+                name="firstName"
+                v-model="user.firstName"
+              />
               <p v-show="fnameError">{{ fnameError }}</p>
             </div>
             <div>
               <label>Last Name</label>
-              <input @keypress="clearError('lname')" />
+              <input
+                @keypress="clearError('lname')"
+                name="lastName"
+                v-model="user.lastName"
+              />
               <p v-show="lnameError">{{ lnameError }}</p>
             </div>
 
             <div>
               <label>Email</label>
-              <input @keypress="clearError('email')" />
+              <input
+                @keypress="clearError('email')"
+                name="emailAddress"
+                v-model="user.emailAddress"
+              />
               <p v-show="emailError">{{ emailError }}</p>
             </div>
             <div>
               <label>Date of Birth</label>
-              <input @keypress="clearError('dob')" />
+              <input
+                @keypress="clearError('dob')"
+                name="dateOfBirth"
+                v-model="user.dateOfBirth"
+              />
               <p v-show="dobError">{{ dobError }}</p>
             </div>
             <div class="password-wrap">
               <label>Address</label>
-              <input @keypress="clearError('address')" />
+              <input
+                @keypress="clearError('address')"
+                name="address"
+                v-model="user.address"
+              />
               <p v-show="addressError">{{ addressError }}</p>
             </div>
 
             <div class="password-wrap1">
               <label>University</label>
-              <input @keypress="clearError('uni')" />
+              <input
+                @keypress="clearError('uni')"
+                name="university"
+                v-model="user.university"
+              />
               <p>{{ universityError }}</p>
             </div>
             <div class="password-wrap">
               <label>Course of Study</label>
-              <input @keypress="clearError('course')" />
+              <input
+                @keypress="clearError('course')"
+                name="course"
+                v-model="user.course"
+              />
               <p>{{ courseError }}</p>
             </div>
 
             <div class="password-wrap1">
               <label>CGPA</label>
-              <input @keypress="clearError('cgpa')" />
+              <input
+                @keypress="clearError('cgpa')"
+                name="cgpa"
+                v-model="user.cgpa"
+              />
               <p>{{ gpaError }}</p>
             </div>
           </div>
-          <button>Submit</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
@@ -98,12 +134,12 @@ export default {
         firstName: "",
         lastName: "",
         emailAddress: "",
-        DOB: "",
+        dateOfBirth: "",
         address: "",
         university: "",
         course: "",
-        GPA: "",
-        CV: null,
+        cgpa: "",
+        cv: null,
         photo: null,
       },
 
@@ -132,31 +168,53 @@ export default {
       !this.user.emailAddress.includes("@")
         ? (this.emailError = "Email address not valid!")
         : console.log(this.emailError);
-      this.user.DOB.length < 1
+      this.user.dateOfBirth.length < 1
         ? (this.dobError = "Select DOB!")
-        : console.log(this.numberError);
-      this.user.address.length < 8
+        : console.log(this.dobError);
+      this.user.address.length < 2
         ? (this.addressError = "Include address!")
-        : console.log(this.passwordError);
+        : console.log(this.addressError);
       this.user.university.length < 1
         ? (this.universityError = "Include university!")
-        : console.log(this.confirmError);
+        : console.log(this.universityError);
       this.user.course.length < 1
         ? (this.courseError = "Include course!")
-        : console.log(this.passwordError);
-      this.user.GPA.length < 1
+        : console.log(this.courseError);
+      this.user.cgpa.length < 1
         ? (this.gpaError = "Input correct CGPA!")
-        : console.log(this.confirmError);
-      this.user.CV == null
+        : console.log(this.gpaError);
+      this.user.cv == null
         ? (this.cvError = "Upload your CV!")
-        : console.log(this.passwordError);
+        : console.log(this.cvError);
       this.user.photo == null
         ? (this.photoError = "Upload your photo!")
-        : console.log(this.confirmError);
+        : console.log(this.photoError);
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("cv", this.user.cv);
+      formData.append("img", this.user.photo);
+      formData.append("firstName", this.user.firstName);
+      formData.append("lastName", this.user.lastName);
+      formData.append("emailAddress", this.user.emailAddress);
+      formData.append("dateOfBirth", this.user.dateOfBirth);
+      formData.append("address", this.user.address);
+      formData.append("course", this.user.course);
+      formData.append("cgpa", this.user.cgpa);
+      formData.append("university", this.user.university);
+
+      console.log(formData);
+
       axios
-        .post("http://localhost:3000/api/v1/auth/application", this.user)
+        .post("http://localhost:3000/api/v1/auth/application", formData, {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        })
         .then((res) => {
-          console.log(res);
+          if(res.data.data.applicant){
+            this.$router.push("/dashboard");
+          }
+          console.log('response',res);
         })
         .catch((err) => {
           this.error = err.response.data.message;
@@ -177,6 +235,14 @@ export default {
       this.addressError && value == "address"
         ? (this.addressError = "")
         : false;
+    },
+    selectedFile(event) {
+      this.user.cv = event.target.files[0];
+      console.log("cv", this.user.cv);
+    },
+    selectedImg(event) {
+      this.user.photo = event.target.files[0];
+      console.log("img", this.user.photo);
     },
   },
 };

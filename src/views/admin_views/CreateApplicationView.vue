@@ -91,6 +91,7 @@ export default {
       this.user.instructions.length < 5
         ? (this.instructionsError = "input a clear instruction!")
         : console.log(this.instructionError);
+        
     },
   },
 };
