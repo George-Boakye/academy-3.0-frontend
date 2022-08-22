@@ -1,4 +1,23 @@
 <template>
+  <MainModal
+    @approve="openApproveButton"
+    @decline="openDenyButton"
+    @close="closeFunction"
+    v-show="mainModalVisibility"
+    class="main-modal"
+  ></MainModal>
+  <DenyDecisionModal
+    @close="closeFunction"
+    v-show="denyModalVisibility"
+    @click="openDenyButton"
+    class="deny-decision"
+  ></DenyDecisionModal>
+  <ApproveDecisionModal
+    @close="closeFunction"
+    v-show="approveModalVisibility"
+    @click="openApproveButton"
+    class="approve-decision"
+  ></ApproveDecisionModal>
   <the-layout>
     <template v-slot:side-nav>
       <SideNav />
@@ -19,7 +38,7 @@
             <th>University</th>
             <th class="numbs">CGPA</th>
           </tr>
-          <tr @click="showModal = true">
+          <tr @click="openMainModal" class="roll1">
             <td>Ify Chinke</td>
             <td>ify@enyata.com</td>
             <td>12/09/19 - 22</td>
@@ -27,7 +46,15 @@
             <td>University of Nigeria</td>
             <td>5.0</td>
           </tr>
-          <tr class="roll1">
+          <tr @click="openMainModal" class="roll1">
+            <td>Ify Chinke</td>
+            <td>ify@enyata.com</td>
+            <td>12/09/19 - 22</td>
+            <td>3 Sabo Ave, Yaba, Lagos</td>
+            <td>University of Nigeria</td>
+            <td>5.0</td>
+          </tr>
+          <tr @click="openMainModal" class="roll1">
             <td>Ify Chinke</td>
             <td>ify@enyata.com</td>
             <td>12/09/19 - 22</td>
@@ -41,19 +68,44 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
+import MainModal from "@/components/MainModal.vue";
+import DenyDecisionModal from "@/components/DenyDecisionModal.vue";
+import ApproveDecisionModal from "@/components/ApproveDecisionModal.vue";
 
 export default {
+  name: "ApplicationEntries",
   components: {
     SideNav,
     TheLayout,
+    DenyDecisionModal,
+    MainModal,
+    ApproveDecisionModal,
   },
   data() {
-    return {};
+    return {
+      mainModalVisibility: false,
+      denyModalVisibility: false,
+      approveModalVisibility: false,
+    };
+  },
+  methods: {
+    openMainModal() {
+      this.mainModalVisibility = true;
+    },
+    openDenyButton() {
+      this.mainModalVisibility = false;
+      this.denyModalVisibility = true;
+    },
+    openApproveButton() {
+      this.mainModalVisibility = false;
+      this.approveModalVisibility = true;
+    },
   },
 };
 </script>
+
 <style scoped>
 input {
   border: none;
@@ -108,8 +160,14 @@ img {
 .main {
   margin-right: 40px;
 }
-tr {
-  cursor: pointer;
-  transition: 0.4s ease-in-out;
+.main-modal {
+  position: absolute;
+}
+.deny-decision {
+  position: absolute;
+}
+
+.approve-decision {
+  position: absolute;
 }
 </style>

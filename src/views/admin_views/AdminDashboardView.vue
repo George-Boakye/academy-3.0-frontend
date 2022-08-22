@@ -6,75 +6,75 @@
 
     <template v-slot:main-content>
       <div>
-      <h2>Dashboard</h2>
+        <h2>Dashboard</h2>
 
-      <div class="application-info">
-        <div class="current-applications">
-          <p>Current Applications</p>
-          <h3>233</h3>
-          <div></div>
-          <p class="small-letters">Academy 2.0</p>
-        </div>
+        <div class="application-info">
+          <div class="current-applications">
+            <p>Current Applications</p>
+            <h3>233</h3>
+            <div></div>
+            <p class="small-letters">Academy 2.0</p>
+          </div>
 
-        <div class="total-applications">
-          <p>Total Applications</p>
-          <h3>4253</h3>
-          <div></div>
-          <p class="small-letters">All entries so far</p>
-        </div>
-        <div class="academies">
-          <p>Academy's</p>
-          <h3>4</h3>
-          <div></div>
-          <p class="small-letters">So far</p>
-        </div>
-      </div>
-
-      <div class="card-container">
-        <div class="card-1">
-          <h4>History</h4>
-          <p>Last Update 18:24, 22/02/19</p>
-
-          <div class="main">
-            <table style="width: 100%">
-            <div>
-              <tr>
-                <td>Academy Batch 1</td>
-                <td class="mid-table">15 students</td>
-                <td>started 11/09/15</td>
-              </tr>
-              </div>
-              <tr>
-                <td>Academy Batch 2</td>
-                <td class="mid-table">15 students</td>
-                <td>started 11/09/15</td>
-              </tr>
-              <tr>
-                <td>Academy Batch 3</td>
-                <td class="mid-table">15 students</td>
-                <td>started 11/09/15</td>
-              </tr>
-            </table>
+          <div class="total-applications">
+            <p>Total Applications</p>
+            <h3>4253</h3>
+            <div></div>
+            <p class="small-letters">All entries so far</p>
+          </div>
+          <div class="academies">
+            <p>Academy's</p>
+            <h3>4</h3>
+            <div></div>
+            <p class="small-letters">So far</p>
           </div>
         </div>
 
-        <div class="card">
-          <h4>Create Assessment</h4>
-          <div class="assessment-container">
-            <p>Create test question for incoming academy students</p>
-            <button @click="$router.push('/compose-assessment')">
-              Create Assessment
-            </button>
+        <div class="card-container">
+          <div class="card-1">
+            <h4>History</h4>
+            <p>Last Update 18:24, 22/02/19</p>
+
+            <div class="main">
+              <table style="width: 100%">
+                <div>
+                  <tr>
+                    <td>Academy Batch 1</td>
+                    <td class="mid-table">15 students</td>
+                    <td>started 11/09/15</td>
+                  </tr>
+                </div>
+                <tr>
+                  <td>Academy Batch 2</td>
+                  <td class="mid-table">15 students</td>
+                  <td>started 11/09/15</td>
+                </tr>
+                <tr>
+                  <td>Academy Batch 3</td>
+                  <td class="mid-table">15 students</td>
+                  <td>started 11/09/15</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Create Assessment</h4>
+            <div class="assessment-container">
+              <p>Create test question for incoming academy students</p>
+              <button @click="$router.push('/compose-assessment')">
+                Create Assessment
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </template>
   </the-layout>
 </template>
 
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 
 export default {
@@ -227,12 +227,12 @@ p {
   }
 }
 
-table{
-  div{
-    & :hover{
-       border-left: 7px solid  #7557d3;
-    box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
-    border-radius: 8px;
+table {
+  div {
+    & :hover {
+      border-left: 7px solid #7557d3;
+      box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
+      border-radius: 8px;
     }
   }
 }
@@ -243,7 +243,6 @@ tr {
     margin-right: 39px;
     margin-left: 55px;
   }
-
 }
 
 td {

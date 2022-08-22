@@ -41,24 +41,37 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "AdminLoginView",
   components: {},
   data() {
     return {
-      inputType: "password",
-      inputTypeIcon: "password",
-
       user: {
         emailAddress: "",
         password: "",
       },
+      inputType: "password",
+      inputTypeIcon: "password",
 
       emailError: "",
       passwordError: "",
     };
   },
   methods: {
+    signIn() {
+      axios
+        .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
+        .then((res) => {
+          const { token } = res.data.data;
+          localStorage.setItem("admin-token", token);
+          console.log(res);
+        })
+        .catch((err) => {
+          alert("Email or password wrong");
+          console.log(err);
+        });
+    },
     toggleInputIcon() {
       this.inputTypeIcon === "password" ? "text" : "password";
     },
