@@ -52,14 +52,14 @@ export default createStore({
       }
     },
     async applicants({commit}){
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('admin-token')
       try {
         let res = await axios.get( "http://localhost:3000/api/v1/auth/applicants",{
           headers:{
             'Authorization': `token ${token}`
           }
         });
-        commit('ALL_APPLICANTS')
+        commit('ALL_APPLICANTS', res.data.data)
         return res
       } catch (error) {
         console.log(error)

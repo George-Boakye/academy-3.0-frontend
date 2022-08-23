@@ -69,8 +69,9 @@ export default {
         .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
         .then((res) => {
           console.log(res)
-          const { token } = res.data.data;
+          const { token, _id } = res.data.data;
           localStorage.setItem("admin-token", token);
+          localStorage.setItem("adminId", _id);
           if(res.data.data.is_admin == true){
             this.$router.push('/admin-dashboard')
           }else{

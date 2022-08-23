@@ -1,9 +1,9 @@
 <template>
   <nav>
     <div class="profile">
-      <figure><img src="@/assets/dummy-profile-pic.svg" alt="" /></figure>
-      <h1>Josh Doe</h1>
-      <p>j.doe@enyata.com</p>
+      <figure><img :src="admin.img" alt="" /></figure>
+      <h1>{{admin.firstName}} {{admin.lastName}}</h1>
+      <p>{{admin.emailAddress}}</p>
     </div>
     <div class="links-container">
       <div class="links">
@@ -62,13 +62,25 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: "AdminSideNav",
+  async created(){
+    const admin = localStorage.getItem('adminId')
+    await this.userDetails(admin)
+  },
+  computed:{
+    ...mapGetters({
+      admin:'getApplicant'
+    })
+  },
   methods:{
         logout(){
       localStorage.removeItem('admin-token')
       this.$router.push('/admin-login')
-    }
+    },
+    ...mapActions(['userDetails'])
   }
 };
 </script>
