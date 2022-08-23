@@ -98,4 +98,12 @@ img {
 .main {
   margin-right: 40px;
 }
+tr:hover {
+  background: #ffffff;
+  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
+  border-left: 7px solid #7557d3;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+}
 </style>

@@ -14,26 +14,69 @@
           <tr class="table-heading">
             <th>Name</th>
             <th>Email</th>
-            <th class="numbs">DOB - Age</th>
+            <th>
+              DOB - Age
+              <img
+                @click="ageAscending"
+                class="toparrow"
+                src="@/assets/toparrow.svg"
+                alt="toparrow"
+                srcset=""
+              />
+              <img
+                @click="ageDescending"
+                class="downarrow"
+                src="@/assets/downarrow.svg"
+                alt="downarrow"
+                srcset=""
+              />
+            </th>
             <th>Adress</th>
             <th>University</th>
-            <th class="numbs">CGPA</th>
+            <th>
+              CGPA
+              <img
+                @click="gpaAscending"
+                class="toparrow"
+                src="@/assets/toparrow.svg"
+                alt="toparrow"
+                srcset=""
+              />
+              <img
+                @click="gpaDescending"
+                class="downarrow"
+                src="@/assets/downarrow.svg"
+                alt="downarrow"
+                srcset=""
+              />
+            </th>
+            <th>
+              Test Scores
+              <img
+                @click="testAscending"
+                class="toparrow"
+                src="@/assets/toparrow.svg"
+                alt="toparrow"
+                srcset=""
+              />
+              <img
+                @click="testDescending"
+                class="downarrow"
+                src="@/assets/downarrow.svg"
+                alt="downarrow"
+                srcset=""
+              />
+            </th>
           </tr>
-          <tr>
-            <td>Ify Chinke</td>
-            <td>ify@enyata.com</td>
-            <td>12/09/19 - 22</td>
-            <td>3 Sabo Ave, Yaba, Lagos</td>
-            <td>University of Nigeria</td>
-            <td>5.0</td>
-          </tr>
-          <tr class="roll1">
-            <td>Ify Chinke</td>
-            <td>ify@enyata.com</td>
-            <td>12/09/19 - 22</td>
-            <td>3 Sabo Ave, Yaba, Lagos</td>
-            <td>University of Nigeria</td>
-            <td>5.0</td>
+          <tr
+            class="rowss"
+            v-for="(row, index) in rows"
+            v-bind:key="index"
+            @click="showModal = true"
+          >
+            <td v-for="(rowItem, Itemindex) in row" v-bind:key="Itemindex">
+              {{ rowItem }}
+            </td>
           </tr>
         </table>
       </div>
@@ -49,9 +92,77 @@ export default {
     SideNav,
     TheLayout,
   },
+  data() {
+    return {
+      rows: [
+        {
+          name: "Afy Chinke",
+          email: "ify@enyata.com",
+          dob: "20",
+          address: "3 Sabo Ave, Yaba, Lagos",
+          university: "University of Nigeria",
+          gpa: "15.0",
+          testScores: "15.0",
+        },
+        {
+          name: "Zfy Chinke",
+          email: "ify@enyata.com",
+          dob: "21",
+          address: "3 Sabo Ave, Yaba, Lagos",
+          university: "University of Nigeria",
+          gpa: "5.0",
+          testScores: "45.0",
+        },
+        {
+          name: "Ify Chinke",
+          email: "ify@enyata.com",
+          dob: "19",
+          address: "3 Sabo Ave, Yaba, Lagos",
+          university: "University of Nigeria",
+          gpa: "55.0",
+          testScores: "25.0",
+        },
+      ],
+      columns: ["Name", "Email", "DOB - Age", "Adress", "University", "CGPA"],
+    };
+  },
+  // mounted() {
+  //   this.gpaAscending();
+  // },
+  methods: {
+    gpaAscending() {
+      this.rows.sort((a, b) => b.gpa - a.gpa);
+    },
+
+    gpaDescending() {
+      this.rows.sort((a, b) => a.gpa - b.gpa);
+    },
+    ageAscending() {
+      this.rows.sort((a, b) => b.dob - a.dob);
+    },
+
+    ageDescending() {
+      this.rows.sort((a, b) => a.dob - b.dob);
+    },
+    testAscending() {
+      this.rows.sort((a, b) => b.testScores - a.testScores);
+    },
+
+    testDescending() {
+      this.rows.sort((a, b) => a.testScores - b.testScores);
+    },
+  },
 };
 </script>
 <style scoped>
+.downarrow {
+  position: absolute;
+  padding-top: 17px;
+  padding-left: 0px;
+}
+.toparrow {
+  padding-right: 0px;
+}
 input {
   border: none;
   background-color: #2b3c4e;
@@ -84,7 +195,7 @@ h2 {
   border-collapse: collapse;
 }
 td {
-  padding: 24px 26px;
+  padding: 24px 6px;
 }
 table {
   border-collapse: collapse;
@@ -95,5 +206,16 @@ img {
 }
 .main {
   margin-right: 40px;
+}
+tr {
+  border-radius: 8px 0px 0px 8px;
+}
+.rowss:hover {
+  background: #ffffff;
+  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
+  border-left: 7px solid #7557d3;
+  border-radius: 8px 0px 0px 8px;
+  margin-top: 20px;
+  cursor: pointer;
 }
 </style>

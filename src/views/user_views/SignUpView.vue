@@ -139,7 +139,7 @@ export default {
       msg: [],
       // inputType: "password",
       inputTypeIcon: "password",
-      error:""
+      error: "",
     };
   },
   methods: {
@@ -158,7 +158,7 @@ export default {
       this.confirmError && value == "confirmPass"
         ? (this.confirmError = "")
         : false;
-        this.error = ""
+      this.error = "";
     },
     createUser() {
       this.user.firstName.length < 2
@@ -185,10 +185,10 @@ export default {
           console.log(res);
           this.$router.push("/login");
         })
-        .catch((err) => {
-          this.error = err.response.data.message
-          });
-          this.error = ""
+        .catch(() => {
+          this.error = "error";
+        });
+      this.error = "";
     },
     validateEmail(value) {
       /* eslint-disable */
