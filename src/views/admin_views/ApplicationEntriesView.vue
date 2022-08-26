@@ -1,4 +1,23 @@
 <template>
+  <MainModal
+    @approve="openApproveButton"
+    @decline="openDenyButton"
+    @close="closeFunction"
+    v-show="mainModalVisibility"
+    class="main-modal"
+  ></MainModal>
+  <DenyDecisionModal
+    @close="closeFunction"
+    v-show="denyModalVisibility"
+    @click="openDenyButton"
+    class="deny-decision"
+  ></DenyDecisionModal>
+  <ApproveDecisionModal
+    @close="closeFunction"
+    v-show="approveModalVisibility"
+    @click="openApproveButton"
+    class="approve-decision"
+  ></ApproveDecisionModal>
   <the-layout>
     <template v-slot:side-nav>
       <SideNav />
@@ -14,143 +33,92 @@
           <tr class="table-heading">
             <th>Name</th>
             <th>Email</th>
-            <th>
+            <th class="numbs">
               DOB - Age
-              <img
-                @click="ageAscending"
-                class="toparrow"
-                src="@/assets/toparrow.svg"
-                alt="toparrow"
-                srcset=""
-              />
-              <img
-                @click="ageDescending"
-                class="downarrow"
-                src="@/assets/downarrow.svg"
-                alt="downarrow"
-                srcset=""
-              />
+              <img src="@/assets/sort-button.svg" alt="sort options button" />
             </th>
             <th>Adress</th>
             <th>University</th>
-            <th>
+            <th class="numbs">
               CGPA
-              <img
-                @click="gpaAscending"
-                class="toparrow"
-                src="@/assets/toparrow.svg"
-                alt="toparrow"
-                srcset=""
-              />
-              <img
-                @click="gpaDescending"
-                class="downarrow"
-                src="@/assets/downarrow.svg"
-                alt="downarrow"
-                srcset=""
-              />
+              <img src="@/assets/sort-button.svg" alt="sort options button" />
             </th>
           </tr>
-          <tr
-            class="rowss"
-            v-for="(row, index) in rows"
-            v-bind:key="index"
-            @click="showModal = true"
-          >
-            <td v-for="(rowItem, Itemindex) in row" v-bind:key="Itemindex">
-              {{ rowItem }}
-            </td>
+          <tr @click="openMainModal" class="roll1">
+            <td>Ify Chinke</td>
+            <td>ify@enyata.com</td>
+            <td>12/09/19 - 22</td>
+            <td>3 Sabo Ave, Yaba, Lagos</td>
+            <td>University of Nigeria</td>
+            <td>5.0</td>
+          </tr>
+          <tr @click="openMainModal" class="roll1">
+            <td>Ify Chinke</td>
+            <td>ify@enyata.com</td>
+            <td>12/09/19 - 22</td>
+            <td>3 Sabo Ave, Yaba, Lagos</td>
+            <td>University of Nigeria</td>
+            <td>5.0</td>
+          </tr>
+          <tr @click="openMainModal" class="roll1">
+            <td>Ify Chinke</td>
+            <td>ify@enyata.com</td>
+            <td>12/09/19 - 22</td>
+            <td>3 Sabo Ave, Yaba, Lagos</td>
+            <td>University of Nigeria</td>
+            <td>5.0</td>
           </tr>
         </table>
       </div>
     </template>
   </the-layout>
 </template>
+
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
+import MainModal from "@/components/MainModal.vue";
+import DenyDecisionModal from "@/components/DenyDecisionModal.vue";
+import ApproveDecisionModal from "@/components/ApproveDecisionModal.vue";
 
 export default {
+  name: "ApplicationEntries",
   components: {
     SideNav,
     TheLayout,
+    DenyDecisionModal,
+    MainModal,
+    ApproveDecisionModal,
   },
   data() {
     return {
-      rows: [
-        {
-          name: "Afy Chinke",
-          email: "ify@enyata.com",
-          dob: "20",
-          address: "3 Sabo Ave, Yaba, Lagos",
-          university: "University of Nigeria",
-          gpa: "15.0",
-        },
-        {
-          name: "Zfy Chinke",
-          email: "ify@enyata.com",
-          dob: "21",
-          address: "3 Sabo Ave, Yaba, Lagos",
-          university: "University of Nigeria",
-          gpa: "5.0",
-        },
-        {
-          name: "Ify Chinke",
-          email: "ify@enyata.com",
-          dob: "19",
-          address: "3 Sabo Ave, Yaba, Lagos",
-          university: "University of Nigeria",
-          gpa: "55.0",
-        },
-      ],
-      columns: ["Name", "Email", "DOB - Age", "Adress", "University", "CGPA"],
+      mainModalVisibility: false,
+      denyModalVisibility: false,
+      approveModalVisibility: false,
     };
   },
-  // mounted() {
-  //   this.gpaAscending();
-  // },
   methods: {
-    gpaAscending() {
-      this.rows.sort((a, b) => b.gpa - a.gpa);
+    openMainModal() {
+      this.mainModalVisibility = true;
     },
-
-    gpaDescending() {
-      this.rows.sort((a, b) => a.gpa - b.gpa);
+    openDenyButton() {
+      this.mainModalVisibility = false;
+      this.denyModalVisibility = true;
     },
-    ageAscending() {
-      this.rows.sort((a, b) => b.dob - a.dob);
+    openApproveButton() {
+      this.mainModalVisibility = false;
+      this.approveModalVisibility = true;
     },
-
-    ageDescending() {
-      this.rows.sort((a, b) => a.dob - b.dob);
+    closeFunction() {
+      this.closeFunction = false;
     },
   },
 };
 </script>
-<style scoped>
-.downarrow {
-  position: absolute;
-  padding-top: 17px;
-  padding-left: 0px;
-}
-.toparrow {
-  padding-right: 0px;
-}
 
-table {
-  border-collapse: collapse;
-}
+<style scoped>
 input {
   border: none;
-  background-color: #2b3c4e;
-}
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 98;
   background-color: #2b3c4e;
 }
 /* .numbs {
@@ -179,7 +147,6 @@ h2 {
   color: white;
   background: #2b3c4e;
   border-collapse: collapse;
-  padding-top: 10px;
 }
 td {
   padding: 24px 26px;
@@ -194,16 +161,14 @@ img {
 .main {
   margin-right: 40px;
 }
-tr {
-  cursor: pointer;
-  transition: 0.4s ease-in-out;
+.main-modal {
+  position: absolute;
 }
-.rowss:hover {
-  background: #ffffff;
-  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
-  border-left: 7px solid #7557d3;
-  border-radius: 8px;
-  margin-top: 20px;
-  cursor: pointer;
+.deny-decision {
+  position: absolute;
+}
+
+.approve-decision {
+  position: absolute;
 }
 </style>

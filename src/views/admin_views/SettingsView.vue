@@ -32,7 +32,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import TimerSettings from "@/components/TimerSettings.vue";
 import Profile from "@/components/AdminProfile.vue";
@@ -90,8 +90,8 @@ h2 {
   padding: 24px 46px;
   width: 188px;
 }
-.setting-div{
-display: flex;
+.setting-div {
+  display: flex;
 }
 .active-tab {
   background: rgba(117, 87, 211, 0.1);

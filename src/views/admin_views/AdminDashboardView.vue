@@ -11,14 +11,14 @@
         <div class="application-info">
           <div class="current-applications">
             <p>Current Applications</p>
-            <h3>{{allApplicants.length}}</h3>
+            <h3>{{ allApplicants.length }}</h3>
             <div></div>
             <p class="small-letters">Academy 2.0</p>
           </div>
 
           <div class="total-applications">
             <p>Total Applications</p>
-            <h3>{{allApplicants.length}}</h3>
+            <h3>{{ allApplicants.length }}</h3>
             <div></div>
             <p class="small-letters">All entries so far</p>
           </div>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import { mapActions, mapGetters } from "vuex";
 
@@ -83,17 +83,17 @@ export default {
     TheLayout,
     SideNav,
   },
-  async created(){
+  async created() {
     await this.applicants();
   },
-  computed:{
+  computed: {
     ...mapGetters({
-      allApplicants:'getApplicants'
-    })
+      allApplicants: "getApplicants",
+    }),
   },
-  methods:{
-    ...mapActions(['applicants'])
-  }
+  methods: {
+    ...mapActions(["applicants"]),
+  },
 };
 </script>
 

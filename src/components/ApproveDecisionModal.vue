@@ -15,6 +15,11 @@
 export default {
   name: "DecisionButton",
   components: {},
+  methods: {
+    close() {
+      this.$emit("close");
+    },
+  },
 };
 </script>
 
