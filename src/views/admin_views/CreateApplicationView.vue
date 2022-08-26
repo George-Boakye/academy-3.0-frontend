@@ -10,12 +10,13 @@
           <div class="main-boxes">
             <div>
               <label class="file-label" for="file"> + Choose file</label>
-              <input class="fileupload" type="file" id="file" />
+              <input class="fileupload" type="file" id="file" v-on:change="selectedFile($event)" />
               <p>{{ fileError }}</p>
             </div>
             <div>
               <label class="box-labels">Link</label><br /><input
                 class="box-input"
+                v-model="user.link"
               />
               <p>{{ linkError }}</p>
             </div>
@@ -27,22 +28,24 @@
                 placeholder="dd/mm/yyyy"
                 onfocus="(this.type='date')"
                 onblur="if(this.value==''){this.type='text'}"
+                v-model="user.closureDate"
               />
               <p>{{ dateError }}</p>
             </div>
             <div>
               <label class="box-labels">Batch ID</label> <br /><input
                 class="box-input"
+                v-model="user.batchId"
               />
               <p>{{ batchIderror }}</p>
             </div>
           </div>
           <div class="box3">
             <label class="box-labels">Instructions</label> <br />
-            <textarea class="text-area" name="" id=""></textarea>
+            <textarea class="text-area" name="" id="" v-model="user.instructions"></textarea>
             <p>{{ instructionsError }}</p>
           </div>
-          <div class="button1"><button>Submit</button></div>
+          <div class="button1" type="submit"><button>Submit</button></div>
         </form>
       </div>
     </template>
@@ -51,6 +54,7 @@
 <script>
 import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -61,7 +65,7 @@ export default {
     return {
       user: {
         link: null,
-        date: null,
+        closureDate: null,
         batchId: "",
         instructions: "",
         file: null,
@@ -79,7 +83,7 @@ export default {
       this.user.link == null
         ? (this.linkError = "upload link!")
         : console.log(this.linkError);
-      this.user.date == null
+      this.user.closureDate == null
         ? (this.dateError = "choose a date!")
         : console.log(this.emailError);
       this.user.batchId.length < 1
@@ -92,7 +96,35 @@ export default {
         ? (this.instructionsError = "input a clear instruction!")
         : console.log(this.instructionError);
 
+
+        const formData = new FormData();
+        formData.append('link', this.user.link);
+        formData.append('closureDate', this.user.closureDate);
+        formData.append('batchId', this.user.batchId);
+        formData.append('instructions', this.user.instructions);
+        formData.append('file', this.user.file);
+
+      const token = localStorage.getItem("admin-token");
+      axios
+        .post(
+          "http://localhost:3000/api/v1/auth/batch-application",
+          formData,
+          {
+            headers: {
+              Authorization: `Basic ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
+    selectedFile(event){
+      this.user.file = event.target.files[0]
+    }
   },
 };
 </script>
