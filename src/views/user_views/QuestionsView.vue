@@ -25,59 +25,27 @@
         <div class="main-body">
           <div class="questions-wrapper">
             <div>
+              <p>Questions {{ index + 1 }}</p>
               <h5>
                 {{ allQuestions[index].question }}
               </h5>
               <div class="checkbox-container">
-                <label>
+                <label
+                  v-for="(answer, alphabets) in allQuestions[index].options"
+                  :key="answer"
+                >
                   <input
+                    :value="alphabets"
                     type="radio"
                     :id="key"
                     name="answers"
                     @change="answered($event)"
                   />
-                  <span :class="{ 'checked-answer': true }">{{ answer }}</span>
+                  <span :class="{ 'checked-answer': true }"
+                    >{{ alphabets.toUpperCase() }} {{ answer }}</span
+                  >
                 </label>
               </div>
-              <!-- <div class="checkbox-container">
-                <label>
-                  <input
-                    type="radio"
-                    :id="key"
-                    name="answers"
-                    @change="answered($event)"
-                  />
-                  <span :class="{ 'checked-answer': true }">{{
-                    allQuestion[index].b
-                  }}</span>
-                </label>
-              </div>
-              <div class="checkbox-container">
-                <label>
-                  <input
-                    type="radio"
-                    :id="key"
-                    name="answers"
-                    @change="answered($event)"
-                  />
-                  <span :class="{ 'checked-answer': true }">{{
-                    allQuestion[index].c
-                  }}</span>
-                </label>
-              </div>
-              <div class="checkbox-container">
-                <label>
-                  <input
-                    type="radio"
-                    :id="key"
-                    name="answers"
-                    @change="answered($event)"
-                  />
-                  <span :class="{ 'checked-answer': true }">{{
-                    allQuestion[index].d
-                  }}</span>
-                </label>
-              </div> -->
             </div>
           </div>
           <div class="bottom">
@@ -111,42 +79,8 @@ export default {
     return {
       selectedAnswer: "",
       index: 0,
-      // questions: [
-      //   {
-      //     questionNumber: "Question 1",
-      //     question: "What is the purpose of HDR technology?",
-      //     answers: {
-      //       a: "A. To reduce the file size of images and videos.",
-      //       b: "B. To speed up 3D rendering performance.",
-      //       c: "C. To support higher video resolutions.",
-      //       d: "D. To display more colors in images and videos",
-      //     },
-      //
-      //   },correctAnswer: "c",
-      //   {
-      //     questionNumber: "Question 2",
-      //     question: "which of these is a programming language ?",
-      //     answers: {
-      //       a: "A. css",
-      //       b: "B. javascript",
-      //       c: "C. vuejs",
-      //       d: "D. html",
-      //     },
-      //     correctAnswer: "b",
-      //   },
-      //   {
-      //     questionNumber: "Question 3",
-      //     question: "which of these is used for styling?",
-      //     answers: {
-      //       a: "A. css",
-      //       b: "B. javascript",
-      //       c: "C. uejs",
-      //       d: "D. html",
-      //     },
-      //     correctAnswer: "a",
-      //   },
-      // ],
-      questionaire: [],
+      answers: [],
+      score: 0,
     };
   },
 
@@ -168,11 +102,11 @@ export default {
       this.$router.push({ name: "successful" });
     },
     ...mapActions({
-      objQuestion: "objQuestion",
+      objQuestion: "questions",
     }),
-    questionslength() {
-      this.questionaire.push(this.allQuestions);
-      console.log(this.questionaire[0][0]);
+    next() {
+      this.answers[this.index] = this.selectedAnswer;
+      this.index++;
     },
   },
 };
@@ -231,10 +165,12 @@ h5 {
   flex-direction: column;
   font-style: italic;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 25px;
   line-height: 17px;
   color: #2b3c4e;
   text-align: center;
+  margin-bottom: 48px;
+  margin-top: 14px;
 }
 .main-body {
   margin-top: 60px;

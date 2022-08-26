@@ -72,8 +72,8 @@ export default {};
   background: #7557d3;
   border-radius: 3px;
   align-items: center;
-   font-family: "Lato";
-   font-size: 16px;
+  font-family: "Lato";
+  font-size: 16px;
 }
 .input2 {
   width: 469px;

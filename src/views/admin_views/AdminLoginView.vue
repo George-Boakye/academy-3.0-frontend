@@ -72,10 +72,9 @@ export default {
           const { token, _id } = res.data.data;
           localStorage.setItem("admin-token", token);
           localStorage.setItem("adminId", _id);
-<<<<<<< HEAD
-=======
+
           console.log(res.data.data.is_admin);
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
+
           if (res.data.data.is_admin == true) {
             this.$router.push("/admin-dashboard");
           } else {
@@ -89,7 +88,7 @@ export default {
     },
     toggleInputIcon() {
       this.inputTypeIcon =
-      this.inputTypeIcon === "password" ? "text" : "password";
+        this.inputTypeIcon === "password" ? "text" : "password";
     },
   },
 };

@@ -6,19 +6,13 @@ export default createStore({
     applicant: [],
     questions: [],
     applicants: [],
-<<<<<<< HEAD
-=======
     batches: [],
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
   },
   getters: {
     getApplicant: (state) => state.applicant,
     getQuestions: (state) => state.questions,
     getApplicants: (state) => state.applicants,
-<<<<<<< HEAD
-=======
     getBatches: (state) => state.batches,
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
   },
   mutations: {
     GET_USER_DETAILS(state, payload) {
@@ -30,12 +24,9 @@ export default createStore({
     ALL_APPLICANTS(state, payload) {
       state.applicants = payload;
     },
-<<<<<<< HEAD
-=======
     GET_ALL_BATCHES(state, payload) {
       state.batches = payload;
     },
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
   },
   actions: {
     async userDetails({ commit }, userId) {
@@ -49,11 +40,7 @@ export default createStore({
         console.log(error);
       }
     },
-<<<<<<< HEAD
-    async objQuestion({ commit }) {
-=======
     async questions({ commit }) {
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
       const token = localStorage.getItem("token");
       try {
         let res = await axios.get(
@@ -65,10 +52,6 @@ export default createStore({
           }
         );
         commit("ALL_QUESTIONS", res.data.data);
-<<<<<<< HEAD
-        console.log("response", res);
-=======
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
         return res;
       } catch (error) {
         console.log(error);
@@ -91,8 +74,6 @@ export default createStore({
         console.log(error);
       }
     },
-<<<<<<< HEAD
-=======
     async allBatches({ commit }) {
       const token = localStorage.getItem("admin-token");
       try {
@@ -110,6 +91,5 @@ export default createStore({
         console.log(error);
       }
     },
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
   },
 });
