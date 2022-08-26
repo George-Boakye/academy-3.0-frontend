@@ -8,7 +8,7 @@
       <h1>Admin Log In</h1>
       <form @submit.prevent="signIn()">
         <label>Email Address</label>
-        <input v-model="user.emailAddress"/>
+        <input v-model="user.emailAddress" />
         <P v-show="emailError">{{ emailError }}</P>
         <div class="password-wrap">
           <label>Password</label>
@@ -66,16 +66,16 @@ export default {
         ? (this.passwordError = "Password must be more than 8 charcacters!")
         : console.log(this.passworderror);
       axios
-        .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
+        .post("http://localhost:3249/api/v1/auth/admin/login", this.user)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           const { token, _id } = res.data.data;
           localStorage.setItem("admin-token", token);
           localStorage.setItem("adminId", _id);
-          if(res.data.data.is_admin == true){
-            this.$router.push('/admin-dashboard')
-          }else{
-            this.$router.push('/admin-login')
+          if (res.data.data.is_admin == true) {
+            this.$router.push("/admin-dashboard");
+          } else {
+            this.$router.push("/admin-login");
           }
         })
         .catch((err) => {

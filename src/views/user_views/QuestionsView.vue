@@ -24,25 +24,60 @@
         </div>
         <div class="main-body">
           <div class="questions-wrapper">
-            <div class="questions">
-              <h5>{{ questions[index]["questionNumber"] }}</h5>
-              <h6>{{ questions[index]["question"] }}</h6>
+            <div>
+              <h5>
+                {{ allQuestions[index].question }}
+              </h5>
               <div class="checkbox-container">
-                <label
-                  :for="key"
-                  v-for="(answer, key) in questions[index]['answers']"
-                  :key="answer"
-                >
+                <label>
                   <input
                     type="radio"
                     :id="key"
                     name="answers"
-                    :value="key"
                     @change="answered($event)"
                   />
-                  <span :class="{'checked-answer': true}">{{ answer }}</span>
+                  <span :class="{ 'checked-answer': true }">{{ answer }}</span>
                 </label>
               </div>
+              <!-- <div class="checkbox-container">
+                <label>
+                  <input
+                    type="radio"
+                    :id="key"
+                    name="answers"
+                    @change="answered($event)"
+                  />
+                  <span :class="{ 'checked-answer': true }">{{
+                    allQuestion[index].b
+                  }}</span>
+                </label>
+              </div>
+              <div class="checkbox-container">
+                <label>
+                  <input
+                    type="radio"
+                    :id="key"
+                    name="answers"
+                    @change="answered($event)"
+                  />
+                  <span :class="{ 'checked-answer': true }">{{
+                    allQuestion[index].c
+                  }}</span>
+                </label>
+              </div>
+              <div class="checkbox-container">
+                <label>
+                  <input
+                    type="radio"
+                    :id="key"
+                    name="answers"
+                    @change="answered($event)"
+                  />
+                  <span :class="{ 'checked-answer': true }">{{
+                    allQuestion[index].d
+                  }}</span>
+                </label>
+              </div> -->
             </div>
           </div>
           <div class="bottom">
@@ -71,58 +106,60 @@ export default {
     SideNav,
     TheLayout,
   },
+
   data() {
     return {
       selectedAnswer: "",
       index: 0,
-      questions: [
-        {
-          questionNumber: "Question 1",
-          question: "What is the purpose of HDR technology?",
-          answers: {
-            a: "A. To reduce the file size of images and videos.",
-            b: "B. To speed up 3D rendering performance.",
-            c: "C. To support higher video resolutions.",
-            d: "D. To display more colors in images and videos",
-          },
-          correctAnswer: "c",
-        },
-        {
-          questionNumber: "Question 2",
-          question: "which of these is a programming language ?",
-          answers: {
-            a: "A. css",
-            b: "B. javascript",
-            c: "C. vuejs",
-            d: "D. html",
-          },
-          correctAnswer: "b",
-        },
-        {
-          questionNumber: "Question 3",
-          question: "which of these is used for styling?",
-          answers: {
-            a: "A. css",
-            b: "B. javascript",
-            c: "C. uejs",
-            d: "D. html",
-          },
-          correctAnswer: "a",
-        },
-      ],
+      // questions: [
+      //   {
+      //     questionNumber: "Question 1",
+      //     question: "What is the purpose of HDR technology?",
+      //     answers: {
+      //       a: "A. To reduce the file size of images and videos.",
+      //       b: "B. To speed up 3D rendering performance.",
+      //       c: "C. To support higher video resolutions.",
+      //       d: "D. To display more colors in images and videos",
+      //     },
+      //
+      //   },correctAnswer: "c",
+      //   {
+      //     questionNumber: "Question 2",
+      //     question: "which of these is a programming language ?",
+      //     answers: {
+      //       a: "A. css",
+      //       b: "B. javascript",
+      //       c: "C. vuejs",
+      //       d: "D. html",
+      //     },
+      //     correctAnswer: "b",
+      //   },
+      //   {
+      //     questionNumber: "Question 3",
+      //     question: "which of these is used for styling?",
+      //     answers: {
+      //       a: "A. css",
+      //       b: "B. javascript",
+      //       c: "C. uejs",
+      //       d: "D. html",
+      //     },
+      //     correctAnswer: "a",
+      //   },
+      // ],
+      questionaire: [],
     };
   },
- async created(){
-  await this.questions()
+
+  async created() {
+    await this.objQuestion();
+    console.log(this.allQuestions);
   },
-    computed: {
-      questionslength() {
-        return this.questions.length;
-      },
-      ...mapGetters({
-        'allQuestions':'getQuestions'
-      })
-    },
+
+  computed: {
+    ...mapGetters({
+      allQuestions: "getQuestions",
+    }),
+  },
   methods: {
     answered(event) {
       this.selectedAnswer = event.target.value;
@@ -130,7 +167,13 @@ export default {
     finishQuiz() {
       this.$router.push({ name: "successful" });
     },
-    ...mapActions(['questions'])
+    ...mapActions({
+      objQuestion: "objQuestion",
+    }),
+    questionslength() {
+      this.questionaire.push(this.allQuestions);
+      console.log(this.questionaire[0][0]);
+    },
   },
 };
 </script>
@@ -184,6 +227,8 @@ h3 {
 }
 h5 {
   font-family: "Lato";
+  display: flex;
+  flex-direction: column;
   font-style: italic;
   font-weight: 500;
   font-size: 14px;
@@ -245,8 +290,8 @@ label {
 input[type="radio"]:checked {
   background-color: black;
 }
-input[type = radio]:checked ~ span {
-background: #31D283;
+input[type="radio"]:checked ~ span {
+  background: #31d283;
 }
 button {
   font-family: "Lato";

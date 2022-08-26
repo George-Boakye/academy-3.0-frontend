@@ -50,8 +50,6 @@ router.beforeEach((to) => {
     }
   }
 
-
-
   if (!to.meta.noAuth && !isAuthenticated) {
     return { name: "login" };
   }
