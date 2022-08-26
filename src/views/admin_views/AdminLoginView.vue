@@ -8,7 +8,7 @@
       <h1>Admin Log In</h1>
       <form @submit.prevent="signIn()">
         <label>Email Address</label>
-        <input v-model="user.emailAddress"/>
+        <input v-model="user.emailAddress" />
         <P v-show="emailError">{{ emailError }}</P>
         <div class="password-wrap">
           <label>Password</label>
@@ -68,14 +68,15 @@ export default {
       axios
         .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           const { token, _id } = res.data.data;
           localStorage.setItem("admin-token", token);
           localStorage.setItem("adminId", _id);
-          if(res.data.data.is_admin == true){
-            this.$router.push('/admin-dashboard')
-          }else{
-            this.$router.push('/admin-login')
+          console.log(res.data.data.is_admin);
+          if (res.data.data.is_admin == true) {
+            this.$router.push("/admin-dashboard");
+          } else {
+            this.$router.push("/admin-login");
           }
         })
         .catch((err) => {
@@ -84,6 +85,7 @@ export default {
         });
     },
     toggleInputIcon() {
+      this.inputTypeIcon =
       this.inputTypeIcon === "password" ? "text" : "password";
     },
   },
@@ -152,6 +154,7 @@ input {
   padding-left: 5px;
   color: #fff;
   background-color: #7557d3;
+  outline: none;
 }
 
 label {
@@ -174,8 +177,9 @@ button {
   width: 379px;
   border-radius: 4px;
   background: #ffff;
-  border-radius: 4px;
   color: #7557d3;
+  font-size: 16px;
+  line-height: 19px;
   cursor: pointer;
 }
 
