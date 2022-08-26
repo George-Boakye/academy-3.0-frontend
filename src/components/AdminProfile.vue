@@ -26,7 +26,7 @@
 
           <div>
             <label>Phone number</label>
-            <input type="number" class="input1" placeholder="(303) 555-0105" />
+            <input type="tel" class="input1" placeholder="(303) 555-0105" />
           </div>
         </div>
         <div class="flex1">
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="button3">
-        <button class="button2" type="submit">Sign Up</button>
+        <button class="button2" type="submit">Save</button>
       </div>
     </form>
   </div>
@@ -65,16 +65,15 @@ export default {};
   margin-bottom: 40px;
 }
 .button2 {
-  top: 80.76%;
-  bottom: 15.53%;
   height: 38px;
   width: 127px;
-  border-radius: 3px;
   border: none;
   color: white;
   background: #7557d3;
   border-radius: 3px;
   align-items: center;
+   font-family: "Lato";
+   font-size: 16px;
 }
 .input2 {
   width: 469px;
@@ -173,7 +172,6 @@ h2 {
   font-size: 15px;
   line-height: 18px;
   /* identical to box height */
-
   letter-spacing: -0.117188px;
   margin-top: 28px;
   color: #ff5722;
