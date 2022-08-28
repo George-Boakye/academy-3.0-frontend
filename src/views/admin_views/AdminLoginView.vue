@@ -66,7 +66,7 @@ export default {
         ? (this.passwordError = "Password must be more than 8 charcacters!")
         : console.log(this.passworderror);
       axios
-        .post("http://localhost:3249/api/v1/auth/admin/login", this.user)
+        .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
         .then((res) => {
           console.log(res);
           const { token, _id } = res.data.data;

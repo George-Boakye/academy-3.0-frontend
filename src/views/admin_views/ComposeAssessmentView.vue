@@ -137,7 +137,18 @@ export default {
         if (this.index < this.questions.length) {
           this.user = { ...this.questions[this.index] };
         } else {
-          this.user = { ...this.questionTemplate };
+          this.user = {
+            options: {
+              a: null,
+              b: null,
+              c: null,
+              d: null,
+            },
+            question: "",
+            selectedAnswer: null,
+            correctAnswer: null,
+            file: null,
+          };
         }
       }
       console.log(this.questions);

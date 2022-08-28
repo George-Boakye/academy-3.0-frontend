@@ -25,24 +25,28 @@
         <div class="main-body">
           <div class="questions-wrapper">
             <div>
-              <p>Questions {{ index + 1 }}</p>
+              <p>Question {{ index + 1 }}</p>
               <h5>
                 {{ allQuestions[index].question }}
               </h5>
               <div class="checkbox-container">
                 <label
-                  v-for="(answer, alphabets) in allQuestions[index].options"
+                  v-for="(answer, alphabet) in allQuestions[index].options"
                   :key="answer"
                 >
                   <input
-                    :value="alphabets"
+                    :checked="selectedAnswer === alphabet"
+                    :value="alphabet"
                     type="radio"
                     :id="key"
                     name="answers"
                     @change="answered($event)"
                   />
-                  <span :class="{ 'checked-answer': true }"
-                    >{{ alphabets.toUpperCase() }} {{ answer }}</span
+                  <span
+                    :class="{
+                      correct: selectedAnswer === alphabet ? true : false,
+                    }"
+                    >{{ alphabet.toUpperCase() }}. {{ answer }}</span
                   >
                 </label>
               </div>
@@ -52,13 +56,13 @@
             <button
               class="preview-button"
               :disabled="index === 0"
-              @click="index--"
+              @click="previous()"
             >
               Previous
             </button>
-            <button class="next-button" @click="index++">Next</button>
+            <button class="next-button" @click="next()">Next</button>
           </div>
-          <button class="finish-button" @click="finishQuiz">Finish</button>
+          <button class="finish-button" @click="finish()">Finish</button>
         </div>
       </div>
     </template>
@@ -68,6 +72,7 @@
 import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import { mapActions, mapGetters } from "vuex";
+import axios from "axios";
 
 export default {
   components: {
@@ -80,7 +85,9 @@ export default {
       selectedAnswer: "",
       index: 0,
       answers: [],
-      score: 0,
+      user: {
+        score: 0,
+      },
     };
   },
 
@@ -98,15 +105,52 @@ export default {
     answered(event) {
       this.selectedAnswer = event.target.value;
     },
-    finishQuiz() {
-      this.$router.push({ name: "successful" });
+    finish() {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+      axios
+        .put(`http://localhost:3000/api/v1/auth/user/${userId}`, this.user, {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          this.$router.push({ name: "successful" })
+        })
+        .catch((error) => {
+          throw error;
+        });
     },
     ...mapActions({
       objQuestion: "questions",
     }),
     next() {
       this.answers[this.index] = this.selectedAnswer;
-      this.index++;
+      if (this.index < this.allQuestions.length - 1) {
+        this.index++;
+      }
+      if (this.index < this.answers.length) {
+        this.selectedAnswer = this.answers[this.index];
+      } else {
+        this.selectedAnswer = "";
+      }
+      this.computeScore();
+    },
+    previous() {
+      this.answers[this.index] = this.selectedAnswer;
+      this.index === 0 ? (this.index = 0) : this.index--;
+      this.selectedAnswer = this.answers[this.index];
+      this.computeScore();
+    },
+    computeScore() {
+      let score = 0;
+      this.answers.forEach((item, index) => {
+        if (item === this.allQuestions[index].correctAnswer) {
+          score += 1;
+        }
+      });
+      this.user.score = score;
     },
   },
 };
@@ -226,7 +270,10 @@ label {
 input[type="radio"]:checked {
   background-color: black;
 }
-input[type="radio"]:checked ~ span {
+/* input[type="radio"]:checked ~ span {
+  background: #31d283;
+} */
+.correct {
   background: #31d283;
 }
 button {

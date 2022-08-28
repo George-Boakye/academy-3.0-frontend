@@ -27,7 +27,7 @@
             soon.<br />
             Best of luck
           </div>
-          <div class="Home-button"><button>Home</button></div>
+          <div class="Home-button" @click="$router.push({name: 'dashboard'})"><button>Home</button></div>
         </div>
       </div>
     </template>
@@ -105,8 +105,6 @@ h5 {
 button {
   height: 41px;
   width: 205px;
-  left: 0px;
-  top: 0px;
   border-radius: 4px;
   background-color: #7557d3;
   border: none;
@@ -115,5 +113,6 @@ button {
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
+  cursor: pointer;
 }
 </style>
