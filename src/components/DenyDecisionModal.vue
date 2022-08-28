@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div @click="close" class="home">
     <div class="alert-message">
       <p>Are you sure you want to decline this application?</p>
 
@@ -15,6 +15,11 @@
 export default {
   name: "DecisionButton",
   components: {},
+  methods: {
+    close() {
+      this.$emit("close");
+    },
+  },
 };
 </script>
 
