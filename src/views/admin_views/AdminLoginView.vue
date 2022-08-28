@@ -66,13 +66,15 @@ export default {
         ? (this.passwordError = "Password must be more than 8 charcacters!")
         : console.log(this.passworderror);
       axios
-        .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
+        .post("http://localhost:3249/api/v1/auth/admin/login", this.user)
         .then((res) => {
           console.log(res);
           const { token, _id } = res.data.data;
           localStorage.setItem("admin-token", token);
           localStorage.setItem("adminId", _id);
+
           console.log(res.data.data.is_admin);
+
           if (res.data.data.is_admin == true) {
             this.$router.push("/admin-dashboard");
           } else {
@@ -86,7 +88,7 @@ export default {
     },
     toggleInputIcon() {
       this.inputTypeIcon =
-      this.inputTypeIcon === "password" ? "text" : "password";
+        this.inputTypeIcon === "password" ? "text" : "password";
     },
   },
 };

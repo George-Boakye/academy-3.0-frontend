@@ -29,7 +29,7 @@
           </div>
           <div>
             <input
-             class="fileupload"
+              class="fileupload"
               type="file"
               id="img"
               name="img"
@@ -158,7 +158,7 @@ export default {
     };
   },
   methods: {
-   createUser() {
+    createUser() {
       this.user.firstName.length < 2
         ? (this.fnameError = "First name not valid!")
         : console.log(this.fnameError);
@@ -204,19 +204,19 @@ export default {
 
       console.log(formData);
 
-       axios
+      axios
         .post("http://localhost:3000/api/v1/auth/application", formData, {
           headers: {
             Authorization: `Basic ${token}`,
           },
         })
         .then((res) => {
-          localStorage.removeItem('token')
+          localStorage.removeItem("token");
           const { data } = res.data;
           localStorage.setItem("token", data.token);
-          if(data.details.applicant){
+          if (data.details.applicant) {
             this.$router.push("/dashboard");
-          }else{
+          } else {
             this.$router.push("/pre-dashboard");
           }
         })
@@ -242,11 +242,9 @@ export default {
     },
     selectedFile(event) {
       this.user.cv = event.target.files[0];
-     
     },
     selectedImg(event) {
       this.user.photo = event.target.files[0];
-    
     },
   },
 };
