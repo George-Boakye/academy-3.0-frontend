@@ -10,7 +10,12 @@
           <div class="main-boxes">
             <div>
               <label class="file-label" for="file"> + Choose file</label>
-              <input class="fileupload" type="file" id="file" v-on:change="selectedFile($event)" />
+              <input
+                class="fileupload"
+                type="file"
+                id="file"
+                v-on:change="selectedFile($event)"
+              />
               <p>{{ fileError }}</p>
             </div>
             <div>
@@ -42,7 +47,12 @@
           </div>
           <div class="box3">
             <label class="box-labels">Instructions</label> <br />
-            <textarea class="text-area" name="" id="" v-model="user.instructions"></textarea>
+            <textarea
+              class="text-area"
+              name=""
+              id=""
+              v-model="user.instructions"
+            ></textarea>
             <p>{{ instructionsError }}</p>
           </div>
           <div class="button1" type="submit"><button>Submit</button></div>
@@ -95,39 +105,31 @@ export default {
       this.user.instructions.length < 5
         ? (this.instructionsError = "input a clear instruction!")
         : console.log(this.instructionError);
-<<<<<<< HEAD
-=======
 
-
-        const formData = new FormData();
-        formData.append('link', this.user.link);
-        formData.append('closureDate', this.user.closureDate);
-        formData.append('batchId', this.user.batchId);
-        formData.append('instructions', this.user.instructions);
-        formData.append('file', this.user.file);
+      const formData = new FormData();
+      formData.append("link", this.user.link);
+      formData.append("closureDate", this.user.closureDate);
+      formData.append("batchId", this.user.batchId);
+      formData.append("instructions", this.user.instructions);
+      formData.append("file", this.user.file);
 
       const token = localStorage.getItem("admin-token");
       axios
-        .post(
-          "http://localhost:3000/api/v1/auth/batch-application",
-          formData,
-          {
-            headers: {
-              Authorization: `Basic ${token}`,
-            },
-          }
-        )
+        .post("http://localhost:3000/api/v1/auth/batch-application", formData, {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        })
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
           console.log(err);
         });
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
     },
-    selectedFile(event){
-      this.user.file = event.target.files[0]
-    }
+    selectedFile(event) {
+      this.user.file = event.target.files[0];
+    },
   },
 };
 </script>

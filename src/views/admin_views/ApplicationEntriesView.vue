@@ -2,20 +2,18 @@
   <MainModal
     @approve="openApproveButton"
     @decline="openDenyButton"
-    @close="closeFunction"
+    @close="closeModal"
     v-show="mainModalVisibility"
     class="main-modal"
   ></MainModal>
   <DenyDecisionModal
-    @close="closeFunction"
+    @close="closeDecisionModal"
     v-show="denyModalVisibility"
-    @click="openDenyButton"
     class="deny-decision"
   ></DenyDecisionModal>
   <ApproveDecisionModal
-    @close="closeFunction"
+    @close="closeDecisionModal"
     v-show="approveModalVisibility"
-    @click="openApproveButton"
     class="approve-decision"
   ></ApproveDecisionModal>
   <the-layout>
@@ -33,18 +31,67 @@
           <tr class="table-heading">
             <th>Name</th>
             <th>Email</th>
-            <th class="numbs">
-              DOB - Age
-              <img src="@/assets/sort-button.svg" alt="sort options button" />
+            <th class="th">
+              <div class="th">
+                <p>DOB - Age</p>
+                <figure>
+                  <img
+                    @click="ageAscending"
+                    class="toparrow"
+                    src="@/assets/toparrow.svg"
+                    alt="toparrow"
+                    srcset=""
+                  />
+
+                  <img
+                    @click="ageDescending"
+                    class="downarrow"
+                    src="@/assets/downarrow.svg"
+                    alt="downarrow"
+                    srcset=""
+                  />
+                </figure>
+              </div>
             </th>
             <th>Adress</th>
             <th>University</th>
-            <th class="numbs">
-              CGPA
-              <img src="@/assets/sort-button.svg" alt="sort options button" />
+            <th class="th">
+              <div class="th">
+                <p>CGPA</p>
+                <figure>
+                  <img
+                    @click="ageAscending"
+                    class="toparrow"
+                    src="@/assets/toparrow.svg"
+                    alt="toparrow"
+                  />
+
+                  <img
+                    @click="ageDescending"
+                    class="downarrow"
+                    src="@/assets/downarrow.svg"
+                    alt="downarrow"
+                  />
+                </figure>
+              </div>
             </th>
           </tr>
-          <tr @click="openMainModal" class="roll1">
+          <tr
+            v-for="(candidate, index) in allApplicants"
+            v-bind:key="index"
+            @click="openMainModal"
+            class="rowss"
+          >
+            <td>
+              {{ candidate.details.firstName }} {{ candidate.details.lastName }}
+            </td>
+            <td>{{ candidate.details.emailAddress }}</td>
+            <td>{{ age(candidate.details.dateOfBirth) }}</td>
+            <td>{{ candidate.details.address }}</td>
+            <td>{{ candidate.details.university }}</td>
+            <td>{{ candidate.details.cgpa }}</td>
+          </tr>
+          <tr @click="openMainModal" class="rowss">
             <td>Ify Chinke</td>
             <td>ify@enyata.com</td>
             <td>12/09/19 - 22</td>
@@ -52,15 +99,7 @@
             <td>University of Nigeria</td>
             <td>5.0</td>
           </tr>
-          <tr @click="openMainModal" class="roll1">
-            <td>Ify Chinke</td>
-            <td>ify@enyata.com</td>
-            <td>12/09/19 - 22</td>
-            <td>3 Sabo Ave, Yaba, Lagos</td>
-            <td>University of Nigeria</td>
-            <td>5.0</td>
-          </tr>
-          <tr @click="openMainModal" class="roll1">
+          <tr @click="openMainModal" class="rowss">
             <td>Ify Chinke</td>
             <td>ify@enyata.com</td>
             <td>12/09/19 - 22</td>
@@ -80,6 +119,8 @@ import TheLayout from "@/components/TheLayout.vue";
 import MainModal from "@/components/MainModal.vue";
 import DenyDecisionModal from "@/components/DenyDecisionModal.vue";
 import ApproveDecisionModal from "@/components/ApproveDecisionModal.vue";
+import { mapActions, mapGetters } from "vuex";
+import { differenceInYears } from "date-fns";
 
 export default {
   name: "ApplicationEntries",
@@ -97,6 +138,22 @@ export default {
       approveModalVisibility: false,
     };
   },
+  async created() {
+    await this.applicants();
+    console.log(this.allApplicants);
+  },
+  computed: {
+    ...mapGetters({
+      allApplicants: "getApplicants",
+    }),
+    age() {
+      return (dob) => {
+        const date = new Date(dob);
+        const age = differenceInYears(new Date(), date);
+        return age;
+      };
+    },
+  },
   methods: {
     openMainModal() {
       this.mainModalVisibility = true;
@@ -109,14 +166,40 @@ export default {
       this.mainModalVisibility = false;
       this.approveModalVisibility = true;
     },
-    closeFunction() {
-      this.closeFunction = false;
+    closeModal() {
+      this.mainModalVisibility = false;
     },
+    closeDecisionModal() {
+      this.approveModalVisibility = false;
+      this.denyModalVisibility = false;
+    },
+    gpaAscending() {
+      this.getUserDetails.sort((a, b) => b.details.cgpa - a.details.cgpa);
+    },
+
+    gpaDescending() {
+      this.getUserDetails.sort((a, b) => a.details.cgpa - b.details.cgpa);
+    },
+    ageAscending() {
+      this.getUserDetails.sort(
+        (a, b) => b.details.dateOfBirth - a.details.dateOfBirth
+      );
+    },
+
+    ageDescending() {
+      this.getUserDetails.sort(
+        (a, b) => a.details.dateOfBirth - b.details.dateOfBirth
+      );
+    },
+    ...mapActions(["applicants"]),
   },
 };
 </script>
 
 <style scoped>
+.toparrow {
+  padding-bottom: 2px;
+}
 input {
   border: none;
   background-color: #2b3c4e;
@@ -154,9 +237,12 @@ td {
 table {
   border-collapse: collapse;
 }
-img {
+/* img {
   padding-left: 14px;
   padding-bottom: 6px;
+} */
+img {
+  cursor: pointer;
 }
 .main {
   margin-right: 40px;
@@ -170,5 +256,32 @@ img {
 
 .approve-decision {
   position: absolute;
+}
+figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  align-self: center;
+}
+tr {
+  border-radius: 8px 0px 0px 8px;
+}
+.rowss:hover {
+  background: #ffffff;
+  box-shadow: 0px 5px 15px rgba(33, 31, 38, 0.05);
+  border-left: 7px solid #7557d3;
+  border-radius: 8px 0px 0px 8px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.th div {
+  display: flex;
+  align-items: center;
+  gap: 0 5px;
+}
+.th p {
+  align-self: flex-end;
 }
 </style>

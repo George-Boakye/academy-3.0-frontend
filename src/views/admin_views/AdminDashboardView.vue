@@ -24,7 +24,7 @@
           </div>
           <div class="academies">
             <p>Academy's</p>
-            <h3>{{batches.length}}</h3>
+            <h3>{{ batches.length }}</h3>
             <div></div>
             <p class="small-letters">So far</p>
           </div>
@@ -85,27 +85,18 @@ export default {
   },
   async created() {
     await this.applicants();
-    await this.allBatches()
+    await this.allBatches();
     // console.log(this.batches)
   },
   computed: {
     ...mapGetters({
-<<<<<<< HEAD
       allApplicants: "getApplicants",
+      batches: "getBatches",
     }),
   },
   methods: {
-    ...mapActions(["applicants"]),
+    ...mapActions(["applicants", "allBatches"]),
   },
-=======
-      allApplicants:'getApplicants',
-      batches:'getBatches'
-    })
-  },
-  methods:{
-    ...mapActions(['applicants', 'allBatches'])
-  }
->>>>>>> 66312006e73f7373d4ef98dff4c11ebeee3b2117
 };
 </script>
 
