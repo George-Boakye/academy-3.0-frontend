@@ -1,10 +1,11 @@
 <template>
   <div class="main">
     <div class="container">
+      <div>
       <div class="image">
         <img src="@/assets/enyata-logowhite.svg" alt="" srcset="" />
       </div>
-
+      
       <h1>Admin Log In</h1>
       <form @submit.prevent="signIn()">
         <label>Email Address</label>
@@ -33,6 +34,7 @@
         </div>
         <button type="submit">Sign In</button>
       </form>
+    </div>
       <div class="admin-bg-img">
         <img src="@/assets/admin-login-Bg.svg" alt="" />
       </div>
@@ -72,19 +74,14 @@ export default {
           const { token, _id } = res.data.data;
           localStorage.setItem("admin-token", token);
           localStorage.setItem("adminId", _id);
-
-          console.log(res.data.data.is_admin);
-
-          if (res.data.data.is_admin == true) {
-            this.$router.push("/admin-dashboard");
-          } else {
-            this.$router.push("/admin-login");
-          }
+          
         })
         .catch((err) => {
           alert("Email or password wrong");
           console.log(err);
         });
+
+        this.$router.push("/admin-dashboard");
     },
     toggleInputIcon() {
       this.inputTypeIcon =
@@ -97,12 +94,15 @@ export default {
 <style scoped>
 .main {
   display: flex;
-  height: 100vh;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   background: #7557d3;
-  /* padding-top: 106px;
-  padding-bottom: 96px; */
+  padding-top: 106px;
+  padding-bottom: 96px;
+}
+.container{
+  display: flex;
+  align-items: center;
 }
 p {
   font-size: 10px;
@@ -190,9 +190,4 @@ button {
   gap: 66px;
 }
 
-.admin-bg-img {
-  position: absolute;
-  top: 106px;
-  right: 0;
-}
 </style>

@@ -2,8 +2,8 @@
   <nav>
     <div class="profile">
       <figure><img :src="admin.img" alt="" /></figure>
-      <h1>{{ admin.firstName }} {{ admin.lastName }}</h1>
-      <p>{{ admin.emailAddress }}</p>
+      <h1>{{ admin.fullName }}</h1>
+      <p>{{ admin.email }}</p>
     </div>
     <div class="links-container">
       <div class="links">
@@ -68,11 +68,11 @@ export default {
   name: "AdminSideNav",
   async created() {
     const admin = localStorage.getItem("adminId");
-    await this.userDetails(admin);
+    await this.adminInfo(admin);
   },
   computed: {
     ...mapGetters({
-      admin: "getApplicant",
+      admin: "getAdmin",
     }),
   },
   methods: {
@@ -80,7 +80,7 @@ export default {
       localStorage.removeItem("admin-token");
       this.$router.push("/admin-login");
     },
-    ...mapActions(["userDetails"]),
+    ...mapActions(["adminInfo"]),
   },
 };
 </script>

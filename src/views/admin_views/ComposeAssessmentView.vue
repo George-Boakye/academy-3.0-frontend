@@ -26,7 +26,7 @@
 
           <div class="main-boxes">
             <div>
-              <label class="box-labels" @click="correctAns('a')"
+              <label class="box-labels option-labels" @click="correctAns('a')"
                 >Option A</label
               >
               <br /><input
@@ -38,7 +38,7 @@
               />
             </div>
             <div>
-              <label class="box-labels" @click="correctAns('b')"
+              <label class="box-labels option-labels" @click="correctAns('b')"
                 >Option B</label
               >
               <br /><input
@@ -51,7 +51,7 @@
             </div>
 
             <div>
-              <label class="box-labels" @click="correctAns('c')"
+              <label class="box-labels option-labels" @click="correctAns('c')"
                 >Option C</label
               >
               <br /><input
@@ -63,7 +63,7 @@
               />
             </div>
             <div>
-              <label class="box-labels" @click="correctAns('d')">Option D</label
+              <label class="box-labels option-labels" @click="correctAns('d')">Option D</label
               ><br /><input
                 class="box-input"
                 :class="{
@@ -93,7 +93,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/adminSideNav.vue";
+import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import axios from "axios";
 
@@ -202,12 +202,6 @@ export default {
 };
 </script>
 <style scoped>
-/* .main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
 p {
   color: red;
   font-size: 10px;
@@ -220,11 +214,11 @@ input {
 .correctAns {
   background: #31d283;
 }
-label {
+.option-labels {
   cursor: pointer;
   padding: 4px;
 }
-label:hover {
+.option-labels:hover {
   background: #31d283;
 }
 .main-text {
@@ -275,9 +269,6 @@ label:hover {
   margin-top: 5px;
 }
 
-/* .box-answer {
-  background-color: #31d283;
-} */
 .box-labels {
   font-weight: 400;
   font-size: 14px;

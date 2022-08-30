@@ -22,7 +22,7 @@
             <td>30 mins</td>
             <td>Taken</td>
           </tr>
-          <tr>
+          <!-- <tr>
             <td>Batch 1</td>
             <td>12/07/94</td>
             <td>30</td>
@@ -35,14 +35,14 @@
             <td>30</td>
             <td>30 mins</td>
             <td>Taken</td>
-          </tr>
+          </tr> -->
         </table>
       </div>
     </template>
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/adminSideNav.vue";
+import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 
 export default {
@@ -57,9 +57,6 @@ input {
   border: none;
   background-color: #2b3c4e;
 }
-/* .numbs {
-  right: 130px;
-} */
 h1 {
   font-style: normal;
   font-weight: 300;

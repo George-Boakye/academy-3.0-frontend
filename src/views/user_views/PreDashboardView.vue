@@ -11,7 +11,6 @@
       <form
         @submit.prevent="createUser"
         class="label-form"
-        action="/action_page.php"
       >
         <div class="uploads">
           <div>
@@ -21,7 +20,7 @@
               id="cv"
               name="cv"
               accept="file_extension"
-              v-on:change="selectedFile($event)"
+              @change="selectFile($event)"
               @keypress="clearError('cv')"
             />
             <label class="file-label" for="cv"> + Upload CV</label>
@@ -34,7 +33,7 @@
               id="img"
               name="img"
               accept="image/*,.pdf"
-              v-on:change="selectedImg($event)"
+              @change="selectImg($event)"
               @keypress="clearError('img')"
             />
             <label class="file-label" for="img"> + Upload Photo</label>
@@ -240,10 +239,10 @@ export default {
         ? (this.addressError = "")
         : false;
     },
-    selectedFile(event) {
+    selectFile(event) {
       this.user.cv = event.target.files[0];
     },
-    selectedImg(event) {
+    selectImg(event) {
       this.user.photo = event.target.files[0];
     },
   },
@@ -278,9 +277,6 @@ h1 {
   text-align: center;
   color: #2b3c4e;
 }
-/* .img {
-  text-align: center;
-} */
 .logo-image {
   text-align: center;
 }
@@ -300,7 +296,6 @@ label {
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   margin-top: 20px;
   color: #4f4f4f;
 }
@@ -326,7 +321,6 @@ p {
   height: 49.97px;
   left: 494px;
   top: 328px;
-  /* margin-right: 22px; */
   border: 1.5px dashed #2b3c4e;
   border-radius: 2.87205px;
   text-align: center;

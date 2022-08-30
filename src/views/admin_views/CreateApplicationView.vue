@@ -14,7 +14,7 @@
                 class="fileupload"
                 type="file"
                 id="file"
-                v-on:change="selectedFile($event)"
+                @change="selectFile($event)"
               />
               <p>{{ fileError }}</p>
             </div>
@@ -62,7 +62,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/adminSideNav.vue";
+import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import axios from "axios";
 
@@ -127,7 +127,7 @@ export default {
           console.log(err);
         });
     },
-    selectedFile(event) {
+    selectFile(event) {
       this.user.file = event.target.files[0];
     },
   },

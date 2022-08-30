@@ -2,9 +2,8 @@
   <div class="home" @click="close">
     <div class="alert-message">
       <p>Are you sure you want to approve this application?</p>
-
       <div class="buttons">
-        <button class="btn1">Yes</button>
+        <button class="btn1" @click="approve">Yes</button>
         <button class="btn2">No</button>
       </div>
     </div>
@@ -12,12 +11,32 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "DecisionButton",
-  components: {},
+  data() {
+    return {
+      applicant: {
+        status: "Approved",
+      },
+    };
+  },
   methods: {
     close() {
       this.$emit("close");
+    },
+    approve() {
+     const userId = localStorage.getItem("userDetails");
+     const token = localStorage.getItem('admin-token')
+      axios.put(`http://localhost:3000/api/v1/auth/user/${userId}`, this.applicant, {
+        headers:{
+          Authorization: `Basic ${token}`
+        }
+      }).then((res)=>{
+        console.log(res)
+      }).catch((errror)=>{
+        throw errror
+      })
     },
   },
 };
@@ -75,5 +94,8 @@ p {
 .btn2 {
   color: #4f4f4f;
   background: #ffffff;
+}
+button {
+  cursor: pointer;
 }
 </style>

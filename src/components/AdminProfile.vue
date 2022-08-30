@@ -7,7 +7,13 @@
     <div class="image">
       <img src="@/assets/admin-image.svg" alt="" srcset="" />
       <form class="label-form" action="/action_page.php">
-        <input class="fileupload" type="file" id="file" name="filename" />
+        <input
+          class="fileupload"
+          type="file"
+          id="file"
+          name="filename"
+          @change="selectFile($event)"
+        />
         <label class="file-label" for="file"> Upload new image</label>
       </form>
       <h2>x Remove</h2>
@@ -17,28 +23,46 @@
         <div class="flex1">
           <div>
             <label>Name</label>
-            <input class="input1" placeholder="Cameron Williamson" />
+            <input
+              class="input1"
+              placeholder="Cameron Williamson"
+              v-model="admin.fullName"
+            />
           </div>
           <div>
             <label>Email</label>
-            <input class="input1" placeholder="debra.holt@example.com" />
+            <input
+              class="input1"
+              placeholder="debra.holt@example.com"
+              v-model="admin.email"
+            />
           </div>
 
           <div>
             <label>Phone number</label>
-            <input type="tel" class="input1" placeholder="(303) 555-0105" />
+            <input
+              type="tel"
+              class="input1"
+              placeholder="(303) 555-0105"
+              v-model="admin.phoneNumber"
+            />
           </div>
         </div>
         <div class="flex1">
           <div>
             <label>Country</label>
-            <input class="input1" placeholder="Afghanistan" />
+            <input
+              class="input1"
+              placeholder="Afghanistan"
+              v-model="admin.country"
+            />
           </div>
           <div>
             <label>Address</label>
             <input
               class="input2"
               placeholder="3891 Ranchview Dr. Richardson, California 62639"
+              v-model="admin.address"
             />
           </div>
         </div>
@@ -51,7 +75,46 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data() {
+    return {
+      admin: {
+        fullName: null,
+        email: null,
+        phoneNumber: null,
+        country: null,
+        address: null,
+        img: null,
+      },
+    };
+  },
+  methods: {
+    save() {
+      const adminId = localStorage.getItem("adminId");
+      const token = localStorage.getItem("admin-token");
+      const formData = new FormData();
+      formData.append("fullName", this.admin.fullName);
+      formData.append("email", this.admin.email);
+      formData.append("phoneNumber", this.admin.phoneNumber);
+      formData.append("country", this.admin.country);
+      formData.append("address", this.admin.address);
+      formData.append("img", this.admin.img);
+      axios.post(
+        `http://localhost:3000/api/v1/auth/admin/${adminId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        }
+      );
+    },
+    selectFile(event) {
+      this.admin.img = event.target.files[0];
+    },
+  },
+};
 </script>
 
 <style scoped>

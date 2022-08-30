@@ -7,16 +7,21 @@ export default createStore({
     questions: [],
     applicants: [],
     batches: [],
+    admin:[],
   },
   getters: {
     getApplicant: (state) => state.applicant,
     getQuestions: (state) => state.questions,
     getApplicants: (state) => state.applicants,
     getBatches: (state) => state.batches,
+    getAdmin: (state) => state.admin,
   },
   mutations: {
     GET_USER_DETAILS(state, payload) {
       state.applicant = payload;
+    },
+    GET_ADMIN_INFO(state, payload) {
+      state.admin = payload;
     },
     ALL_QUESTIONS(state, payload) {
       state.questions = payload;
@@ -35,6 +40,17 @@ export default createStore({
           `http://localhost:3000/api/v1/auth/user/${userId}`
         );
         commit("GET_USER_DETAILS", res.data.data);
+        return res;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async adminInfo({ commit }, adminId) {
+      try {
+        let res = await axios.get(
+          `http://localhost:3000/api/v1/auth/admin/${adminId}`
+        );
+        commit("GET_ADMIN_INFO", res.data.data);
         return res;
       } catch (error) {
         console.log(error);

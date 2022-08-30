@@ -33,7 +33,7 @@
         <div class="card-container">
           <div class="card-1">
             <h4>History</h4>
-            <p>Last Update 18:24, 22/02/19</p>
+            <p>Last Update 18:24, 22/08/22</p>
 
             <div class="main">
               <table style="width: 100%">
@@ -41,10 +41,10 @@
                   <tr>
                     <td>Academy Batch 1</td>
                     <td class="mid-table">15 students</td>
-                    <td>started 11/09/15</td>
+                    <td>started 11/08/22</td>
                   </tr>
                 </div>
-                <tr>
+                <!-- <tr>
                   <td>Academy Batch 2</td>
                   <td class="mid-table">15 students</td>
                   <td>started 11/09/15</td>
@@ -53,7 +53,7 @@
                   <td>Academy Batch 3</td>
                   <td class="mid-table">15 students</td>
                   <td>started 11/09/15</td>
-                </tr>
+                </tr> -->
               </table>
             </div>
           </div>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import SideNav from "@/components/adminSideNav.vue";
+import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import { mapActions, mapGetters } from "vuex";
 
@@ -86,7 +86,6 @@ export default {
   async created() {
     await this.applicants();
     await this.allBatches();
-    // console.log(this.batches)
   },
   computed: {
     ...mapGetters({
