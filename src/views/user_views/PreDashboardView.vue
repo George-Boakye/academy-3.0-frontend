@@ -76,6 +76,7 @@
                 @keypress="clearError('dob')"
                 name="dateOfBirth"
                 v-model="user.dateOfBirth"
+                placeholder="dd/mm/yyyy"
               />
               <p v-show="dobError">{{ dobError }}</p>
             </div>
