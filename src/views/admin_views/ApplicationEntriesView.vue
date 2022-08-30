@@ -91,7 +91,10 @@
               {{ candidate.details.firstName }} {{ candidate.details.lastName }}
             </td>
             <td>{{ candidate.details.emailAddress }}</td>
-            <td>{{date(candidate.details.dateOfBirth)}} - {{ age(candidate.details.dateOfBirth) }}</td>
+            <td>
+              {{ date(candidate.details.dateOfBirth) }} -
+              {{ age(candidate.details.dateOfBirth) }}
+            </td>
             <td>{{ candidate.details.address }}</td>
             <td>{{ candidate.details.university }}</td>
             <td>{{ candidate.details.cgpa }}</td>
@@ -103,13 +106,13 @@
 </template>
 
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import MainModal from "@/components/MainModal.vue";
 import DenyDecisionModal from "@/components/DenyDecisionModal.vue";
 import ApproveDecisionModal from "@/components/ApproveDecisionModal.vue";
 import { mapActions, mapGetters } from "vuex";
-import { differenceInYears,format } from "date-fns";
+import { differenceInYears, format } from "date-fns";
 
 export default {
   name: "ApplicationEntries",
@@ -125,8 +128,8 @@ export default {
       mainModalVisibility: false,
       denyModalVisibility: false,
       approveModalVisibility: false,
-      applicantDate:'',
-      applicantAge:''
+      applicantDate: "",
+      applicantAge: "",
     };
   },
   async created() {
@@ -137,7 +140,6 @@ export default {
     await this.userDetails(userId);
     this.applicantDate = this.date(this.applicant.dateOfBirth);
     this.applicantAge = this.age(this.applicant.dateOfBirth);
-    
   },
   computed: {
     ...mapGetters({
@@ -151,12 +153,12 @@ export default {
         return age;
       };
     },
-       date(){
-        return (dob) => {
-            const date = new Date(dob);
-          return format(date, "dd/MM/yyyy")
-        }
-    }
+    date() {
+      return (dob) => {
+        const date = new Date(dob);
+        return format(date, "dd/MM/yyyy");
+      };
+    },
   },
   methods: {
     openMainModal() {

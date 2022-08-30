@@ -89,7 +89,10 @@
               {{ candidate.details.firstName }} {{ candidate.details.lastName }}
             </td>
             <td>{{ candidate.details.emailAddress }}</td>
-            <td>{{date(candidate.details.dateOfBirth)}} - {{ age(candidate.details.dateOfBirth) }}</td>
+            <td>
+              {{ date(candidate.details.dateOfBirth) }} -
+              {{ age(candidate.details.dateOfBirth) }}
+            </td>
             <td>{{ candidate.details.address }}</td>
             <td>{{ candidate.details.university }}</td>
             <td>{{ candidate.details.cgpa }}</td>
@@ -101,7 +104,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import { mapActions, mapGetters } from "vuex";
 import { differenceInYears, format } from "date-fns";
@@ -129,12 +132,12 @@ export default {
         return age;
       };
     },
-     date(){
-        return (dob) => {
-            const date = new Date(dob);
-          return format(date, "dd/MM/yyyy")
-        }}
-    
+    date() {
+      return (dob) => {
+        const date = new Date(dob);
+        return format(date, "dd/MM/yyyy");
+      };
+    },
   },
   methods: {
     gpaAscending() {

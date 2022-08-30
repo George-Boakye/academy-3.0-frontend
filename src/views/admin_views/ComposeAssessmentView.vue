@@ -63,7 +63,8 @@
               />
             </div>
             <div>
-              <label class="box-labels option-labels" @click="correctAns('d')">Option D</label
+              <label class="box-labels option-labels" @click="correctAns('d')"
+                >Option D</label
               ><br /><input
                 class="box-input"
                 :class="{
@@ -93,7 +94,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import axios from "axios";
 

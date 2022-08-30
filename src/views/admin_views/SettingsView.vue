@@ -32,7 +32,7 @@
   </the-layout>
 </template>
 <script>
-import SideNav from "@/components/AdminSideNav.vue";
+import SideNav from "@/components/adminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import TimerSettings from "@/components/TimerSettings.vue";
 import Profile from "@/components/AdminProfile.vue";
