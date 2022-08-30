@@ -192,6 +192,7 @@ export default {
             file: null,
           };
       this.index = 0;
+      this.questions = []
 
     },
     correctAns(value) {
