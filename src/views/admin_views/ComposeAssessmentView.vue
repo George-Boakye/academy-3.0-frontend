@@ -179,8 +179,20 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      this.user = this.questionTemplate;
+      this.user = {
+            options: {
+              a: null,
+              b: null,
+              c: null,
+              d: null,
+            },
+            question: "",
+            selectedAnswer: null,
+            correctAnswer: null,
+            file: null,
+          };
       this.index = 0;
+
     },
     correctAns(value) {
       this.user.correctAnswer = value;
