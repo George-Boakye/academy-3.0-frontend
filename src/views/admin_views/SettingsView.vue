@@ -36,6 +36,7 @@ import SideNav from "@/components/AdminSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import TimerSettings from "@/components/TimerSettings.vue";
 import Profile from "@/components/AdminProfile.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -49,12 +50,23 @@ export default {
       component: "Profile",
     };
   },
+  async created(){
+    const admin = localStorage.getItem("adminId");
+    await this.adminInfo(admin)
+    localStorage.setItem('seconds', this.admin.time)
+  },
+  computed:{
+    ...mapGetters({
+      admin: "getAdmin",
+    }),
+  },
   methods: {
     toggle() {
       this.component === "Profile"
         ? (this.component = "TimerSettings")
         : (this.component = "Profile");
     },
+    ...mapActions(['adminInfo'])
   },
 };
 </script>

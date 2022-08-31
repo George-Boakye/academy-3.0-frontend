@@ -48,6 +48,7 @@
                 @keypress="clearError('fname')"
                 name="firstName"
                 v-model="user.firstName"
+                readonly
               />
               <p v-show="fnameError">{{ fnameError }}</p>
             </div>
@@ -57,6 +58,7 @@
                 @keypress="clearError('lname')"
                 name="lastName"
                 v-model="user.lastName"
+                readonly
               />
               <p v-show="lnameError">{{ lnameError }}</p>
             </div>
@@ -67,6 +69,7 @@
                 @keypress="clearError('email')"
                 name="emailAddress"
                 v-model="user.emailAddress"
+                readonly
               />
               <p v-show="emailError">{{ emailError }}</p>
             </div>
@@ -156,6 +159,11 @@ export default {
 
       error: "",
     };
+  },
+  created(){
+  this.user.firstName =  localStorage.getItem('firstName');
+  this.user.lastName =  localStorage.getItem('lastName');
+  this.user.emailAddress =  localStorage.getItem('email');
   },
   methods: {
     createUser() {

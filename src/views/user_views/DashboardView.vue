@@ -37,10 +37,13 @@
           <div class="card">
             <h4>Take Assessment</h4>
             <div class="assessment-container">
-              <p>
-                We have 4 days left until the next assessment Watch this space
+              <p v-show="daysForTest >= 0">
+                We have {{daysForTest}} days left until the next assessment Watch this space
               </p>
-              <button>Take Assessment</button>
+              <p v-show ="daysForTest == 0">
+                You can now take the Assessment 
+              </p>
+              <button :disabled="daysForTest > 1">Take Assessment</button>
             </div>
           </div>
         </div>
@@ -53,7 +56,7 @@
 import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import { mapActions, mapGetters } from "vuex";
-import { formatDistance, format } from "date-fns";
+import { formatDistance, format, differenceInDays } from "date-fns";
 
 export default {
   components: {
@@ -63,6 +66,9 @@ export default {
   async created() {
     const userId = localStorage.getItem("userId");
     await this.userDetails(userId);
+  },
+  mounted(){
+    localStorage.setItem('timer', this.applicant.time)
   },
   computed: {
     ...mapGetters({
@@ -79,6 +85,9 @@ export default {
       const date = new Date(this.applicant.createdAt);
       return format(date, "dd.MM.yy");
     },
+    daysForTest(){
+      return differenceInDays(new Date(2022,8,5,12,0,0), new Date())
+    }
   },
   methods: {
     ...mapActions(["userDetails"]),

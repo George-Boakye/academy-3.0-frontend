@@ -13,8 +13,8 @@
           <div>
             <h3>Timer</h3>
             <h4>
-              <span class="timer">23</span><span class="time-range">min</span
-              ><span class="timer">043<span class="time-range">sec</span></span>
+              <span class="timer">{{getTime.min}}</span><span class="time-range">min</span
+              ><span class="timer">{{getTime.sec}}<span class="time-range">sec</span></span>
             </h4>
           </div>
         </div>
@@ -36,12 +36,30 @@
 <script>
 import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
+import { intervalToDuration } from "date-fns";
 
 export default {
   components: {
     SideNav,
     TheLayout,
   },
+  data(){
+    return{
+      stopTime:null
+    }
+  },
+  mounted(){
+    this.stopTime = localStorage.getItem('stopTime')
+  },
+  computed:{
+    getTime(){
+      const duration = intervalToDuration({start: 0, end: this.stopTime * 1000})
+      return{
+        min:duration.minutes.toString().padStart(2, '0'),
+        sec:duration.seconds.toString().padStart(2, '0')
+      }
+    }
+  }
 };
 </script>
 <style scoped>

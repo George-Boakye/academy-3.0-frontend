@@ -24,22 +24,10 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   let token = localStorage.getItem("token");
-  // let admin = localStorage.getItem("admin-token")
   let isAuthenticated = false;
   let decoded;
-  // let decodedAdmin;
   let adminAuth = false;
 
-  // if(admin){
-  //   decodedAdmin = jwt_decode(admin);
-  //   const expirydate = new Date(decodedAdmin.exp * 1000);
-  //   const now = new Date();
-
-  //   if (now < expirydate) {
-  //     adminAuth = true;
-  //   }
-
-  // }
   if (token) {
     decoded = jwt_decode(token);
     const expirydate = new Date(decoded.exp * 1000);

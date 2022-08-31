@@ -79,6 +79,9 @@ export default {
           const { data } = res.data;
           localStorage.setItem("token", data.token);
           localStorage.setItem("userId", data._id);
+          localStorage.setItem('firstName', data.firstName);
+          localStorage.setItem('lastName', data.lastName);
+          localStorage.setItem('email', data.emailAddress);
           if (data.applied === false) {
             this.$router.push("/pre-dashboard");
           } else {
@@ -86,7 +89,6 @@ export default {
           }
         })
         .catch((err) => {
-          // alert("Email or password wrong");
           this.serverError = err.response.data.message;
         });
     },

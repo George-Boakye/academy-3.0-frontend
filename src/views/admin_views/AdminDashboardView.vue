@@ -44,16 +44,6 @@
                     <td>started 11/08/22</td>
                   </tr>
                 </div>
-                <!-- <tr>
-                  <td>Academy Batch 2</td>
-                  <td class="mid-table">15 students</td>
-                  <td>started 11/09/15</td>
-                </tr>
-                <tr>
-                  <td>Academy Batch 3</td>
-                  <td class="mid-table">15 students</td>
-                  <td>started 11/09/15</td>
-                </tr> -->
               </table>
             </div>
           </div>
