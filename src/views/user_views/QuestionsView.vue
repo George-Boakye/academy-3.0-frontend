@@ -96,6 +96,7 @@ export default {
       answers: [],
       user: {
         score: 0,
+        takenTest:null
       },
       stopTime: 0,
       timer: 0,
@@ -143,6 +144,9 @@ export default {
     finish() {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
+
+      this.user.takenTest = true
+
       axios
         .put(`http://localhost:3000/api/v1/auth/user/${userId}`, this.user, {
           headers: {
