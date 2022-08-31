@@ -42,7 +42,9 @@
             v-model="applicant.cgpa"
           />
 
-          <button @click="approve">Approve</button>
+          <button v-show="applicant.status === 'Pending'" @click="approve">
+            Approve
+          </button>
         </div>
 
         <div class="section-2">
@@ -73,32 +75,44 @@
           <label for="">CV</label>
           <input type="text" v-model="applicant.cv" />
 
-          <button @click="decline">Decline</button>
+          <button v-show="applicant.status === 'Pending'" @click="decline">
+            Decline
+          </button>
         </div>
+      </div>
+      <div
+        :class="[
+          applicant.status === 'Approved'
+            ? 'status-approved'
+            : 'status-declined',
+          'status',
+        ]"
+        v-show="applicant.status !== 'Pending'"
+      >
+        <p>{{ applicant.status }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "MainModal",
-  data(){
-    return{
-    }
+  data() {
+    return {};
   },
-  props:['date','age'],
-  computed:{
-    fullName(){
-      return this.applicant.firstName + ' ' + this.applicant.lastName
+  props: ["date", "age"],
+  computed: {
+    fullName() {
+      return this.applicant.firstName + " " + this.applicant.lastName;
     },
     ...mapGetters({
-      applicant:'getApplicant'
+      applicant: "getApplicant",
     }),
-    applicantDate(){
-      return `${this.date} - ${this.age}`
+    applicantDate() {
+      return `${this.date} - ${this.age}`;
     },
   },
   methods: {
@@ -111,7 +125,6 @@ export default {
     decline() {
       this.$emit("decline");
     },
-   
   },
 };
 </script>
@@ -205,5 +218,14 @@ input {
 img {
   width: 100%;
   height: 100%;
+}
+.status-approved {
+  color: #31d283;
+}
+.status-declined {
+  color: red;
+}
+.status {
+  text-align: center;
 }
 </style>

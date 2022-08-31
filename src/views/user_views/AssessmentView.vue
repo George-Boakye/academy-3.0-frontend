@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     takeAssesment() {
+
       this.$router.push({ name: "questions" });
     },
   },

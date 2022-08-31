@@ -17,8 +17,16 @@
           <div>
             <h3>Timer</h3>
             <h4>
-              <span class="timer">00</span><span class="time-range">min</span
-              ><span class="timer">000<span class="time-range">sec</span></span>
+              <span
+                class="timer"
+                :class="[Number(getTime.min) > 20 ? 'time-up' : '']"
+                >{{ getTime.min }}</span
+              ><span class="time-range">min</span
+              ><span
+                class="timer"
+                :class="[Number(getTime.min) > 20 ? 'time-up' : '']"
+                >{{ getTime.sec }}<span class="time-range">sec</span></span
+              >
             </h4>
           </div>
         </div>
@@ -62,7 +70,7 @@
             </button>
             <button class="next-button" @click="next()">Next</button>
           </div>
-          <button class="finish-button" @click="finish()">Finish</button>
+          <button class="finish-button" @click="stop(); finish()">Finish</button>
         </div>
       </div>
     </template>
@@ -73,6 +81,7 @@ import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
+import { intervalToDuration } from "date-fns";
 
 export default {
   components: {
@@ -87,27 +96,57 @@ export default {
       answers: [],
       user: {
         score: 0,
+        takenTest:null
       },
+      stopTime: 0,
+      timer: 0,
+      time: null,
     };
   },
 
-  async created() {
+ async created() {
     await this.objQuestion();
-    console.log(this.allQuestions);
+    this.time = Number(localStorage.getItem("timer"));
+    this.startTimer(), 
+    this.stopTime = setInterval(this.startTimer, 1000);
   },
-
+  watch:{
+    timer(value){
+      if(value >= this.time){
+        this.stop()
+        this.finish()
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       allQuestions: "getQuestions",
     }),
+    getTime() {
+      const duration = intervalToDuration({ start: 0, end: this.timer * 1000 });
+      return {
+        min: duration.minutes.toString().padStart(2, "0"),
+        sec: duration.seconds.toString().padStart(2, "0"),
+      };
+    },
   },
   methods: {
+    startTimer() {
+      this.timer++;
+    },
+    stop() {
+      clearInterval(this.stopTime);
+      localStorage.setItem('stopTime', this.timer)
+    },
     answered(event) {
       this.selectedAnswer = event.target.value;
     },
     finish() {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
+
+      this.user.takenTest = true
+
       axios
         .put(`http://localhost:3000/api/v1/auth/user/${userId}`, this.user, {
           headers: {
@@ -115,8 +154,8 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res)
-          this.$router.push({ name: "successful" })
+          console.log(res);
+          this.$router.push({ name: "successful" });
         })
         .catch((error) => {
           throw error;
@@ -313,5 +352,8 @@ button {
   border: none;
   color: white;
   cursor: pointer;
+}
+.time-up {
+  color: red;
 }
 </style>

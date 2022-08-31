@@ -48,8 +48,12 @@ export default {
   methods: {
     ...mapActions(["userDetails"]),
     logout(){
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem("firstName");
+      localStorage.removeItem("lastName");
+      localStorage.removeItem("email");
+      localStorage.removeItem("timer");
       this.$router.push('/login')
     }
   },

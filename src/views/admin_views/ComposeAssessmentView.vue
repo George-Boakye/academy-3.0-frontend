@@ -198,7 +198,6 @@ export default {
     },
     correctAns(value) {
       this.user.correctAnswer = value;
-      this.holder = value;
     },
 
     // composeApplication() {
