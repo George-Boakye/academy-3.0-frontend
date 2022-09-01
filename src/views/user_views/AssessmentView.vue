@@ -38,6 +38,7 @@
   </the-layout>
 </template>
 <script>
+import axios from "axios";
 import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
 
@@ -48,8 +49,20 @@ export default {
   },
   methods: {
     takeAssesment() {
-
-      this.$router.push({ name: "questions" });
+      const userId = localStorage.getItem("userId");
+      axios
+        .get(`http://localhost:3000/api/v1/auth/user/${userId}`)
+        .then((res) => {
+          const { data } = res.data;
+          if (data.takenTest === false) {
+            this.$router.push({ name: "questions" });
+          } else {
+            this.$router.push("/successful");
+          }
+        })
+        .catch((err) => {
+          this.serverError = err.response.data.message;
+        });
     },
   },
 };
