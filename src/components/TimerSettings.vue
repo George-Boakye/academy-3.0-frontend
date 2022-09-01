@@ -73,7 +73,6 @@ export default {
       let seconds = [];
       for (let i = 0; i < 60; i++) {
         i = i.toString().padStart(3, "0");
-
         seconds.push(i);
       }
       return seconds;

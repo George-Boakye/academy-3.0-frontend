@@ -163,7 +163,6 @@ export default {
               Authorization: `Basic ${token}`,
             },
           }
-          // { takenTest: true }
         )
         .then((res) => {
           console.log(res);
