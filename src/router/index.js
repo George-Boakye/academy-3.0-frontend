@@ -26,7 +26,6 @@ router.beforeEach((to) => {
   let token = localStorage.getItem("token");
   let isAuthenticated = false;
   let decoded;
-  let adminAuth = false;
 
   if (token) {
     decoded = jwt_decode(token);
@@ -53,9 +52,6 @@ router.beforeEach((to) => {
   }
   if (isAuthenticated && to.name === "login") {
     return { name: "dashboard" };
-  }
-  if (adminAuth && to.name === "admin-login") {
-    return { name: "admin-dashboard" };
   }
   return true;
 });

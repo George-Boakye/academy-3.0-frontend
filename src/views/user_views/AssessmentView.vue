@@ -22,15 +22,24 @@
           </div>
         </div>
         <div class="body-section">
-          <div class="hourglass">
+          <div class="hourglass" v-show="applicant.takenTest === false">
             <img src="@/assets/hourglass.svg" alt="" srcset="" />
           </div>
-          <div class="main-text">
+          <div class="main-text" v-show="applicant.takenTest === false">
             We have 4 days left until the next assessment<br />
             Watch this space
           </div>
+          <div class="main-text" v-show="applicant.takenTest === true">
+            You have already taken the assessment
+          </div>
           <div>
-            <button @click="takeAssesment()">Take Assessment</button>
+            <button
+              @click="takeAssesment()"
+              :disabled="applicant.takenTest === true"
+              v-show="applicant.takenTest === false"
+            >
+              Take Assessment
+            </button>
           </div>
         </div>
       </div>
@@ -40,17 +49,26 @@
 <script>
 import SideNav from "@/components/UserSideNav.vue";
 import TheLayout from "@/components/TheLayout.vue";
-
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     SideNav,
     TheLayout,
   },
+  async created() {
+    const userId = localStorage.getItem("userId");
+    await this.userDetails(userId);
+  },
+  computed: {
+    ...mapGetters({
+      applicant: "getApplicant",
+    }),
+  },
   methods: {
     takeAssesment() {
-
       this.$router.push({ name: "questions" });
     },
+    ...mapActions(["userDetails"]),
   },
 };
 </script>
@@ -60,6 +78,7 @@ export default {
   justify-content: space-between;
   padding-right: 82px;
 }
+
 h1 {
   font-weight: 300;
   font-size: 43.5555px;
@@ -68,6 +87,7 @@ h1 {
   margin-bottom: 14px;
   color: #2b3c4e;
 }
+
 h2 {
   font-style: italic;
   font-weight: 500;
@@ -75,6 +95,7 @@ h2 {
   line-height: 19px;
   color: #2b3c4e;
 }
+
 h3 {
   font-weight: 400;
   font-size: 14px;
@@ -82,6 +103,7 @@ h3 {
   margin-bottom: 10px;
   color: #4f4f4f;
 }
+
 .timer {
   font-weight: 300;
   font-size: 48px;
@@ -89,6 +111,7 @@ h3 {
   text-align: center;
   color: #2b3c4e;
 }
+
 .time-range {
   font-weight: 400;
   font-size: 12px;
@@ -96,10 +119,12 @@ h3 {
   text-align: center;
   color: #4f4f4f;
 }
+
 .body-section {
   text-align: center;
   margin-top: 160px;
 }
+
 .hourglass {
   margin-bottom: 24px;
 }
@@ -112,6 +137,7 @@ h3 {
   color: #4f4f4f;
   margin-bottom: 24px;
 }
+
 button {
   font-family: "Lato";
   background: #b1b1b1;

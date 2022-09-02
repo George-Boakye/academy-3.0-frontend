@@ -13,7 +13,7 @@
             <p>Current Applications</p>
             <h3>{{ allApplicants.length }}</h3>
             <div></div>
-            <p class="small-letters">Academy 2.0</p>
+            <p class="small-letters">Academy 1.0</p>
           </div>
 
           <div class="total-applications">

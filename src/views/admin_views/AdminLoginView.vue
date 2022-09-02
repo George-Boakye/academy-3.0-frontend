@@ -74,14 +74,12 @@ export default {
           const { token, _id } = res.data.data;
           localStorage.setItem("admin-token", token);
           localStorage.setItem("adminId", _id);
-          
         })
         .catch((err) => {
           alert("Email or password wrong");
           console.log(err);
         });
-
-        this.$router.push("/admin-dashboard");
+        this.$router.push({name: 'admin-dashboard'})
     },
     toggleInputIcon() {
       this.inputTypeIcon =

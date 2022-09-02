@@ -70,7 +70,15 @@
             </button>
             <button class="next-button" @click="next()">Next</button>
           </div>
-          <button class="finish-button" @click="stop(); finish()">Finish</button>
+          <button
+            class="finish-button"
+            @click="
+              stop();
+              finish();
+            "
+          >
+            Finish
+          </button>
         </div>
       </div>
     </template>
@@ -96,7 +104,7 @@ export default {
       answers: [],
       user: {
         score: 0,
-        takenTest:null
+        takenTest: null,
       },
       stopTime: 0,
       timer: 0,
@@ -104,19 +112,18 @@ export default {
     };
   },
 
- async created() {
+  async created() {
     await this.objQuestion();
     this.time = Number(localStorage.getItem("timer"));
-    this.startTimer(), 
-    this.stopTime = setInterval(this.startTimer, 1000);
+    this.startTimer(), (this.stopTime = setInterval(this.startTimer, 1000));
   },
-  watch:{
-    timer(value){
-      if(value >= this.time){
-        this.stop()
-        this.finish()
+  watch: {
+    timer(value) {
+      if (value >= this.time) {
+        this.stop();
+        this.finish();
       }
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -136,7 +143,7 @@ export default {
     },
     stop() {
       clearInterval(this.stopTime);
-      localStorage.setItem('stopTime', this.timer)
+      localStorage.setItem("stopTime", this.timer);
     },
     answered(event) {
       this.selectedAnswer = event.target.value;
@@ -145,14 +152,18 @@ export default {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
 
-      this.user.takenTest = true
+      this.user.takenTest = true;
 
       axios
-        .put(`http://localhost:3000/api/v1/auth/user/${userId}`, this.user, {
-          headers: {
-            Authorization: `Basic ${token}`,
-          },
-        })
+        .put(
+          `http://localhost:3000/api/v1/auth/user/${userId}`,
+          this.user,
+          {
+            headers: {
+              Authorization: `Basic ${token}`,
+            },
+          }
+        )
         .then((res) => {
           console.log(res);
           this.$router.push({ name: "successful" });
