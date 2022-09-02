@@ -66,8 +66,6 @@ export default {
   async created() {
     const userId = localStorage.getItem("userId");
     await this.userDetails(userId);
-  },
-  mounted(){
     localStorage.setItem('timer', this.applicant.time)
   },
   computed: {
