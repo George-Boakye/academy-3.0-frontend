@@ -116,7 +116,6 @@ export default {
   },
   async created() {
     await this.applicants();
-    console.log(this.allApplicants);
   },
   computed: {
     ...mapGetters({
