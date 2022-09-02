@@ -9,7 +9,6 @@ import SettingsView from "@/views/admin_views/SettingsView.vue";
 import jwt_decode from "jwt-decode";
 
 let admin = localStorage.getItem("admin-token");
-// let decoded = jwt_decode(token)
 let decodedAdmin;
 let adminAuth = false;
 
