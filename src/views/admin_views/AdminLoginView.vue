@@ -9,7 +9,7 @@
       <h1>Admin Log In</h1>
       <form @submit.prevent="signIn()">
         <label>Email Address</label>
-        <input v-model="user.emailAddress" />
+        <input v-model="user.email" />
         <P v-show="emailError">{{ emailError }}</P>
         <div class="password-wrap">
           <label>Password</label>
@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       user: {
-        emailAddress: "",
+        email: "",
         password: "",
       },
       inputType: "password",
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     signIn() {
-      !this.user.emailAddress.includes("@")
+      !this.user.email.includes("@")
         ? (this.emailError = "Email address not valid!")
         : console.log(this.emailError);
       this.user.password.length < 8
@@ -71,15 +71,20 @@ export default {
         .post("http://localhost:3000/api/v1/auth/admin/login", this.user)
         .then((res) => {
           console.log(res);
-          const { token, _id } = res.data.data;
+          const { token, _id, is_admin} = res.data.data;
           localStorage.setItem("admin-token", token);
           localStorage.setItem("adminId", _id);
+          console.log(is_admin)
+          if (is_admin === false) {
+            this.$router.push("/admin-login");
+          } else {
+            this.$router.push({name: 'admin-dashboard'})
+          }
         })
         .catch((err) => {
           alert("Email or password wrong");
           console.log(err);
         });
-        this.$router.push({name: 'admin-dashboard'})
     },
     toggleInputIcon() {
       this.inputTypeIcon =

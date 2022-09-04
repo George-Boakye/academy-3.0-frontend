@@ -2,39 +2,41 @@
   <div class="main">
     <div class="profile">
       <h1>Profiles Setting</h1>
-      <button>Edit</button>
+      <button @click="edit">Edit</button>
     </div>
-    <div class="image">
-      <img src="@/assets/admin-image.svg" alt="" srcset="" />
-      <form class="label-form" action="/action_page.php">
-        <input
-          class="fileupload"
-          type="file"
-          id="file"
-          name="filename"
-          @change="selectFile($event)"
-        />
-        <label class="file-label" for="file"> Upload new image</label>
-      </form>
-      <h2>x Remove</h2>
-    </div>
-    <form>
+    <form @submit.prevent="save()">
+      <div class="image">
+        <img :src="admin.img" alt="" srcset="" />
+        <div class="label-form">
+          <input
+            class="fileupload"
+            type="file"
+            id="file"
+            name="filename"
+            @change="selectFile($event)"
+          />
+          <label class="file-label" for="file"> Upload new image</label>
+        </div>
+        <h2 class="remove" @click="remove">x Remove</h2>
+      </div>
       <div class="inputs-wrapper">
         <div class="flex1">
           <div>
             <label>Name</label>
             <input
               class="input1"
-              placeholder="Cameron Williamson"
-              v-model="admin.fullName"
+              :placeholder="admin.fullName"
+              :readonly="isDisabled"
+              v-model="user.fullName"
             />
           </div>
           <div>
             <label>Email</label>
             <input
               class="input1"
-              placeholder="debra.holt@example.com"
-              v-model="admin.email"
+              :placeholder="admin.email"
+              :readonly="isDisabled"
+              v-model="user.email"
             />
           </div>
 
@@ -43,8 +45,9 @@
             <input
               type="tel"
               class="input1"
-              placeholder="(303) 555-0105"
-              v-model="admin.phoneNumber"
+              :placeholder="admin.phoneNumber"
+              :readonly="isDisabled"
+              v-model="user.phoneNumber"
             />
           </div>
         </div>
@@ -53,16 +56,18 @@
             <label>Country</label>
             <input
               class="input1"
-              placeholder="Afghanistan"
-              v-model="admin.country"
+              :placeholder="admin.country"
+              :readonly="isDisabled"
+              v-model="user.country"
             />
           </div>
           <div>
             <label>Address</label>
             <input
               class="input2"
-              placeholder="3891 Ranchview Dr. Richardson, California 62639"
-              v-model="admin.address"
+              :placeholder="admin.address"
+              :readonly="isDisabled"
+              v-model="user.address"
             />
           </div>
         </div>
@@ -76,10 +81,11 @@
 
 <script>
 import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      admin: {
+      user: {
         fullName: null,
         email: null,
         phoneNumber: null,
@@ -87,32 +93,77 @@ export default {
         address: null,
         img: null,
       },
+      isDisabled: true,
     };
   },
+  async created() {
+    const adminId = localStorage.getItem("adminId");
+    await this.adminInfo(adminId);
+    this.user.fullName = this.admin.fullName;
+    this.user.email = this.admin.email;
+    this.user.phoneNumber = this.admin.phoneNumber;
+    this.user.country = this.admin.country;
+    this.user.address = this.admin.address;
+  },
+  async updated() {
+    const adminId = localStorage.getItem("adminId");
+    await this.adminInfo(adminId);
+  },
+  computed: {
+    ...mapGetters({
+      admin: "getAdmin",
+    }),
+  },
   methods: {
+    edit() {
+      this.isDisabled = false;
+    },
+    remove() {
+      const user = {
+        img: "",
+      };
+      const adminId = localStorage.getItem("adminId");
+      const token = localStorage.getItem("admin-token");
+      axios
+        .put(`http://localhost:3000/api/v1/auth/admin/img/${adminId}`, user, {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     save() {
       const adminId = localStorage.getItem("adminId");
       const token = localStorage.getItem("admin-token");
       const formData = new FormData();
-      formData.append("fullName", this.admin.fullName);
-      formData.append("email", this.admin.email);
-      formData.append("phoneNumber", this.admin.phoneNumber);
-      formData.append("country", this.admin.country);
-      formData.append("address", this.admin.address);
-      formData.append("img", this.admin.img);
-      axios.post(
-        `http://localhost:3000/api/v1/auth/admin/${adminId}`,
-        formData,
-        {
+      formData.append("fullName", this.user.fullName);
+      formData.append("email", this.user.email);
+      formData.append("phoneNumber", this.user.phoneNumber);
+      formData.append("country", this.user.country);
+      formData.append("address", this.user.address);
+      formData.append("img", this.user.img);
+      axios
+        .put(`http://localhost:3000/api/v1/auth/admin/${adminId}`, formData, {
           headers: {
             Authorization: `Basic ${token}`,
           },
-        }
-      );
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     selectFile(event) {
-      this.admin.img = event.target.files[0];
+      this.user.img = event.target.files[0];
     },
+    ...mapActions(["adminInfo"]),
   },
 };
 </script>
@@ -122,11 +173,13 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .flex1 {
   display: flex;
   gap: 40px;
   margin-bottom: 40px;
 }
+
 .button2 {
   height: 38px;
   width: 127px;
@@ -138,25 +191,29 @@ export default {
   font-family: "Lato";
   font-size: 16px;
 }
+
 .input2 {
   width: 469px;
   height: 54px;
   left: 595px;
   top: 733px;
   color: black;
-  background: #cdcbd6;
+  background: rgba(117, 87, 211, 0.04);
 }
+
 .button3 {
   text-align: center;
 }
+
 .input1 {
   width: 216px;
   height: 54px;
   left: 340px;
   top: 613px;
   color: black;
-  background: #cdcbd6;
+  background: rgba(117, 87, 211, 0.04);
 }
+
 ::placeholder {
   font-style: normal;
   font-weight: 400;
@@ -166,6 +223,7 @@ export default {
   letter-spacing: -0.117188px;
   color: #333758;
 }
+
 button {
   border: 1px solid #7557d3;
   border-radius: 3px;
@@ -176,11 +234,18 @@ button {
   border-radius: 3px;
   color: #7557d3;
   background: white;
+  cursor: pointer;
 }
+
+button:focus {
+  color: #7557d3;
+}
+
 label {
   display: block;
   text-align: start;
 }
+
 input {
   width: 379px;
   height: 48px;
@@ -190,7 +255,9 @@ input {
   border: 1.5px solid #bdbdbd;
   border-radius: 4px;
   padding-left: 10px;
+ 
 }
+
 label {
   font-family: "Lato";
   font-style: normal;
@@ -202,15 +269,18 @@ label {
   color: #4f4f4f;
   margin-bottom: 8px;
 }
+
 .main {
   margin-right: 260px;
 }
+
 .image {
   display: flex;
   gap: 32px;
   margin-top: 73px;
   margin-bottom: 40px;
 }
+
 .file-label {
   font-style: normal;
   font-weight: 400;
@@ -222,13 +292,16 @@ label {
   padding: 5px;
   opacity: 0.5;
 }
+
 .fileupload {
   display: none;
 }
+
 .label-form {
   display: flex;
   justify-content: center;
 }
+
 h2 {
   font-style: normal;
   font-weight: 400;
@@ -238,5 +311,15 @@ h2 {
   letter-spacing: -0.117188px;
   margin-top: 28px;
   color: #ff5722;
+}
+
+img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
+.remove {
+  cursor: pointer;
 }
 </style>

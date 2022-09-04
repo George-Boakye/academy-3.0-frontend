@@ -8,10 +8,8 @@
     </div>
     <div class="form-wrapper">
       <div class="server-error" v-show="error">{{ error }}</div>
-      <form
-        @submit.prevent="createUser"
-        class="label-form"
-      >
+      <div class="loader" v-if="loading"></div>
+      <form @submit.prevent="createUser" class="label-form">
         <div class="uploads">
           <div>
             <input
@@ -157,16 +155,18 @@ export default {
       cvError: null,
       photoError: null,
 
+      loading: false,
       error: "",
     };
   },
-  created(){
-  this.user.firstName =  localStorage.getItem('firstName');
-  this.user.lastName =  localStorage.getItem('lastName');
-  this.user.emailAddress =  localStorage.getItem('email');
+  created() {
+    this.user.firstName = localStorage.getItem("firstName");
+    this.user.lastName = localStorage.getItem("lastName");
+    this.user.emailAddress = localStorage.getItem("email");
   },
   methods: {
     createUser() {
+      this.loading = true;
       this.user.firstName.length < 2
         ? (this.fnameError = "First name not valid!")
         : console.log(this.fnameError);
@@ -222,6 +222,7 @@ export default {
           localStorage.removeItem("token");
           const { data } = res.data;
           localStorage.setItem("token", data.token);
+          this.loading = false;
           if (data.details.applicant) {
             this.$router.push("/dashboard");
           } else {
@@ -229,6 +230,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.loading = false
           this.error = err.response.data.message;
         });
     },
@@ -258,10 +260,33 @@ export default {
 };
 </script>
 <style scoped>
+.loader {
+  position: absolute;
+  top: 400px;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #7557d3;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+  z-index: 3;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 img {
   margin-top: 100px;
   margin-bottom: 26px;
 }
+
 button {
   font-family: "Lato";
   font-weight: 700;
@@ -276,6 +301,7 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+
 h1 {
   font-family: "Lato";
   font-style: italic;
@@ -286,9 +312,11 @@ h1 {
   text-align: center;
   color: #2b3c4e;
 }
+
 .logo-image {
   text-align: center;
 }
+
 input {
   width: 379px;
   height: 48px;
@@ -299,6 +327,7 @@ input {
   border-radius: 4px;
   padding-left: 10px;
 }
+
 label {
   font-family: "Lato";
   font-style: normal;
@@ -308,12 +337,14 @@ label {
   margin-top: 20px;
   color: #4f4f4f;
 }
+
 p {
   margin-top: 5px;
   color: red;
   font-size: 12px;
   text-align: start;
 }
+
 .main {
   height: 100vh;
   display: flex;
@@ -325,6 +356,7 @@ p {
   gap: 62px;
   justify-content: center;
 }
+
 .file-label {
   width: 211px;
   height: 49.97px;
@@ -336,9 +368,11 @@ p {
   padding-top: 14px;
   cursor: pointer;
 }
+
 .fileupload {
   display: none;
 }
+
 .label-form {
   display: flex;
   flex-direction: column;
@@ -352,6 +386,7 @@ p {
   right: 14px;
   cursor: pointer;
 }
+
 .password-wrap1 {
   position: relative;
 }
@@ -359,6 +394,7 @@ p {
 .password-wrap {
   position: relative;
 }
+
 .eye-logo2 {
   top: -40px;
   left: 350px;
@@ -370,6 +406,7 @@ label {
   display: block;
   text-align: start;
 }
+
 h2 {
   font-family: "Lato";
   font-style: italic;
@@ -380,15 +417,18 @@ h2 {
   margin-top: 12px;
   text-align: center;
 }
+
 form {
   text-align: center;
 }
+
 .inputs-wrapper {
   display: grid;
   grid-template-columns: max-content max-content;
   gap: 22px 62px;
   justify-content: center;
 }
+
 .form-wrapper {
   padding: 53px 71px 39px 61px;
   background: #ffffff;
@@ -399,17 +439,21 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
+
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .uploads {
   display: flex;
   gap: 0 32px;
 }
+
 .server-error {
   width: max-content;
   border-radius: 5px;
